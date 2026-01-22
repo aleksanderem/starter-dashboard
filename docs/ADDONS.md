@@ -945,6 +945,29 @@ Features:
 - Settings with image upload
 - Per-post overrides
 
+### Example 5: Complex Settings Addon (301 Redirects)
+
+See `addons/redirects-301/addon.php`
+
+Features:
+- Full-featured settings panel with table UI
+- AJAX CRUD operations for redirects
+- Multiple match types (exact, wildcard, regex)
+- Hit tracking and statistics
+- Built-in redirect testing with status display
+- CSV import/export
+- External redirect scanner (Yoast, Redirection, Rank Math, .htaccess)
+- Post list integration showing redirect badges
+- Real-time search and filtering
+
+This addon demonstrates:
+- Large settings panel with multiple sections
+- Drag-and-drop table rows
+- Modal dialogs for testing
+- Background scanning with progress
+- Complex JavaScript interactions
+- Integration with WordPress post tables
+
 ---
 
 ## Checklist for New Addons

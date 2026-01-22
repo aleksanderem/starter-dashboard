@@ -1,10 +1,10 @@
 # Starter Dashboard - Documentation
 
-Version: 3.9.2
+Version: 4.1.x
 
 ## Overview
 
-Starter Dashboard is a comprehensive WordPress admin plugin that replaces the default WordPress dashboard with a customizable, branded hub. It provides post type management tiles, user role editing, menu visibility control, custom post type visibility settings, and a modular addon system.
+Starter Dashboard is a comprehensive WordPress admin plugin that replaces the default WordPress dashboard with a customizable, branded hub. It provides a Command Menu (Cmd+K), post type management tiles, user role editing, menu visibility control, custom post type visibility settings, whitelabel options, and a modular addon system with 10+ built-in addons including 301 Redirects management.
 
 ---
 
@@ -12,20 +12,24 @@ Starter Dashboard is a comprehensive WordPress admin plugin that replaces the de
 
 1. [Installation](#installation)
 2. [Architecture](#architecture)
-3. [Main Dashboard](#main-dashboard)
-4. [Settings Page](#settings-page)
-5. [Role Editor](#role-editor)
-6. [Menu Visibility Control](#menu-visibility-control)
-7. [Admin Menu Order](#admin-menu-order)
-8. [CPT Visibility](#cpt-visibility)
-9. [Visual Settings](#visual-settings)
-10. [Content Versioning](#content-versioning)
-11. [Import/Export](#importexport)
-12. [Addon System](#addon-system)
-13. [Icons (ezicons)](#icons-ezicons)
-14. [AJAX Endpoints](#ajax-endpoints)
-15. [Hooks and Filters](#hooks-and-filters)
-16. [Database Options](#database-options)
+3. [Command Menu](#command-menu)
+4. [Main Dashboard](#main-dashboard)
+5. [Settings Page](#settings-page)
+6. [Role Editor](#role-editor)
+7. [Menu Visibility Control](#menu-visibility-control)
+8. [Admin Menu Order](#admin-menu-order)
+9. [CPT Visibility](#cpt-visibility)
+10. [Visual Settings](#visual-settings)
+11. [Whitelabel](#whitelabel)
+12. [Content Versioning](#content-versioning)
+13. [Import/Export](#importexport)
+14. [Addon System](#addon-system)
+15. [301 Redirects Addon](#301-redirects-addon)
+16. [Icons (ezicons)](#icons-ezicons)
+17. [AJAX Endpoints](#ajax-endpoints)
+18. [Hooks and Filters](#hooks-and-filters)
+19. [Database Options](#database-options)
+20. [GitHub Updates](#github-updates)
 
 ---
 
@@ -88,6 +92,63 @@ class Starter_Dashboard {
 | `$content_types` | array | Post types shown in Content tab (`post`, `page`) |
 | `$builder_types` | array | Post types shown in Builder tab (`elementor_library`, `e-landing-page`) |
 | `$type_colors` | array | Color mapping for post type tiles |
+
+---
+
+## Command Menu
+
+The Command Menu provides Spotlight/Raycast-style quick navigation across the WordPress admin.
+
+### Activation
+
+Press `Cmd+K` (Mac) or `Ctrl+K` (Windows/Linux) anywhere in the WordPress admin to open.
+
+### Features
+
+- **Quick Navigation** - Jump to any admin page instantly
+- **Nested Categories** - Create, Settings, Tools, Site, Hub, WooCommerce
+- **Recent Posts** - Quick access to recently edited content
+- **Keyboard-driven** - Full keyboard navigation with arrow keys and Enter
+- **Smart Search** - Fuzzy search across all menu items and actions
+
+### Technology
+
+The Command Menu is built as a separate React/TypeScript application:
+
+```
+command-menu/
+├── src/
+│   ├── wp-command-menu.tsx    # Main component
+│   ├── components/            # UI components
+│   └── globals.css            # Tailwind styles
+├── dist/                      # Built assets
+└── package.json               # Dependencies
+```
+
+Built with React 19, Tailwind CSS 4, React Aria Components, and @untitledui/icons.
+
+### Building
+
+```bash
+cd command-menu
+npm install
+npm run build
+```
+
+### Configuration
+
+Menu items are automatically collected from WordPress admin menu and passed to the React app via `wp_localize_script()`:
+
+```php
+wp_localize_script('wp-command-menu-js', 'wpCommandMenuConfig', [
+    'menuItems' => $menu_items,
+    'recentPosts' => $recent_posts,
+    'quickActions' => $quick_actions,
+    'settingsActions' => $settings_actions,
+    'hubActions' => $hub_actions,
+    // ...
+]);
+```
 
 ---
 
@@ -355,6 +416,52 @@ Visual settings are output as CSS custom properties:
 
 ---
 
+## Whitelabel
+
+The Whitelabel feature allows complete rebranding of the plugin for agency/client use.
+
+### Accessing Whitelabel Settings
+
+Whitelabel settings are hidden by default. Access via:
+```
+/wp-admin/admin.php?page=starter-whitelabel
+```
+
+Or add `?whitelabel=1` to any dashboard URL to reveal the menu item.
+
+### Options
+
+| Setting | Description |
+|---------|-------------|
+| Plugin Name | Replace "Starter Dashboard" with custom name |
+| Plugin Description | Custom description shown in Plugins list |
+| Plugin Author | Custom author name |
+| Plugin Author URI | Custom author website |
+| Hide from Plugins List | Completely hide plugin from Plugins page |
+
+### Storage
+
+```php
+// Option: starter_whitelabel_settings
+$settings = [
+    'plugin_name' => 'My Custom Dashboard',
+    'plugin_description' => 'Custom admin dashboard',
+    'plugin_author' => 'My Agency',
+    'plugin_author_uri' => 'https://myagency.com',
+    'hide_from_plugins' => false,
+];
+```
+
+### Implementation
+
+Whitelabel settings are applied via `all_plugins` filter:
+
+```php
+add_filter('all_plugins', [$this, 'filter_plugin_metadata']);
+```
+
+---
+
 ## Content Versioning
 
 Posts can be tagged with a "Content Version" meta field for filtering.
@@ -453,6 +560,95 @@ $this->addons['addon-id'] = [
     'settings_callback' => 'Class::render_settings',
     'version' => '1.0.0',
 ];
+```
+
+---
+
+## 301 Redirects Addon
+
+The 301 Redirects addon provides comprehensive URL redirect management directly in the dashboard.
+
+### Features
+
+- **Multiple Redirect Types** - 301 (permanent), 302 (temporary), 307 (temporary preserve method)
+- **Match Types** - Exact match, Wildcard (*), Regex patterns
+- **Hit Tracking** - Counts how many times each redirect is used
+- **Testing** - Built-in redirect testing with status verification
+- **External Redirect Scanner** - Detects redirects from Yoast, Redirection, Rank Math, .htaccess
+- **Import/Export** - CSV import/export for bulk management
+- **Post Integration** - Shows redirect status in post list tables
+
+### Accessing
+
+When the addon is active, access via:
+- Dashboard tab: "301 Redirects"
+- Command Menu: Type "redirects" or "301"
+
+### Redirect Format
+
+```php
+// Storage: option 'starter_redirects_301'
+$redirects = [
+    [
+        'id' => 'abc123',
+        'from' => '/old-page',
+        'to' => '/new-page',
+        'status_code' => '301',
+        'match_type' => 'exact',  // exact|wildcard|regex
+        'enabled' => true,
+        'hits' => 42,
+        'created' => '2024-01-01 12:00:00',
+        'last_hit' => '2024-01-15 08:30:00',
+        'note' => 'Migrated from old site',
+    ],
+];
+```
+
+### Match Types
+
+| Type | Pattern Example | Matches |
+|------|-----------------|---------|
+| Exact | `/old-page` | Only `/old-page` |
+| Wildcard | `/blog/*` | `/blog/post-1`, `/blog/post-2`, etc. |
+| Regex | `/products/([0-9]+)` | `/products/123`, with capture groups |
+
+### Regex Capture Groups
+
+For regex redirects, capture groups can be used in the destination:
+
+```
+From: /products/([0-9]+)/(.*)
+To: /shop/$1/item/$2
+```
+
+### Testing Redirects
+
+Each redirect can be tested individually:
+- **Exact match** - Click ↻ to test immediately
+- **Wildcard/Regex** - Opens modal to enter test URL
+
+Test results show:
+- ✓ Working (green) - Redirect works as expected
+- ≠ Mismatch (orange) - Redirects but to wrong destination
+- ✗ Error (red) - No redirect or server error
+
+### AJAX Endpoints
+
+| Action | Description |
+|--------|-------------|
+| `starter_redirects_get` | Get all redirects |
+| `starter_redirects_save` | Save/update redirect |
+| `starter_redirects_delete` | Delete redirect |
+| `starter_redirects_test_url` | Test a URL for redirects |
+| `starter_redirects_import` | Import from CSV |
+| `starter_redirects_export` | Export to CSV |
+| `starter_redirects_scan_external` | Scan for external redirects |
+
+### Import CSV Format
+
+```csv
+/old-url,/new-url,Optional note
+/another-old,https://external.com/page,External redirect
 ```
 
 ---
@@ -621,9 +817,67 @@ starter-dashboard/
 │   ├── elementor-phone-field/
 │   │   ├── addon.php          # Phone field
 │   │   └── field-phone-intl.php
-│   └── elementor-styled-checkboxes/
-│       └── addon.php          # Styled checkboxes
+│   ├── elementor-styled-checkboxes/
+│   │   └── addon.php          # Styled checkboxes
+│   ├── redirects-301/
+│   │   └── addon.php          # 301 Redirects manager
+│   ├── reading-time/
+│   │   └── addon.php          # Reading time shortcode
+│   └── adaptive-gallery/
+│       └── addon.php          # Adaptive gallery widget
+├── command-menu/              # React Command Menu app
+│   ├── src/
+│   ├── dist/
+│   └── package.json
+├── lib/
+│   ├── Parsedown.php          # Markdown parser
+│   └── plugin-update-checker/ # GitHub updates
 └── docs/
     ├── README.md              # This file
     └── ADDONS.md              # Addon development guide
 ```
+
+---
+
+## GitHub Updates
+
+The plugin supports automatic updates from GitHub releases using Plugin Update Checker.
+
+### Configuration
+
+In `starter-dashboard.php`:
+
+```php
+$starter_dashboard_update_checker = PucFactory::buildUpdateChecker(
+    'https://github.com/YOUR_USERNAME/starter-dashboard/',
+    __FILE__,
+    'starter-dashboard'
+);
+
+$starter_dashboard_update_checker->setBranch('main');
+$starter_dashboard_update_checker->getVcsApi()->enableReleaseAssets();
+```
+
+### Creating Releases
+
+1. Update version in `starter-dashboard.php` and `readme.txt`
+2. Build distribution: `./build-dist.sh`
+3. Create git tag: `git tag v4.1.2`
+4. Push with tags: `git push origin main --tags`
+5. Create GitHub Release with ZIP attached
+
+### Automated Release Script
+
+Use `./release.sh` for automated releases:
+
+```bash
+./release.sh 4.1.2
+```
+
+The script:
+- Updates version numbers
+- Builds Command Menu React app
+- Creates distribution ZIP
+- Commits and tags
+- Pushes to GitHub
+- Creates GitHub Release with ZIP attached
