@@ -63,6 +63,12 @@ The command menu automatically includes all registered admin pages, recent posts
 
 == Changelog ==
 
+= 4.1.2 =
+* IMPROVED: 301 Redirects - added retest button for all redirect types (not just regex/wildcard)
+* IMPROVED: 301 Redirects - home badge with ⌂ character for cleaner visual
+* IMPROVED: Exact match redirects now test directly without opening modal
+* UPDATED: Documentation with Command Menu, Whitelabel, and 301 Redirects guides
+
 = 4.1.1 =
 * IMPROVED: 301 Redirects - cleaner UI with home icon instead of full site URL in redirect paths
 * ADDED: Automated release script for easier version management
