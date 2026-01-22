@@ -2411,7 +2411,7 @@ class Starter_Addon_Redirects_301 {
                                         <option value="regex"><?php _e('Regex', 'starter-dashboard'); ?></option>
                                     </select>
                                     <div class="bp-input-with-prefix">
-                                        <span class="bp-input-prefix"><?php echo esc_html($site_url); ?></span>
+                                        <span class="bp-input-prefix bp-input-prefix--icon" title="<?php echo esc_attr($site_url); ?>"><span class="dashicons dashicons-admin-home"></span></span>
                                         <input type="text" id="redirect-from" placeholder="old-page" class="bp-input">
                                     </div>
                                 </div>
@@ -3197,6 +3197,16 @@ class Starter_Addon_Redirects_301 {
                 border-right: 1px solid var(--bp-gray-300);
                 white-space: nowrap;
             }
+            .bp-input-prefix--icon {
+                padding: 0 10px;
+                cursor: help;
+            }
+            .bp-input-prefix--icon .dashicons {
+                font-size: 16px;
+                width: 16px;
+                height: 16px;
+                line-height: 16px;
+            }
             .bp-input-with-prefix .bp-input {
                 border: none !important;
                 border-radius: 0 8px 8px 0 !important;
@@ -3293,6 +3303,16 @@ class Starter_Addon_Redirects_301 {
             }
             .bp-redirects-row__from-base {
                 color: var(--bp-gray-400);
+                cursor: help;
+                display: inline-flex;
+                align-items: center;
+                margin-right: 2px;
+            }
+            .bp-redirects-row__from-base .dashicons {
+                font-size: 14px;
+                width: 14px;
+                height: 14px;
+                line-height: 14px;
             }
             .bp-redirects-row__from-path {
                 color: var(--bp-blue-700);
@@ -3900,7 +3920,7 @@ class Starter_Addon_Redirects_301 {
                         html += '<span class="bp-redirects-row__match-type bp-redirects-row__match-type--' + matchType + '">' + matchType + '</span>';
                     }
                     html += '<span class="bp-redirects-row__from">';
-                    html += '<span class="bp-redirects-row__from-base">' + siteUrl + '</span>';
+                    html += '<span class="bp-redirects-row__from-base" title="' + siteUrl + '"><span class="dashicons dashicons-admin-home"></span></span>';
                     html += '<span class="bp-redirects-row__from-path">' + escapeHtml(r.from.replace(/^\//, '')) + '</span>';
                     html += '</span>';
                     html += '</td>';
