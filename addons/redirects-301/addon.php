@@ -2411,7 +2411,7 @@ class Starter_Addon_Redirects_301 {
                                         <option value="regex"><?php _e('Regex', 'starter-dashboard'); ?></option>
                                     </select>
                                     <div class="bp-input-with-prefix">
-                                        <span class="bp-input-prefix bp-input-prefix--icon" title="<?php echo esc_attr($site_url); ?>"><span class="dashicons dashicons-admin-home"></span></span>
+                                        <span class="bp-input-prefix bp-input-prefix--icon" title="<?php echo esc_attr($site_url); ?>">⌂</span>
                                         <input type="text" id="redirect-from" placeholder="old-page" class="bp-input">
                                     </div>
                                 </div>
@@ -3044,6 +3044,16 @@ class Starter_Addon_Redirects_301 {
                 padding: 2px 4px;
                 font-size: 12px;
             }
+            .bp-redirects-test-single--auto {
+                color: var(--bp-gray-500);
+                background: var(--bp-gray-50);
+                border-color: var(--bp-gray-200);
+            }
+            .bp-redirects-test-single--auto:hover {
+                color: var(--bp-primary-700);
+                background: var(--bp-primary-50);
+                border-color: var(--bp-primary-200);
+            }
 
             /* Test URL Modal */
             .bp-redirects-test-modal {
@@ -3198,14 +3208,9 @@ class Starter_Addon_Redirects_301 {
                 white-space: nowrap;
             }
             .bp-input-prefix--icon {
-                padding: 0 10px;
+                padding: 0 12px;
                 cursor: help;
-            }
-            .bp-input-prefix--icon .dashicons {
                 font-size: 16px;
-                width: 16px;
-                height: 16px;
-                line-height: 16px;
             }
             .bp-input-with-prefix .bp-input {
                 border: none !important;
@@ -3302,17 +3307,18 @@ class Starter_Addon_Redirects_301 {
                 color: var(--bp-gray-700);
             }
             .bp-redirects-row__from-base {
-                color: var(--bp-gray-400);
-                cursor: help;
                 display: inline-flex;
                 align-items: center;
-                margin-right: 2px;
-            }
-            .bp-redirects-row__from-base .dashicons {
+                justify-content: center;
+                width: 22px;
+                height: 22px;
+                background: var(--bp-gray-100);
+                color: var(--bp-gray-500);
+                border-radius: 6px;
                 font-size: 14px;
-                width: 14px;
-                height: 14px;
-                line-height: 14px;
+                margin-right: 6px;
+                cursor: help;
+                flex-shrink: 0;
             }
             .bp-redirects-row__from-path {
                 color: var(--bp-blue-700);
@@ -3920,7 +3926,7 @@ class Starter_Addon_Redirects_301 {
                         html += '<span class="bp-redirects-row__match-type bp-redirects-row__match-type--' + matchType + '">' + matchType + '</span>';
                     }
                     html += '<span class="bp-redirects-row__from">';
-                    html += '<span class="bp-redirects-row__from-base" title="' + siteUrl + '"><span class="dashicons dashicons-admin-home"></span></span>';
+                    html += '<span class="bp-redirects-row__from-base" title="' + siteUrl + '">⌂</span>';
                     html += '<span class="bp-redirects-row__from-path">' + escapeHtml(r.from.replace(/^\//, '')) + '</span>';
                     html += '</span>';
                     html += '</td>';
@@ -3977,15 +3983,14 @@ class Starter_Addon_Redirects_301 {
                         } else if (testStatus.status === 'error') {
                             html += '<span class="bp-redirects-test-badge bp-redirects-test-badge--error" data-tooltip="' + buildTooltip('<?php esc_attr_e('Error', 'starter-dashboard'); ?>', testStatus) + '">✗</span>';
                         }
-                        // Add re-test button for regex/wildcard after showing result
-                        if (needsManualTest) {
-                            html += '<button type="button" class="bp-redirects-test-single" data-id="' + r.id + '" title="<?php esc_attr_e('Test again', 'starter-dashboard'); ?>">↻</button>';
-                        }
+                        // Add re-test button for all redirects after showing result
+                        html += '<button type="button" class="bp-redirects-test-single" data-id="' + r.id + '" data-match-type="' + matchType + '" title="<?php esc_attr_e('Test again', 'starter-dashboard'); ?>">↻</button>';
                     } else if (needsManualTest) {
                         // Show test button for regex/wildcard that haven't been tested
-                        html += '<button type="button" class="bp-redirects-test-single" data-id="' + r.id + '" title="<?php esc_attr_e('Test with URL', 'starter-dashboard'); ?>"><?php _e('Test', 'starter-dashboard'); ?></button>';
+                        html += '<button type="button" class="bp-redirects-test-single" data-id="' + r.id + '" data-match-type="' + matchType + '" title="<?php esc_attr_e('Test with URL', 'starter-dashboard'); ?>"><?php _e('Test', 'starter-dashboard'); ?></button>';
                     } else {
-                        html += '<span class="bp-redirects-test-badge bp-redirects-test-badge--pending" data-tooltip="<?php esc_attr_e('Not tested', 'starter-dashboard'); ?>">?</span>';
+                        // Show test button for exact match that haven't been tested
+                        html += '<button type="button" class="bp-redirects-test-single bp-redirects-test-single--auto" data-id="' + r.id + '" data-match-type="' + matchType + '" title="<?php esc_attr_e('Test redirect', 'starter-dashboard'); ?>">↻</button>';
                     }
                     html += '</td>';
 
@@ -4704,9 +4709,54 @@ class Starter_Addon_Redirects_301 {
 
             $(document).on('click', '.bp-redirects-test-single', function() {
                 var id = $(this).data('id');
+                var matchType = $(this).data('match-type') || 'exact';
                 var redirect = redirects.find(function(r) { return r.id === id; });
                 if (!redirect) return;
 
+                // For exact match, test directly without modal
+                if (matchType === 'exact') {
+                    // Mark as testing
+                    redirectTestResults[id] = { status: 'testing' };
+                    renderRedirects($('#redirects-search').val());
+
+                    $.post(ajaxurl, {
+                        action: 'starter_redirects_test_url',
+                        nonce: starterDashboard.nonce,
+                        url: redirect.from
+                    }, function(response) {
+                        var timestamp = new Date().toLocaleString();
+                        if (response.success) {
+                            var data = response.data;
+                            var expectedCode = parseInt(redirect.status_code) || 301;
+
+                            if (data.redirected && data.status_code === expectedCode) {
+                                // Normalize URLs for comparison
+                                var normalizeUrl = function(url) {
+                                    return url.replace(/\/$/, '').toLowerCase();
+                                };
+                                var actualTo = normalizeUrl(data.location || '');
+                                var expectedTo = normalizeUrl(redirect.to.indexOf('http') === 0 ? redirect.to : siteUrl.replace(/\/$/, '') + redirect.to);
+
+                                if (actualTo === expectedTo || actualTo.indexOf(normalizeUrl(redirect.to)) !== -1) {
+                                    redirectTestResults[id] = { status: 'ok', tested_at: timestamp, actual_location: data.location };
+                                } else {
+                                    redirectTestResults[id] = { status: 'mismatch', tested_at: timestamp, expected: redirect.to, actual: data.location };
+                                }
+                            } else if (data.redirected) {
+                                redirectTestResults[id] = { status: 'mismatch', tested_at: timestamp, expected: expectedCode, actual: data.status_code };
+                            } else {
+                                redirectTestResults[id] = { status: 'error', tested_at: timestamp, message: '<?php _e('No redirect', 'starter-dashboard'); ?>' };
+                            }
+                        } else {
+                            redirectTestResults[id] = { status: 'error', tested_at: timestamp, message: response.data || '<?php _e('Test failed', 'starter-dashboard'); ?>' };
+                        }
+                        renderRedirects($('#redirects-search').val());
+                        saveTestResult(id, redirectTestResults[id]);
+                    });
+                    return;
+                }
+
+                // For regex/wildcard, open modal to enter test URL
                 currentTestRedirectId = id;
                 $('#test-modal-pattern').text(redirect.from);
                 $('#test-modal-url').val('');
