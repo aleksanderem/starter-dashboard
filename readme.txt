@@ -63,6 +63,10 @@ The command menu automatically includes all registered admin pages, recent posts
 
 == Changelog ==
 
+= 4.1.1 =
+* IMPROVED: 301 Redirects - cleaner UI with home icon instead of full site URL in redirect paths
+* ADDED: Automated release script for easier version management
+
 = 4.1.0 =
 * NEW: Hub section in Command Menu with quick access to dashboard, settings, and addons
 * NEW: Active addon shortcuts in command palette (301 Redirects, Social Preview, HubSpot)
