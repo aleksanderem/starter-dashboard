@@ -1,0 +1,134 @@
+/**
+ * Adaptive Gallery Styles
+ */
+
+.adaptive-gallery-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.adaptive-gallery-container {
+    overflow: hidden;
+    width: 100%;
+    height: 450px;
+}
+
+.adaptive-gallery-track {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    will-change: transform;
+}
+
+.adaptive-gallery-slide {
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adaptive-gallery-slide img {
+    height: 100%;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
+}
+
+/* Navigation Arrows */
+.adaptive-gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: #1A3580;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.adaptive-gallery-arrow:hover {
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.adaptive-gallery-arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.adaptive-gallery-arrow svg {
+    width: 24px;
+    height: 24px;
+}
+
+.adaptive-gallery-prev {
+    left: 10px;
+}
+
+.adaptive-gallery-next {
+    right: 10px;
+}
+
+/* Navigation Dots */
+.adaptive-gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.adaptive-gallery-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.adaptive-gallery-dot:hover {
+    background: #999;
+}
+
+.adaptive-gallery-dot.active {
+    background: #1A3580;
+    transform: scale(1.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .adaptive-gallery-container {
+        height: 300px;
+    }
+
+    .adaptive-gallery-arrow {
+        width: 36px;
+        height: 36px;
+    }
+
+    .adaptive-gallery-arrow svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .adaptive-gallery-prev {
+        left: 5px;
+    }
+
+    .adaptive-gallery-next {
+        right: 5px;
+    }
+}

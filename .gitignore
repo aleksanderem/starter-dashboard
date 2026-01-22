@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build artifacts (keep dist for releases)
+command-menu/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+hubspot-debug.log
+
+# Task tracking (local)
+session_state.json
+tasks_progress.json
+tasks_progress_verbose.txt
+
+# Package locks (keep package-lock.json)
+bun.lock

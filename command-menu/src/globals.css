@@ -1,0 +1,100 @@
+/* Import Tailwind without preflight to avoid conflicts with WordPress admin */
+@import "tailwindcss/theme";
+@import "tailwindcss/utilities";
+@import "./theme.css";
+@import "./typography.css";
+
+@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-react-aria-components";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:where(.dark-mode, .dark-mode *));
+@custom-variant label (& [data-label]);
+@custom-variant focus-input-within (&:has(input:focus));
+
+@utility scrollbar-hide {
+    /* For Webkit-based browsers (Chrome, Safari and Opera) */
+    &::-webkit-scrollbar {
+        display: none;
+        -webkit-appearance: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+@utility transition-inherit-all {
+    transition-property: inherit;
+    transition-duration: inherit;
+    transition-timing-function: inherit;
+}
+
+/* Scope styles to command menu root only - don't affect WP admin */
+#wp-command-menu-root {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-variant-ligatures: contextual;
+    font-variant-ligatures: contextual;
+    -webkit-font-kerning: normal;
+    font-kerning: normal;
+}
+
+/* Hide the default expand arrow on Safari.  */
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Hide default arrows from number inputs. */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Hide the default clear button (X) from search inputs. */
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+/* Fix WordPress admin tables - prevent Tailwind utilities from affecting them */
+/* WordPress uses .fixed for table-layout, but Tailwind uses it for position */
+.wp-list-table {
+    position: static !important;
+}
+.wp-list-table.fixed {
+    table-layout: fixed !important;
+    position: static !important;
+}
+
+/* Command menu custom styles for WordPress */
+@layer base {
+    body #wp-command-menu-root footer {
+        background: #F0F0F0 !important;
+    }
+
+    body #wp-command-menu-root input {
+        padding: 10px 30px !important;
+        border-radius: 8px !important;
+        border: 1px solid #DDD !important;
+    }
+
+    body #wp-command-menu-root div.pointer-events-none > svg {
+        margin-left: 7px !important;
+    }
+
+    /* Focused/selected item highlight */
+    body #wp-command-menu-root [role="option"][data-focused="true"] > div,
+    body #wp-command-menu-root [role="option"][data-selected="true"] > div,
+    body #wp-command-menu-root [role="option"]:focus > div {
+        background-color: #E8F4FD !important;
+        outline: 2px solid #0073AA !important;
+        outline-offset: -2px;
+    }
+}
