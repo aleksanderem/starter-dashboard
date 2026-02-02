@@ -2464,24 +2464,21 @@ JS;
             return new WP_Error('not_configured', __('HubSpot not configured', 'starter-dashboard'));
         }
 
+        // Always send context to HubSpot API (required by API)
         $payload = [
             'fields' => [],
-        ];
-
-        // Only include context in HubSpot API request if enabled
-        if (!empty($context['send_to_hubspot'])) {
-            $payload['context'] = [
+            'context' => [
                 'pageUri' => $context['page_url'] ?? '',
                 'pageName' => $context['page_title'] ?? '',
-                'ipAddress' => $context['ip'] ?? '',
-            ];
+            ],
+        ];
+
+        // Add IP and tracking cookie only if "Send Page Context" is enabled
+        if (!empty($context['send_to_hubspot'])) {
+            $payload['context']['ipAddress'] = $context['ip'] ?? '';
         }
 
-        // Add HubSpot tracking cookie if available and context is enabled
-        if (!empty($context['send_to_hubspot']) && !empty($_COOKIE['hubspotutk'])) {
-            if (!isset($payload['context'])) {
-                $payload['context'] = [];
-            }
+        if (!empty($_COOKIE['hubspotutk'])) {
             $payload['context']['hutk'] = sanitize_text_field($_COOKIE['hubspotutk']);
         }
 
