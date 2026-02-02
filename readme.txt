@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.1.5
+Stable tag: 4.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,10 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.1.6 =
+* FIXED: HubSpot Forms - select fields now send option labels (e.g. "Connecticut - CT") instead of just values (e.g. "CT")
+* IMPROVED: Better data quality in HubSpot submissions for dropdown/select fields
 
 = 4.1.5 =
 * HOTFIX: HubSpot Forms - fixed "server error" on form submissions caused by missing context object in API payload
