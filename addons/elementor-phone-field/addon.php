@@ -362,17 +362,36 @@ CSS;
                 console.log('[Phone Field] Successfully initialized');
 
                 // On form submit, set full number as the input value
+                // Use capture phase to run BEFORE Elementor's serialization
                 var form = input.closest('form');
                 if (form && !form._phoneFieldBound) {
                     form._phoneFieldBound = true;
-                    form.addEventListener('submit', function() {
+                    form.addEventListener('submit', function(e) {
                         var allPhoneInputs = form.querySelectorAll('input[type="tel"]');
                         allPhoneInputs.forEach(function(phoneInput) {
                             if (phoneInput.intlTelInputInstance) {
-                                phoneInput.value = phoneInput.intlTelInputInstance.getNumber();
+                                var fullNumber = phoneInput.intlTelInputInstance.getNumber();
+                                console.log('[Phone Field] Setting full number:', fullNumber, 'for field:', phoneInput.name);
+                                phoneInput.value = fullNumber;
+
+                                // Also update any hidden field
+                                var hiddenField = phoneInput.parentElement.querySelector('.phone-full-number');
+                                if (hiddenField) {
+                                    hiddenField.value = fullNumber;
+                                }
                             }
                         });
-                    });
+                    }, true); // USE CAPTURE PHASE (true) to fire before Elementor
+
+                    // Also bind to Elementor's before_submit event if available
+                    if (typeof jQuery !== 'undefined') {
+                        jQuery(form).on('submit_success submit_error', function() {
+                            // Reset to formatted number after submission
+                            setTimeout(function() {
+                                initPhoneFields();
+                            }, 100);
+                        });
+                    }
                 }
             } catch (e) {
                 console.error('[Phone Field] Error initializing:', e);

@@ -269,14 +269,29 @@ class EHFA_HubSpot_Action extends Action_Base {
         );
 
         if (is_wp_error($result)) {
-            $ajax_handler->add_admin_error_message(
-                sprintf(__('HubSpot Error: %s', 'starter-dashboard'), $result->get_error_message())
-            );
+            $error_message = $result->get_error_message();
 
+            // Build detailed error message
+            $detailed_error = sprintf(__('HubSpot Error: %s', 'starter-dashboard'), $error_message);
+
+            // Add field information in development mode
             if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('[Starter HubSpot] Submission failed: ' . $result->get_error_message());
-                error_log('[Starter HubSpot] Fields: ' . print_r($hubspot_fields, true));
+                $detailed_error .= "\n\n" . __('Submitted fields:', 'starter-dashboard');
+                foreach ($hubspot_fields as $field_name => $field_value) {
+                    $detailed_error .= sprintf("\n- %s: %s", $field_name, $field_value);
+                }
+                $detailed_error .= "\n\n" . sprintf(
+                    __('Check debug log at: %s', 'starter-dashboard'),
+                    dirname(__FILE__) . '/hubspot-debug.log'
+                );
             }
+
+            $ajax_handler->add_admin_error_message($detailed_error);
+
+            // Always log to error_log for server logs
+            error_log('[Starter HubSpot] Submission failed: ' . $error_message);
+            error_log('[Starter HubSpot] Form ID: ' . $settings['hubspot_form_id']);
+            error_log('[Starter HubSpot] Fields: ' . json_encode($hubspot_fields));
         }
     }
 

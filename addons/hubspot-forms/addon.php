@@ -2340,7 +2340,34 @@ JS;
             return true;
         }
 
-        $error = $body['message'] ?? $body['errors'][0]['message'] ?? __('Submission failed', 'starter-dashboard');
+        // Extract detailed error information
+        $error_parts = [];
+
+        // Main error message
+        if (!empty($body['message'])) {
+            $error_parts[] = $body['message'];
+        }
+
+        // Field-level errors
+        if (!empty($body['errors']) && is_array($body['errors'])) {
+            foreach ($body['errors'] as $err) {
+                if (is_array($err)) {
+                    $field_name = $err['errorType'] ?? $err['name'] ?? 'unknown';
+                    $field_message = $err['message'] ?? 'validation error';
+                    $error_parts[] = sprintf('%s: %s', $field_name, $field_message);
+                } elseif (is_string($err)) {
+                    $error_parts[] = $err;
+                }
+            }
+        }
+
+        // If no specific errors, use generic message
+        if (empty($error_parts)) {
+            $error_parts[] = __('Submission failed', 'starter-dashboard');
+        }
+
+        $error = implode('; ', $error_parts);
+
         $log_data['success'] = false;
         $log_data['error'] = $error;
         $log_data['response_code'] = $code;
