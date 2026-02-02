@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.1.2
+ * Version: 4.1.3
  * Author: Alex M.
  * Author URI: https://developer.dev
  */
@@ -373,17 +373,17 @@ class Starter_Dashboard {
             // Media library for logo picker
             wp_enqueue_media();
 
-            // Select2 for nice multi-selects
+            // Select2 for nice multi-selects (local copy - CDN was blocked on some servers)
             wp_enqueue_style(
                 'select2-css',
-                'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css',
+                $plugin_url . 'lib/select2/select2.min.css',
                 [],
                 '4.1.0'
             );
 
             wp_enqueue_script(
                 'select2-js',
-                'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
+                $plugin_url . 'lib/select2/select2.min.js',
                 ['jquery'],
                 '4.1.0',
                 true

@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.1.2
+Stable tag: 4.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,14 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.1.3 =
+* FIXED: Elementor Phone Field - submission timing issue resolved using event capture phase
+* FIXED: HubSpot Forms - improved error logging with field-level validation details
+* NEW: HubSpot Forms - independent debug mode toggle in addon settings
+* IMPROVED: HubSpot Forms - enhanced submissions log with expandable debug details (fields, request payload, API response)
+* IMPROVED: Error messages now show specific field validation errors from HubSpot API
+* IMPROVED: Debug mode works independently of WP_DEBUG setting
 
 = 4.1.2 =
 * IMPROVED: 301 Redirects - added retest button for all redirect types (not just regex/wildcard)
