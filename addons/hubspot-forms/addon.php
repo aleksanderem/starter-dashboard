@@ -13,6 +13,7 @@ class Starter_Addon_HubSpot_Forms {
     private static $instance = null;
     private $option_portal = 'starter_hubspot_portal_id';
     private $option_token = 'starter_hubspot_access_token';
+    private $option_debug = 'starter_hubspot_debug_mode';
     private $log_option = 'starter_hubspot_submission_log';
     private $max_log_entries = 100;
 
@@ -56,6 +57,7 @@ class Starter_Addon_HubSpot_Forms {
         $instance = self::instance();
         $portal_id = get_option($instance->option_portal, '');
         $token = get_option($instance->option_token, '');
+        $debug_mode = get_option($instance->option_debug, 'no');
         $is_configured = !empty($portal_id) && !empty($token);
         ?>
         <div class="bp-addon-settings bp-hubspot-dashboard" data-addon="hubspot-forms">
@@ -112,6 +114,31 @@ class Starter_Addon_HubSpot_Forms {
                             <?php _e('Test Connection', 'starter-dashboard'); ?>
                         </button>
                         <span class="bp-hubspot-test-result"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Debug Mode Section -->
+            <div class="bp-hubspot-section bp-hubspot-debug">
+                <div class="bp-hubspot-section__header">
+                    <easier-icon name="bug" variant="twotone" size="20" color="#ff7a59"></easier-icon>
+                    <h4><?php _e('Debug Mode', 'starter-dashboard'); ?></h4>
+                </div>
+                <div class="bp-hubspot-section__content">
+                    <div class="bp-hubspot-debug-toggle">
+                        <label class="bp-hubspot-switch">
+                            <input type="checkbox"
+                                   name="debug_mode"
+                                   value="yes"
+                                   <?php checked($debug_mode, 'yes'); ?>>
+                            <span class="bp-hubspot-switch-slider"></span>
+                        </label>
+                        <div class="bp-hubspot-debug-info">
+                            <strong><?php _e('Enable detailed error logging', 'starter-dashboard'); ?></strong>
+                            <p class="description">
+                                <?php _e('When enabled, submissions log will show all submitted field values, API responses, and detailed error information. Independent of WP_DEBUG.', 'starter-dashboard'); ?>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -757,6 +784,134 @@ class Starter_Addon_HubSpot_Forms {
             display: block;
         }
 
+        /* Debug Mode Styles */
+        .bp-hubspot-debug-toggle {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .bp-hubspot-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .bp-hubspot-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .bp-hubspot-switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 26px;
+        }
+
+        .bp-hubspot-switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        .bp-hubspot-switch input:checked + .bp-hubspot-switch-slider {
+            background-color: #ff7a59;
+        }
+
+        .bp-hubspot-switch input:checked + .bp-hubspot-switch-slider:before {
+            transform: translateX(24px);
+        }
+
+        .bp-hubspot-debug-info {
+            flex: 1;
+        }
+
+        .bp-hubspot-debug-info strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #1e1e1e;
+        }
+
+        .bp-hubspot-log-entry__debug {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f0f7ff;
+            border: 1px solid #d0e8ff;
+            border-radius: 6px;
+        }
+
+        .bp-hubspot-log-entry__debug-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            background: #2196F3;
+            color: white;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .bp-hubspot-log-entry__debug-section {
+            margin-bottom: 10px;
+        }
+
+        .bp-hubspot-log-entry__debug-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .bp-hubspot-log-entry__debug-toggle {
+            display: block;
+            cursor: pointer;
+            color: #2196F3;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 8px 10px;
+            background: white;
+            border: 1px solid #d0e8ff;
+            border-radius: 4px;
+            user-select: none;
+        }
+
+        .bp-hubspot-log-entry__debug-toggle:hover {
+            background: #f8fbff;
+        }
+
+        .bp-hubspot-log-entry__debug-content {
+            display: none;
+            margin-top: 8px;
+            padding: 12px;
+            background: #1e1e1e;
+            color: #f8f8f2;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .bp-hubspot-log-entry__debug-content.visible {
+            display: block;
+        }
+
         .bp-hubspot-log-empty {
             padding: 40px;
             text-align: center;
@@ -1217,13 +1372,46 @@ class Starter_Addon_HubSpot_Forms {
                     if (!entry.success && entry.error) {
                         html += '<div class="bp-hubspot-log-entry__error">';
                         html += '<strong><?php _e('Error:', 'starter-dashboard'); ?></strong> ' + escapeHtml(entry.error);
+                        if (entry.response_code) {
+                            html += '<br><strong><?php _e('Response Code:', 'starter-dashboard'); ?></strong> ' + entry.response_code;
+                        }
                         html += '</div>';
                     }
 
-                    if (entry.fields) {
-                        html += '<div class="bp-hubspot-log-entry__fields">';
-                        html += '<span class="bp-hubspot-log-entry__fields-toggle" data-index="' + index + '"><?php _e('Show submitted fields', 'starter-dashboard'); ?> ▼</span>';
-                        html += '<pre class="bp-hubspot-log-entry__fields-content" data-index="' + index + '">' + escapeHtml(JSON.stringify(entry.fields, null, 2)) + '</pre>';
+                    // Show debug details if available (debug mode was enabled for this submission)
+                    if (entry.debug_mode) {
+                        html += '<div class="bp-hubspot-log-entry__debug">';
+                        html += '<div class="bp-hubspot-log-entry__debug-badge">';
+                        html += '<easier-icon name="bug" variant="twotone" size="14" color="currentColor"></easier-icon> <?php _e('Debug Mode', 'starter-dashboard'); ?>';
+                        html += '</div>';
+
+                        // Submitted fields
+                        if (entry.fields) {
+                            html += '<div class="bp-hubspot-log-entry__debug-section">';
+                            html += '<span class="bp-hubspot-log-entry__debug-toggle" data-target="fields-' + index + '">';
+                            html += '<?php _e('Submitted Fields', 'starter-dashboard'); ?> ▼</span>';
+                            html += '<pre class="bp-hubspot-log-entry__debug-content" data-target="fields-' + index + '">' + escapeHtml(JSON.stringify(entry.fields, null, 2)) + '</pre>';
+                            html += '</div>';
+                        }
+
+                        // Request payload
+                        if (entry.request_payload) {
+                            html += '<div class="bp-hubspot-log-entry__debug-section">';
+                            html += '<span class="bp-hubspot-log-entry__debug-toggle" data-target="request-' + index + '">';
+                            html += '<?php _e('API Request Payload', 'starter-dashboard'); ?> ▼</span>';
+                            html += '<pre class="bp-hubspot-log-entry__debug-content" data-target="request-' + index + '">' + escapeHtml(JSON.stringify(entry.request_payload, null, 2)) + '</pre>';
+                            html += '</div>';
+                        }
+
+                        // Response body
+                        if (entry.response_body) {
+                            html += '<div class="bp-hubspot-log-entry__debug-section">';
+                            html += '<span class="bp-hubspot-log-entry__debug-toggle" data-target="response-' + index + '">';
+                            html += '<?php _e('API Response', 'starter-dashboard'); ?> ▼</span>';
+                            html += '<pre class="bp-hubspot-log-entry__debug-content" data-target="response-' + index + '">' + escapeHtml(JSON.stringify(entry.response_body, null, 2)) + '</pre>';
+                            html += '</div>';
+                        }
+
                         html += '</div>';
                     }
 
@@ -1232,12 +1420,17 @@ class Starter_Addon_HubSpot_Forms {
 
                 container.html(html);
 
-                // Toggle fields visibility
-                container.on('click', '.bp-hubspot-log-entry__fields-toggle', function() {
-                    var index = $(this).data('index');
-                    var content = $('.bp-hubspot-log-entry__fields-content[data-index="' + index + '"]');
+                // Toggle debug sections visibility
+                container.on('click', '.bp-hubspot-log-entry__debug-toggle', function() {
+                    var target = $(this).data('target');
+                    var content = $('.bp-hubspot-log-entry__debug-content[data-target="' + target + '"]');
+                    var isVisible = content.hasClass('visible');
+
                     content.toggleClass('visible');
-                    $(this).text(content.hasClass('visible') ? '<?php _e('Hide submitted fields', 'starter-dashboard'); ?> ▲' : '<?php _e('Show submitted fields', 'starter-dashboard'); ?> ▼');
+
+                    // Update arrow
+                    var text = $(this).text();
+                    $(this).text(isVisible ? text.replace('▲', '▼') : text.replace('▼', '▲'));
                 });
             }
 
@@ -1293,6 +1486,11 @@ class Starter_Addon_HubSpot_Forms {
         }
         if (isset($settings['access_token'])) {
             update_option($this->option_token, sanitize_text_field($settings['access_token']));
+        }
+        if (isset($settings['debug_mode'])) {
+            update_option($this->option_debug, $settings['debug_mode'] === 'yes' ? 'yes' : 'no');
+        } else {
+            update_option($this->option_debug, 'no');
         }
         // Clear caches when settings change
         delete_transient('starter_hubspot_forms_list');
@@ -2231,6 +2429,7 @@ JS;
         $instance = self::instance();
         $portal_id = get_option($instance->option_portal, '');
         $access_token = get_option($instance->option_token, '');
+        $debug_mode = get_option($instance->option_debug, 'no') === 'yes';
 
         // Get form name for logging
         $forms = $instance->get_hubspot_forms();
@@ -2250,8 +2449,13 @@ JS;
             'page_url' => $context['page_url'] ?? '',
             'page_title' => $context['page_title'] ?? '',
             'fields_count' => count($fields),
-            'fields' => $fields,
+            'debug_mode' => $debug_mode,
         ];
+
+        // Include full field data in debug mode
+        if ($debug_mode) {
+            $log_data['fields'] = $fields;
+        }
 
         if (empty($portal_id) || empty($access_token)) {
             $log_data['success'] = false;
@@ -2307,10 +2511,18 @@ JS;
 
         $json_body = json_encode($payload);
 
-        // Debug logging - write directly to file
-        $debug_file = __DIR__ . '/hubspot-debug.log';
-        file_put_contents($debug_file, date('Y-m-d H:i:s') . " URL: " . $url . "\n", FILE_APPEND);
-        file_put_contents($debug_file, date('Y-m-d H:i:s') . " Payload: " . $json_body . "\n", FILE_APPEND);
+        // Store request details in debug mode
+        if ($debug_mode) {
+            $log_data['request_url'] = $url;
+            $log_data['request_payload'] = $payload;
+        }
+
+        // Debug logging to file - only if debug mode enabled
+        if ($debug_mode) {
+            $debug_file = __DIR__ . '/hubspot-debug.log';
+            file_put_contents($debug_file, date('Y-m-d H:i:s') . " URL: " . $url . "\n", FILE_APPEND);
+            file_put_contents($debug_file, date('Y-m-d H:i:s') . " Payload: " . $json_body . "\n", FILE_APPEND);
+        }
 
         $response = wp_remote_post($url, [
             'headers' => [
@@ -2320,9 +2532,12 @@ JS;
             'timeout' => 30,
         ]);
 
-        // Debug response - write directly to file
-        file_put_contents($debug_file, date('Y-m-d H:i:s') . " Response Code: " . wp_remote_retrieve_response_code($response) . "\n", FILE_APPEND);
-        file_put_contents($debug_file, date('Y-m-d H:i:s') . " Response Body: " . wp_remote_retrieve_body($response) . "\n\n", FILE_APPEND);
+        // Debug response - write directly to file if debug mode
+        if ($debug_mode) {
+            $debug_file = __DIR__ . '/hubspot-debug.log';
+            file_put_contents($debug_file, date('Y-m-d H:i:s') . " Response Code: " . wp_remote_retrieve_response_code($response) . "\n", FILE_APPEND);
+            file_put_contents($debug_file, date('Y-m-d H:i:s') . " Response Body: " . wp_remote_retrieve_body($response) . "\n\n", FILE_APPEND);
+        }
 
         if (is_wp_error($response)) {
             $log_data['success'] = false;
@@ -2336,6 +2551,9 @@ JS;
 
         if ($code >= 200 && $code < 300) {
             $log_data['success'] = true;
+            if ($debug_mode && !empty($body)) {
+                $log_data['response_body'] = $body;
+            }
             self::log_submission($log_data);
             return true;
         }
