@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.1.3
+ * Version: 4.1.4
  * Author: Alex M.
  * Author URI: https://developer.dev
  */

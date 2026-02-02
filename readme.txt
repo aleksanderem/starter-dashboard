@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.1.3
+Stable tag: 4.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,10 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.1.4 =
+* FIXED: HubSpot Forms - submissions log now always shows page URL and title, regardless of "Send Page Context" setting
+* IMPROVED: "Send Page Context" setting now only controls whether context is sent to HubSpot API, not whether it's logged
 
 = 4.1.3 =
 * FIXED: Elementor Phone Field - submission timing issue resolved using event capture phase
