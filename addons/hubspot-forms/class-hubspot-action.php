@@ -205,10 +205,43 @@ class EHFA_HubSpot_Action extends Action_Base {
 
         // Get submitted fields
         $raw_fields = $record->get('fields');
+        $form_fields = $settings['form_fields'] ?? [];
         $submitted_data = [];
 
         foreach ($raw_fields as $id => $field) {
-            $submitted_data[$id] = $field['value'];
+            $value = $field['value'];
+
+            // For select fields, try to get the option label instead of value
+            if (!empty($field['type']) && $field['type'] === 'select') {
+                // Find the corresponding form field settings
+                foreach ($form_fields as $form_field) {
+                    if (($form_field['custom_id'] ?? '') === $id || ($form_field['_id'] ?? '') === $id) {
+                        // Parse options to find the label
+                        $field_options = $form_field['field_options'] ?? '';
+                        if (!empty($field_options)) {
+                            $options = array_filter(array_map('trim', explode("\n", $field_options)));
+                            foreach ($options as $option_line) {
+                                // Format: "Label|value" or just "Label"
+                                if (strpos($option_line, '|') !== false) {
+                                    list($label, $option_value) = array_map('trim', explode('|', $option_line, 2));
+                                    if ($option_value === $value) {
+                                        $value = $label;
+                                        break;
+                                    }
+                                } else {
+                                    // If no pipe, label and value are the same
+                                    if ($option_line === $value) {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            $submitted_data[$id] = $value;
         }
 
         // Build HubSpot fields array from mappings
