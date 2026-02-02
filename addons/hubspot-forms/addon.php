@@ -2466,14 +2466,22 @@ JS;
 
         $payload = [
             'fields' => [],
-            'context' => [
+        ];
+
+        // Only include context in HubSpot API request if enabled
+        if (!empty($context['send_to_hubspot'])) {
+            $payload['context'] = [
                 'pageUri' => $context['page_url'] ?? '',
                 'pageName' => $context['page_title'] ?? '',
                 'ipAddress' => $context['ip'] ?? '',
-            ],
-        ];
+            ];
+        }
 
-        if (!empty($_COOKIE['hubspotutk'])) {
+        // Add HubSpot tracking cookie if available and context is enabled
+        if (!empty($context['send_to_hubspot']) && !empty($_COOKIE['hubspotutk'])) {
+            if (!isset($payload['context'])) {
+                $payload['context'] = [];
+            }
             $payload['context']['hutk'] = sanitize_text_field($_COOKIE['hubspotutk']);
         }
 

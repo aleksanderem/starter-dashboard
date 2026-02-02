@@ -251,14 +251,22 @@ class EHFA_HubSpot_Action extends Action_Base {
             }
         }
 
-        // Prepare context
-        $context = [];
+        // Prepare context - always collect for logging
+        $page_url = $record->get('meta')['page_url']['value'] ?? '';
+        $page_title = $record->get('meta')['page_title']['value'] ?? '';
+        $client_ip = $this->get_client_ip();
+
+        // Only send context to HubSpot if setting is enabled
+        $context = [
+            'page_url' => $page_url,
+            'page_title' => $page_title,
+        ];
+
         if (!empty($settings['hubspot_send_context']) && $settings['hubspot_send_context'] === 'yes') {
-            $context = [
-                'page_url' => $record->get('meta')['page_url']['value'] ?? '',
-                'page_title' => $record->get('meta')['page_title']['value'] ?? '',
-                'ip' => $this->get_client_ip(),
-            ];
+            $context['ip'] = $client_ip;
+            $context['send_to_hubspot'] = true;
+        } else {
+            $context['send_to_hubspot'] = false;
         }
 
         // Submit to HubSpot
