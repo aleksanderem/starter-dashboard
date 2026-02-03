@@ -1,0 +1,4696 @@
+{
+  "edges": [
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_elementor_template_links",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_filtered_template_count"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_external_redirect_from_cache"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "element",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getLatestRelease",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/elementor-csv-options/addon.php",
+      "from_func": "Starter_Addon_Elementor_CSV_Options::ajax_parse_csv",
+      "to_file": "addons/elementor-csv-options/addon.php",
+      "to_func": "parse_csv"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "UpdateChecker::isPluginBeingUpgraded",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "isBeingUpgraded"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "getUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledVersion"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_save",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_simple_301_redirects"
+    },
+    {
+      "from_file": "addons/adaptive-gallery/widget.php",
+      "from_func": "Starter_Adaptive_Gallery_Widget::get_name",
+      "to_file": "starter-dashboard.php",
+      "to_func": "starter_hub_prefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Theme/Update.php",
+      "from_func": "fromObject",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "copyFields"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "setTranslations",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "save"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "isUnknownMuPlugin"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::render",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "displayCurrentUpdate"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_elementor_template_links",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_filtered_template_count"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::lines",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "linesElements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_addons_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "elementApplyRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementApplyRecursive"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "setLastCheckToNow"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "Starter_Addon_Vertical_Menu::render_shortcode",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "get_elementor_primary_color"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_quick_actions"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::add_menu_pages",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_filtered_template_count",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_elementor_templates"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::elementApplyRecursiveDepthFirst",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementsApplyRecursiveDepthFirst"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "getRemoteFile"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "injectInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Update.php",
+      "to_func": "toWpFormat"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "blockListContinue",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "blockList"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "removeHooksIfLibraryGone",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "to_func": "removeHooks"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::filterUpdateResult",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "fixSupportedWordpressVersion"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "get_incoming_redirects",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::blockListContinue",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "blockReference"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "api",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "buildApiUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getUpdateDetectionStrategies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getStableTag"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ReleaseAssetSupport.php",
+      "from_func": "matchesAssetFilter",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ReleaseAssetSupport.php",
+      "to_func": "getFilterableAssetName"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "redirect_default_dashboard",
+      "to_file": "starter-dashboard.php",
+      "to_func": "user_has_dashboard_access"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_get_all",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_menu_order_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getLatestCommitTime",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "filter_posts_by_content_version",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "get"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::__construct",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "register_addons"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_post_types_for_tiles"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "render_settings",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "setInfoFromRemoteReadme"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_filtered_template_count",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_elementor_templates"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "sort_tiles_by_order"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_yoast_redirects"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "output_meta_tags",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "get_og_image"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "from_func": "Package::isMuPlugin",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/PucFactory.php",
+      "to_func": "normalizePath"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_visual_settings_tab"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "from_func": "UpgraderStatus::isThemeBeingUpgraded",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "to_func": "isBeingUpgraded"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "getRemoteReadme",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRemoteFile"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::get_redirects_for_post",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::handleElementRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementApplyRecursive"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::get_redirect_map",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "rebuild_cache"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "ajax_get_addon_readme",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "markdown_to_html"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "run",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "get"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "ThemeUpdateChecker::requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "setLocalDirectory"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayConfiguration",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "displayConfigHeader"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_htaccess"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::extract_hubspot_forms_from_elementor",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "extract_hubspot_forms_from_elementor"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getLatestRelease",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "chooseReference",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getUpdateDetectionStrategies"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "from_func": "copyFields",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "getPrefixedFilter"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_additional_elements_tab"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "extractElement"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "row"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "sanitiseElement",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "filterUnsafeUrlInAttribute"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "from_func": "ajaxCheckNow",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "to_func": "preAjaxRequest"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getLatestRelease",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "requestMetadata",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "triggerError"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "handle_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "can_user_edit_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayCurrentUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "getUpdateFields"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/OAuthSignature.php",
+      "from_func": "OAuthSignature::sign",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/OAuthSignature.php",
+      "to_func": "nonce"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRepositoryUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "excludeEntityFromWordPressAPI",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_roles_tab"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "get_incoming_redirects",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirect_map"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRepositoryUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "setLastCheckToNow"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "parse",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "text"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "chooseReference"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_card",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_tile_links"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getUpdateDetectionStrategies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getBranch"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "filterUpdateResult",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "filterApplicableTranslations"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "from_func": "getHeaderValue",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "to_func": "getPluginHeader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getDownloadUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Update.php",
+      "to_func": "fromPluginInfo"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_menu_order_tab"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_roles_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_capabilities"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_eps_301_redirects"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::lineElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "inlineText"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "createScheduler"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Update.php",
+      "to_func": "toWpFormat"
+    },
+    {
+      "from_file": "addons/elementor-csv-options/addon.php",
+      "from_func": "Starter_Addon_Elementor_CSV_Options::enqueue_editor_scripts",
+      "to_file": "addons/elementor-csv-options/addon.php",
+      "to_func": "get_editor_js"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "maybeCheckForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "timeSinceLastCheck"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_all_menu_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "format_submenu"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "ajax_toggle_addon",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "activate_addon"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::unmarkedText",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "inlineText"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayConfiguration",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "row"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::handle_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "ajax_get_modal_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_items_for_modal"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_cpt_tab"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Update.php",
+      "from_func": "Update::fromObject",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "copyFields"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "isBlockContinuable"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_all",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "check_url_redirect"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "filterApplicableTranslations",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledTranslations"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_import",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "format_permalink_path"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getLatestRelease",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "findReleaseDownloadUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "from_func": "Ui::addViewDetailsLink",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "to_func": "isMyPluginFile"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "elementsApplyRecursiveDepthFirst",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementApplyRecursiveDepthFirst"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "setCheckedVersion",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "addFilter",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::render",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "displayConfiguration"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "UpdateChecker::requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Update.php",
+      "to_func": "fromPluginInfo"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "setUpdateDownloadHeaders",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "getAssetApiBaseUrl"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_elementor_items_for_modal",
+      "to_file": "starter-dashboard.php",
+      "to_func": "parse_elementor_conditions"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "Scheduler::maybeCheckForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "timeSinceLastCheck"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_custom_post_types"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::lineElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "extractElement"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::elementApplyRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementApplyRecursive"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_visual_settings_tab"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "removeUpdateFromList"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayCurrentUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "row"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "Starter_Addon_Vertical_Menu::render_shortcode",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "render_menu_items"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_rankmath_available"
+    },
+    {
+      "from_file": "addons/post-type-pill/widget.php",
+      "from_func": "Starter_Post_Type_Pill_Widget::register_controls",
+      "to_file": "addons/post-type-pill/addon.php",
+      "to_func": "get_post_types_options"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::getUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledVersion"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "elementsApplyRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementApplyRecursive"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_addons_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "is_addon_active"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::getCheckedVersion",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_import_export_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "Starter_Addon_OG_Image::output_meta_tags",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "get_og_image"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "from_func": "Ui::onAdminInit",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "to_func": "handleManualCheck"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_additional_elements_tab"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "line",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "lineElements"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_recent_posts",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_type_color"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_path_redirected"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "from_func": "UpgraderStatus::getThingBeingUpgradedBy",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "to_func": "identifyPluginByHeaders"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_url",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "check_url_redirect"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_cpt_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "lazyLoad",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "load"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "unmarkedText",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "element"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getRemoteFile",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Update.php",
+      "to_func": "toWpFormat"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "from_func": "Package::getPluginTitle",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "to_func": "getPluginHeader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::setCheckedVersion",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_dashboard_tab"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "handle",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "handle"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "Scheduler::upgraderProcessComplete",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "to_func": "maybeCheckForUpdates"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "setBannersFromLocalAssets"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_menu_items"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayCurrentUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "getUpdateFields"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::setUpdateDownloadHeaders",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "getAssetApiBaseUrl"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_additional_elements_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_menu_items"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "Starter_Addon_Elementor_Phone_Field::editor_scripts",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "register_scripts"
+    },
+    {
+      "from_file": "addons/post-type-pill/widget.php",
+      "from_func": "register_controls",
+      "to_file": "addons/post-type-pill/addon.php",
+      "to_func": "get_post_types_options"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "formatTimeWithDelta"
+    },
+    {
+      "from_file": "addons/adaptive-gallery/addon.php",
+      "from_func": "register_assets",
+      "to_file": "starter-dashboard.php",
+      "to_func": "starter_hub_prefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/InstalledPackage.php",
+      "from_func": "InstalledPackage::fileExists",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/InstalledPackage.php",
+      "to_func": "getAbsoluteDirectoryPath"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/field-phone-intl.php",
+      "from_func": "update_controls",
+      "to_file": "addons/elementor-phone-field/field-phone-intl.php",
+      "to_func": "get_type"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "add_menu_pages",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_addons_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "is_addon_active"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "buildArchiveDownloadUrl"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "get_redirects_for_post",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_import",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Update.php",
+      "from_func": "fromJson",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/PluginInfo.php",
+      "to_func": "fromJson"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "createInstalledPackage"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "enqueue_command_menu",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "starter_addon_loader"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_additional_elements_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_menu_items"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "preview_scripts",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "get_frontend_init_script"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getStableTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getTag"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::excludeEntityFromWordPressAPI",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_search_posts",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_path_redirected"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "getNoUpdateItemFields",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledVersion"
+    },
+    {
+      "from_file": "addons/adaptive-gallery/widget.php",
+      "from_func": "Starter_Adaptive_Gallery_Widget::get_script_depends",
+      "to_file": "starter-dashboard.php",
+      "to_func": "starter_hub_prefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "getRemoteReadme",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getLocalReadmeName"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "preview_scripts",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "register_scripts"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_additional_elements_for_user",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_menu_icon_for_slug"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "getLastCheck",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "filterUpdateResult",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_custom_post_types"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getUpdateDetectionStrategies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "getBranch"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "from_func": "onAdminInit",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "to_func": "handleManualCheck"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::removeUpdateFromList",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdateListKey"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "text",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "textElements"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::elementsApplyRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementApplyRecursive"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::load",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "get"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/OAuthSignature.php",
+      "from_func": "sign",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/OAuthSignature.php",
+      "to_func": "nonce"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "setIconsFromLocalAssets"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_whitelabel_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "addons/adaptive-gallery/widget.php",
+      "from_func": "get_style_depends",
+      "to_file": "starter-dashboard.php",
+      "to_func": "starter_hub_prefix"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "find_elementor_hubspot_forms",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "from_func": "Package::getHeaderValue",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "to_func": "getPluginHeader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getRemoteFile",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "isVersionTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "looksLikeVersion"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "requestMetadata",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "setAuthentication"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::find_elementor_hubspot_forms",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_eps_redirects_available"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::ajax_toggle_addon",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "deactivate_addon"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "Starter_Addon_Vertical_Menu::render_menu_items",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "render_menu_items"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getStableTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getTag"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::handle_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayCurrentUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "row"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::handle",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "handle"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "Starter_Addon_Elementor_Phone_Field::preview_scripts",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "get_frontend_init_script"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "output_meta_tags",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "get_og_description"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "inlineImage",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "inlineLink"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "setInfoFromHeader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledVersion"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "setAuthentication"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "getRemoteChangelog",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "text"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "lines",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elements"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "deactivate_addon",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "Starter_Addon_Elementor_Phone_Field::preview_scripts",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "register_scripts"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "shouldShowUpdates"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "render_shortcode",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "render_menu_items"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "find_elementor_hubspot_forms",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "extract_hubspot_forms_from_elementor"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::rebuild_cache",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "UpdateChecker::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "isUnknownMuPlugin"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::find_elementor_hubspot_forms",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "extract_hubspot_forms_from_elementor"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::triggerError",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "isDebugModeEnabled"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "rebuild_cache",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "api",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "buildApiUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getLatestCommit",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_all_menu_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "format_submenu"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_card",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_tile_links"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::ajax_get_modal_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_acf_items_for_modal"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRemoteChangelog"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "format_permalink_path"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "handle_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::check_url_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_path_redirected"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/field-phone-intl.php",
+      "from_func": "Starter_Phone_Intl_Field::update_controls",
+      "to_file": "addons/elementor-phone-field/field-phone-intl.php",
+      "to_func": "get_type"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getDownloadUrl"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "lineElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "inlineText"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getLatestCommitTime",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::setUpdateDownloadHeaders",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "getAuthorizationHeader"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::handleElementsRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementsApplyRecursive"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "print_styles",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "get_custom_styles"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "addUpdateToList"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "addons/post-type-pill/widget.php",
+      "from_func": "Starter_Post_Type_Pill_Widget::register_controls",
+      "to_file": "addons/post-type-pill/addon.php",
+      "to_func": "get_default_labels"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "from_func": "Metadata::createFromJson",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "validateMetadata"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "setIconsFromLocalAssets"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::setBannersFromLocalAssets",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "getLocalAssetUrls"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "save",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "startsWith"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_recent_posts"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "render_settings",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "render_preview"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::lazyLoad",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "load"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "from_func": "addCheckForUpdatesLink",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "to_func": "isMyPluginFile"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "readmeTxtExistsLocally"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "load",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "get"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_menu_order_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::requestMetadata",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledVersion"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_filtered_template_count",
+      "to_file": "starter-dashboard.php",
+      "to_func": "parse_elementor_conditions"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::markdown_to_html",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "setSafeMode"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "element",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "element"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::handle_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "lineElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "extractElement"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayConfiguration",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "row"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "installHooks"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_external_redirect_from_cache"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::setTranslations",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_search_posts",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "format_permalink_path"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_save_test_result",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "ThemeUpdateChecker::requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "findNotEmpty"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::ajax_get_elementor_forms",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "find_elementor_hubspot_forms"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "triggerError"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "blockListContinue",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "blockReference"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "from_func": "Extension::ajaxCheckNow",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "to_func": "preAjaxRequest"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "filterUpdateResult",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "fixSupportedWordpressVersion"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::getTranslations",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getCheckedVersion"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "Starter_Addon_Elementor_Phone_Field::frontend_scripts",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "get_frontend_init_script"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "output_meta_tags",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "get_current_url"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "removeUpdateFromList",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdateListKey"
+    },
+    {
+      "from_file": "addons/post-type-pill/widget.php",
+      "from_func": "register_controls",
+      "to_file": "addons/post-type-pill/addon.php",
+      "to_func": "get_default_labels"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::get_incoming_redirects",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_redirection_plugin"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/WpCliCheckTrigger.php",
+      "from_func": "WpCliCheckTrigger::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/WpCliCheckTrigger.php",
+      "to_func": "getRelevantCommands"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "buildArchiveDownloadUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "load",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getLibPrefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getRemoteFile",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "Starter_Addon_OG_Image::output_meta_tags",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "get_og_description"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::ajax_toggle_addon",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "activate_addon"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "rebuild_cache",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "setUpdateDownloadHeaders",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "buildApiUrl"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/field-phone-intl.php",
+      "from_func": "Starter_Phone_Intl_Field::update_controls",
+      "to_file": "addons/elementor-phone-field/field-phone-intl.php",
+      "to_func": "get_country_options"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "from_func": "Extension::enqueuePanelDependencies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "to_func": "getLibraryUrl"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_import",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::ajax_save_visual_settings",
+      "to_file": "starter-dashboard.php",
+      "to_func": "can_user_edit_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "excludeEntityFromWordPressAPI",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "startsWith"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::ajax_get_modal_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_taxonomy_items_for_modal"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getLatestCommitTime",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_addons_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "starter_addon_loader"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_all",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "check_url_redirect"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "check_url_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getUpdate"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "ajax_get_elementor_forms",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "find_elementor_hubspot_forms"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "from_func": "createFromJson",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "validateMetadata"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::text",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledVersion"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "EHFA_HubSpot_Action::run",
+      "to_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "to_func": "get_client_ip"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "EHFA_HubSpot_Action::run",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "submit_to_hubspot"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/InstalledPackage.php",
+      "from_func": "InstalledPackage::getFileHeader",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/InstalledPackage.php",
+      "to_func": "getHeaderNames"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "buildArchiveDownloadUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getRemoteFile",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_rankmath_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "from_func": "getThingBeingUpgradedBy",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "to_func": "identifyPluginByHeaders"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "save"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "editor_scripts",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "register_scripts"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "ajax_get_recent_activity",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_recent_item"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::ajax_get_recent_activity",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_recent_item"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_admin_menu_items"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::addFilter",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "from_func": "Package::getInstalledVersion",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "to_func": "getPluginHeader"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_card",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_type_color"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getDownloadUrl"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_redirection_available"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::get_incoming_redirects",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirect_map"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_visual_settings_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_global_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRepositoryUrl"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::inlineImage",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "inlineLink"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_yoast_redirects_available"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Update.php",
+      "from_func": "fromObject",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "copyFields"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "element",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "handle"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::setUpdateDownloadHeaders",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "buildApiUrl"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_addons_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "starter_addon_loader"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "register_settings_section",
+      "to_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "to_func": "get_forms_options"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "requestUpdate"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::getUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::addNoUpdateItem",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdateListKey"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "enqueue_editor_scripts",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_editor_js"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "render",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "displayCurrentUpdate"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_search_posts",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_path_redirected"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_roles_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "group_capabilities"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "setLocalDirectory"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "element",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "sanitiseElement"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::get_redirects_for_post",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "Starter_Addon_Elementor_Phone_Field::print_styles",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "get_custom_styles"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_card"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_recent_posts"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_save",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "format_permalink_path"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "ajax_get_modal_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_acf_items_for_modal"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "output_meta_tags",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "get_og_title"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "render_shortcode",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "get_elementor_primary_color"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "setLocalDirectory"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::submit_to_hubspot",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_roles_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_capabilities"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_simple_301_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::getLastCheck",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/VcsCheckerMethods.php",
+      "from_func": "onDisplayConfiguration",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "row"
+    },
+    {
+      "from_file": "addons/elementor-csv-options/addon.php",
+      "from_func": "ajax_parse_csv",
+      "to_file": "addons/elementor-csv-options/addon.php",
+      "to_func": "parse_csv"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "Starter_Addon_OG_Image::output_meta_tags",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "get_current_url"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "elementApplyRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementsApplyRecursive"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "row"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::addNoUpdateItem",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getNoUpdateItemFields"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "handleElementsRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementsApplyRecursive"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Update.php",
+      "from_func": "Update::fromJson",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/PluginInfo.php",
+      "to_func": "fromJson"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "ajax_get_forms",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::chooseReference",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getUpdateDetectionStrategies"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "api",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "getAuthorizationHeader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdate"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "triggerError"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "createInstalledPackage"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "from_func": "getInstalledVersion",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "to_func": "getPluginHeader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getLatestRelease",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_recent_posts",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_type_color"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::maybeInitDebugBar",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "createDebugBarExtension"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_whitelabel_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "loadTextDomain"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_save_test_result",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "from_func": "Metadata::toStdClass",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "copyFields"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "markdown_to_html",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "setSafeMode"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_import_export_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::deactivate_addon",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/addon.php",
+      "from_func": "frontend_scripts",
+      "to_file": "addons/elementor-phone-field/addon.php",
+      "to_func": "get_frontend_init_script"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_yoast_redirects"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::is_addon_active",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::elements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "element"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "injectInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "requestInfo"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_menu_order_tab"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::unmarkedText",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "element"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_additional_element_card"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_addons"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::timeSinceLastCheck",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_search_posts",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_safe_redirect_manager"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "starter_addon_loader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "from_func": "Extension::getLibraryUrl",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/PucFactory.php",
+      "to_func": "normalizePath"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getUpdateDetectionStrategies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "getBranch"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_additional_elements_for_user"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::markdown_to_html",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "text"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::getRemoteChangelog",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "text"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_htaccess"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "activate_addon",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_incoming_redirects"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_import",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "format_permalink_path"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "paragraphContinue"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::save",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "startsWith"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::api",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "buildApiUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayConfiguration",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "getMetadataButton"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getLatestRelease",
+      "to_file": "starter-dashboard.php",
+      "to_func": "instance"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::api",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "buildApiUrl"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "Starter_Addon_Vertical_Menu::render_shortcode",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "build_menu_tree"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "addNoUpdateItem",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdateListKey"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "from_func": "copyFields",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "getFieldNames"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::setIconsFromLocalAssets",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "getLocalAssetUrls"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::load",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getLibPrefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "from_func": "isThemeBeingUpgraded",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "to_func": "isBeingUpgraded"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_admin_menu_items"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_save",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "getUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::render",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "displayStatus"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "ThemeUpdateChecker::requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "chooseReference"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::activate_addon",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "ajax_get_modal_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_taxonomy_items_for_modal"
+    },
+    {
+      "from_file": "addons/adaptive-gallery/addon.php",
+      "from_func": "Starter_Addon_Adaptive_Gallery::register_assets",
+      "to_file": "starter-dashboard.php",
+      "to_func": "starter_hub_prefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::requestMetadata",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "validateApiResponse"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_tile_links",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_acf_field_group_links"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "EHFA_HubSpot_Action::register_settings_section",
+      "to_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "to_func": "get_forms_options"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "getCheckedVersion",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "UpdateChecker::requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "requestInfo"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "textElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "linesElements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "timeSinceLastCheck",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_eps_301_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "addNoUpdateItem",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getNoUpdateItemFields"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "render",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "displayConfiguration"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "setUpdateDownloadHeaders",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "getAuthorizationHeader"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "Starter_Addon_OG_Image::output_meta_tags",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "get_og_title"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::ajax_get_recent_activity",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_type_color"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "line",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getUpdateDetectionStrategies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getStableTag"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::ajax_get_modal_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_type_label"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "formatTimeWithDelta",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "formatTimestamp"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "ajax_test_connection",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::parse",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "text"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::element",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "element"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_card"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_search_posts",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "format_permalink_path"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_recent_item"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "handleElementRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementApplyRecursive"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getDownloadUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "setBannersFromLocalAssets"
+    },
+    {
+      "from_file": "addons/elementor-phone-field/field-phone-intl.php",
+      "from_func": "update_controls",
+      "to_file": "addons/elementor-phone-field/field-phone-intl.php",
+      "to_func": "get_country_options"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ReleaseFilteringFeature.php",
+      "from_func": "setReleaseVersionFilter",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ReleaseFilteringFeature.php",
+      "to_func": "setReleaseFilter"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "getRemoteChangelog",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRemoteFile"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "from_func": "isBeingUpgraded",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "to_func": "getThingBeingUpgradedBy"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_dashboard_tab"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/InstalledPackage.php",
+      "from_func": "getFileHeader",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/InstalledPackage.php",
+      "to_func": "getHeaderNames"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_tile_links",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_template_links"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "addNoUpdateItem"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::enqueue_editor_scripts",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_editor_js"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "fixDirectoryName",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "isBeingUpgraded"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "fixDirectoryName",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "isBadDirectoryStructure"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/WpCliCheckTrigger.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/WpCliCheckTrigger.php",
+      "to_func": "getRelevantCommands"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/PluginInfo.php",
+      "from_func": "PluginInfo::toWpFormat",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/PluginInfo.php",
+      "to_func": "getFormattedAuthor"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getStableTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getBranch"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "register_settings_section",
+      "to_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "to_func": "get_name"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::installHooks",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "maybeInitDebugBar"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "get_redirects_for_post",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getRemoteFile",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_import",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::is_path_redirected",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "getRemoteFile"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_card",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_type_color"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "chooseReference"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "getRemoteChangelog",
+      "to_file": "starter-dashboard.php",
+      "to_func": "instance"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "is_addon_active",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_delete",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_cpt_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "installHooks"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "requestUpdate"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "buildArchiveDownloadUrl"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::textElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "linesElements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "ThemeUpdateChecker::requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "get"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::enqueue_command_menu",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "is_addon_active"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::setUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "__construct",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "load_active_addons"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_dashboard_stats",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_type_color"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::setTranslations",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "save"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_additional_elements_for_user",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_menu_icon_for_slug"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_delete",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "ajax_export_settings",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_exportable_settings"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_additional_element_card"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_addons"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getUpdateDetectionStrategies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getBranch"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_visual_settings",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_global_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "excludeEntityFromWordPressAPI",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdateListKey"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_url",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "check_url_redirect"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "starter_addon_loader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "setInfoFromRemoteReadme"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::getRemoteReadme",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getLocalReadmeName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getLatestRelease",
+      "to_file": "starter-dashboard.php",
+      "to_func": "instance"
+    },
+    {
+      "from_file": "addons/elementor-csv-options/addon.php",
+      "from_func": "enqueue_editor_scripts",
+      "to_file": "addons/elementor-csv-options/addon.php",
+      "to_func": "get_editor_js"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_additional_elements_for_user"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getLatestCommitTime",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "removeUpdateFromList"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_dashboard_stats"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "api",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "startsWith"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "from_func": "getLibraryUrl",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/PucFactory.php",
+      "to_func": "normalizePath"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "isBlockCompletable"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::elementsApplyRecursiveDepthFirst",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementApplyRecursiveDepthFirst"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "triggerError",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "isDebugModeEnabled"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdate"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "EHFA_HubSpot_Action::get_forms_options",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "instance"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "requestInfo"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::load_active_addons",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::is_path_redirected",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirect_map"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "requestMetadata",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledVersion"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::element",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "handle"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_addons_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "UpdateChecker::shouldShowUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "isUnknownMuPlugin"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_addons_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_addons_by_category"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "setBannersFromLocalAssets",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "getLocalAssetUrls"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_filtered_template_count",
+      "to_file": "starter-dashboard.php",
+      "to_func": "parse_elementor_conditions"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "get_forms_options",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "instance"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "findNotEmpty"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "markdown_to_html",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "text"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::addUpdateToList",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdateListKey"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "build_menu_tree",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "build_menu_tree"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdate"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_rankmath_available"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_all_menu_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_menu_icon_for_slug"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::blockListContinue",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "blockList"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "ThemeUpdateChecker::requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "getRemoteFile"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "upgraderProcessComplete",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "to_func": "maybeCheckForUpdates"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "getRemoteFile"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::fixDirectoryName",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "isBeingUpgraded"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::element",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "sanitiseElement"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::fixDirectoryName",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "isBadDirectoryStructure"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "from_func": "enqueuePanelDependencies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Extension.php",
+      "to_func": "getLibraryUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getLatestCommitTime",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "buildArchiveDownloadUrl"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::li",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "linesElements"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "EHFA_HubSpot_Action::run",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "get"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "from_func": "addViewDetailsLink",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "to_func": "isMyPluginFile"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_cpt_tab"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_recent_item"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getLatestRelease",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "findReleaseDownloadUrl"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "get_redirect_map",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "rebuild_cache"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "getRemoteChangelog",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "findChangelogName"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_save",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "from_func": "displayManualCheckResult",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "to_func": "formatManualCheckErrors"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::redirect_default_dashboard",
+      "to_file": "starter-dashboard.php",
+      "to_func": "user_has_dashboard_access"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "from_func": "Ui::addCheckForUpdatesLink",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "to_func": "isMyPluginFile"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "save",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getLibPrefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::api",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "getAuthorizationHeader"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::ajax_export_settings",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_exportable_settings"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "EHFA_HubSpot_Action::register_settings_section",
+      "to_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "to_func": "get_name"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "setTranslations",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getUpdateDetectionStrategies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "getBranch"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_addons_page",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_addons_by_category"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "save_redirects",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "rebuild_cache"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getLastCheck"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_save_test_result",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "setIconsFromLocalAssets",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "getLocalAssetUrls"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "ajax_get_modal_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_type_label"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getUpdateDetectionStrategies",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "getBranch"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "Starter_Addon_Vertical_Menu::build_menu_tree",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "build_menu_tree"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "elementApplyRecursiveDepthFirst",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementsApplyRecursiveDepthFirst"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::requestMetadata",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "triggerError"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_quick_action"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "paragraphContinue"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "buildArchiveDownloadUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "from_func": "isPluginBeingUpgraded",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "to_func": "isBeingUpgraded"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_search_posts",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_additional_elements_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "Scheduler::removeHooksIfLibraryGone",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "to_func": "removeHooks"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "Scheduler::maybeCheckForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "to_func": "getEffectiveCheckPeriod"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "run",
+      "to_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "to_func": "get_client_ip"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_save",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "format_permalink_path"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "run",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "submit_to_hubspot"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Theme/Update.php",
+      "from_func": "Update::fromObject",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "copyFields"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::sanitiseElement",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "filterUnsafeUrlInAttribute"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayConfiguration",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "getMetadataButton"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::ajax_get_form_fields",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_form_fields"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "lines",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "linesElements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getDownloadUrl"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "load_active_addons",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "get_active_addons"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_additional_elements_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_visual_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::filterUpdateResult",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "filterApplicableTranslations"
+    },
+    {
+      "from_file": "addons/adaptive-gallery/widget.php",
+      "from_func": "Starter_Adaptive_Gallery_Widget::get_style_depends",
+      "to_file": "starter-dashboard.php",
+      "to_func": "starter_hub_prefix"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "check_url_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_path_redirected"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::getRemoteChangelog",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRemoteFile"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "unmarkedText",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "inlineText"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::excludeEntityFromWordPressAPI",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "startsWith"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::excludeEntityFromWordPressAPI",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdateListKey"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "starter_addon_loader",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "Starter_Addon_Loader::instance"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::render_settings",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "addNoUpdateItem"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "ajax_get_form_fields",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_form_fields"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_dashboard_stats"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_get_all",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "resolve_url_to_post"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_import",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "shouldShowUpdates"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_menu_items"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectTranslationUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getTranslationUpdates"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_dashboard_stats",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_type_color"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "ajax_save_visual_settings",
+      "to_file": "starter-dashboard.php",
+      "to_func": "can_user_edit_visual_settings"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::ajax_test_connection",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "text",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elements"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_delete",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_eps_redirects_available"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getLatestRelease",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "text"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::getRemoteReadme",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRemoteFile"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "save"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "user_has_dashboard_access"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::ajax_get_addon_readme",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "markdown_to_html"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_roles_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "group_capabilities"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_delete",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "getLatestCommitTime"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdate"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "submit_to_hubspot",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "addUpdateToList"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_path_redirected"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_menu_tab"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_redirection_plugin"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_get_all",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRemoteChangelog"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_all_menu_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_menu_icon_for_slug"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "paragraph"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "__construct",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "register_addons"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "elements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "element"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "li",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "linesElements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "createScheduler"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::line",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "lineElements"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_save",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayConfiguration",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "displayConfigHeader"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "maybeInitDebugBar",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "createDebugBarExtension"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "from_func": "Metadata::copyFields",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "getPrefixedFilter"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::lines",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getUpdate"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "requestInfo"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::text",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "textElements"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "Starter_Addon_Loader::__construct",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "load_active_addons"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "maybeCheckForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "to_func": "getEffectiveCheckPeriod"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "ThemeUpdateChecker::__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "getRepositoryUrl"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_post_types_for_tiles"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::getNoUpdateItemFields",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledVersion"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::filterApplicableTranslations",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getInstalledTranslations"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::filter_posts_by_content_version",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "get"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "setUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_incoming_redirects"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::enqueue_command_menu",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "starter_addon_loader"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_rankmath_redirects"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "register_settings_section",
+      "to_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "to_func": "get_common_hubspot_fields"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "setInfoFromHeader"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_quick_action"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "addUpdateToList",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUpdateListKey"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getStableTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getBranch"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "EHFA_HubSpot_Action::get_forms_options",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "isBlockCompletable"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::api",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "startsWith"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "ajax_get_recent_activity",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_type_color"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::rebuild_cache",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "injectTranslationUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getTranslationUpdates"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_visual_settings_tab",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_global_settings"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "requestMetadata",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "validateApiResponse"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "isPluginBeingUpgraded",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "isBeingUpgraded"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_quick_actions"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "setUpdate"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_elementor_items_for_modal",
+      "to_file": "starter-dashboard.php",
+      "to_func": "parse_elementor_conditions"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::getRemoteChangelog",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "findChangelogName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::filterUpdateResult",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "getLatestCommitTime"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "get_forms_options",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "addons/adaptive-gallery/widget.php",
+      "from_func": "get_script_depends",
+      "to_file": "starter-dashboard.php",
+      "to_func": "starter_hub_prefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "getTranslations",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getBranch",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "GitLabApi::getLatestCommitTime",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "isBlockContinuable"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "__construct",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "loadTextDomain"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getCheckedVersion"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "handle_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirects"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_save_test_result",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "save_redirects"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "is_path_redirected",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::elementApplyRecursive",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elementsApplyRecursive"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::requestMetadata",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "getUniqueName"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "from_func": "UpgraderStatus::isPluginBeingUpgraded",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "to_func": "isBeingUpgraded"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "BitBucketApi::getTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "getDownloadUrl"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_menu_tab"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/InstalledPackage.php",
+      "from_func": "fileExists",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/InstalledPackage.php",
+      "to_func": "getAbsoluteDirectoryPath"
+    },
+    {
+      "from_file": "addons/og-image/addon.php",
+      "from_func": "Starter_Addon_OG_Image::render_settings",
+      "to_file": "addons/og-image/addon.php",
+      "to_func": "render_preview"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::save",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getLibPrefix"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "formatTimeWithDelta"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::check_url_redirect",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "normalize_path"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "render_menu_items",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "render_menu_items"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::line",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elements"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "sort_tiles_by_order"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "paragraph"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::getRemoteChangelog",
+      "to_file": "starter-dashboard.php",
+      "to_func": "instance"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "from_func": "toStdClass",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "copyFields"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "Parsedown::element",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "elements"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "setLocalDirectory"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "injectUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Update.php",
+      "to_func": "toWpFormat"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_dashboard_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "user_has_dashboard_access"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::removeAuthHeaderFromRedirects",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "buildApiUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "getLatestRelease",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "text"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "removeAuthHeaderFromRedirects",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "buildApiUrl"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "from_func": "Ui::displayManualCheckResult",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Ui.php",
+      "to_func": "formatManualCheckErrors"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "setLastCheckToNow",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "from_func": "PluginUpdateChecker::requestInfo",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/PluginUpdateChecker.php",
+      "to_func": "readmeTxtExistsLocally"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_visual_settings",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_global_settings"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "get_elementor_template_links",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_elementor_templates"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "extract_hubspot_forms_from_elementor",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "extract_hubspot_forms_from_elementor"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "from_func": "isMuPlugin",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/PucFactory.php",
+      "to_func": "normalizePath"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "from_func": "getPluginTitle",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/Package.php",
+      "to_func": "getPluginHeader"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_tile_links",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_acf_field_group_links"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "chooseReference"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "maybeCheckForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getLastCheck"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_elementor_template_links",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_all_elementor_templates"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::ajax_get_modal_items",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_items_for_modal"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::render_redirect_column",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "format_permalink_path"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/ThemeUpdateChecker.php",
+      "from_func": "requestUpdate",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Utils.php",
+      "to_func": "get"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "installHooks",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "to_func": "maybeInitDebugBar"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "from_func": "getRemoteFile",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/BitBucketApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "displayStatus",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getLastCheck"
+    },
+    {
+      "from_file": "addons/adaptive-gallery/widget.php",
+      "from_func": "get_name",
+      "to_file": "starter-dashboard.php",
+      "to_func": "starter_hub_prefix"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_redirection_available"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/PluginInfo.php",
+      "from_func": "toWpFormat",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/PluginInfo.php",
+      "to_func": "getFormattedAuthor"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "from_func": "Api::isVersionTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/Api.php",
+      "to_func": "looksLikeVersion"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpdateChecker.php",
+      "from_func": "UpdateChecker::checkForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "setUpdate"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "from_func": "UpgraderStatus::isBeingUpgraded",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/UpgraderStatus.php",
+      "to_func": "getThingBeingUpgradedBy"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "is_yoast_redirects_available"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Scheduler.php",
+      "from_func": "Scheduler::maybeCheckForUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "getLastCheck"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "from_func": "getLatestTag",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitLabApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::save_redirects",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "rebuild_cache"
+    },
+    {
+      "from_file": "addons/hubspot-forms/addon.php",
+      "from_func": "Starter_Addon_HubSpot_Forms::ajax_get_forms",
+      "to_file": "addons/hubspot-forms/addon.php",
+      "to_func": "get_hubspot_forms"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "is_path_redirected",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "get_redirect_map"
+    },
+    {
+      "from_file": "lib/Parsedown.php",
+      "from_func": "linesElements",
+      "to_file": "lib/Parsedown.php",
+      "to_func": "extractElement"
+    },
+    {
+      "from_file": "addons/vertical-menu/addon.php",
+      "from_func": "render_shortcode",
+      "to_file": "addons/vertical-menu/addon.php",
+      "to_func": "build_menu_tree"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "ajax_scan_external_sources",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "scan_safe_redirect_manager"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "render",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "displayStatus"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "enqueue_command_menu",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "is_addon_active"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "from_func": "StateStore::setLastCheckToNow",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/StateStore.php",
+      "to_func": "lazyLoad"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::get_tile_links",
+      "to_file": "starter-dashboard.php",
+      "to_func": "get_elementor_template_links"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "from_func": "Metadata::copyFields",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Metadata.php",
+      "to_func": "getFieldNames"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "can_user_edit_visual_settings"
+    },
+    {
+      "from_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "from_func": "EHFA_HubSpot_Action::register_settings_section",
+      "to_file": "addons/hubspot-forms/class-hubspot-action.php",
+      "to_func": "get_common_hubspot_fields"
+    },
+    {
+      "from_file": "addons/redirects-301/addon.php",
+      "from_func": "Starter_Addon_Redirects_301::ajax_get_all",
+      "to_file": "addons/redirects-301/addon.php",
+      "to_func": "resolve_url_to_post"
+    },
+    {
+      "from_file": "starter-dashboard.php",
+      "from_func": "Starter_Dashboard::render_settings_page",
+      "to_file": "starter-dashboard.php",
+      "to_func": "render_roles_tab"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "from_func": "shouldShowUpdates",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Plugin/UpdateChecker.php",
+      "to_func": "isUnknownMuPlugin"
+    },
+    {
+      "from_file": "addons/class-addon-loader.php",
+      "from_func": "ajax_toggle_addon",
+      "to_file": "addons/class-addon-loader.php",
+      "to_func": "deactivate_addon"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "from_func": "Panel::formatTimeWithDelta",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/DebugBar/Panel.php",
+      "to_func": "formatTimestamp"
+    },
+    {
+      "from_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "from_func": "GitHubApi::getLatestCommit",
+      "to_file": "lib/plugin-update-checker/Puc/v5p5/Vcs/GitHubApi.php",
+      "to_func": "api"
+    },
+    {
+      "from_file": "command-menu/src/components/application/command-menus/command-menu.tsx",
+      "from_func": "CommandMenuRoot",
+      "to_file": "command-menu/src/components/application/command-menus/parseHotkeys.ts",
+      "to_func": "parseHotkey"
+    },
+    {
+      "from_file": "command-menu/src/components/application/command-menus/command-menu.tsx",
+      "from_func": "CommandMenuRoot",
+      "to_file": "command-menu/src/components/application/command-menus/utils.ts",
+      "to_func": "isDeepEqual"
+    },
+    {
+      "from_file": "command-menu/src/wp-command-menu.tsx",
+      "from_func": "mapActionsToItems",
+      "to_file": "command-menu/src/wp-command-menu.tsx",
+      "to_func": "getIconForAction"
+    },
+    {
+      "from_file": "command-menu/src/is-react-component.ts",
+      "from_func": "isReactComponent",
+      "to_file": "command-menu/src/is-react-component.ts",
+      "to_func": "isFunctionComponent"
+    },
+    {
+      "from_file": "command-menu/src/components/application/command-menus/parseHotkeys.ts",
+      "from_func": "parseHotkey",
+      "to_file": "command-menu/src/components/application/command-menus/parseHotkeys.ts",
+      "to_func": "mapCode"
+    },
+    {
+      "from_file": "command-menu/src/is-react-component.ts",
+      "from_func": "isReactComponent",
+      "to_file": "command-menu/src/is-react-component.ts",
+      "to_func": "isForwardRefComponent"
+    },
+    {
+      "from_file": "command-menu/src/components/application/command-menus/utils.ts",
+      "from_func": "isDeepEqual",
+      "to_file": "command-menu/src/components/application/command-menus/utils.ts",
+      "to_func": "isDeepEqual"
+    },
+    {
+      "from_file": "command-menu/src/is-react-component.ts",
+      "from_func": "isReactComponent",
+      "to_file": "command-menu/src/is-react-component.ts",
+      "to_func": "isClassComponent"
+    },
+    {
+      "from_file": "command-menu/src/components/foundations/featured-icon/featured-icon.tsx",
+      "from_func": "FeaturedIcon",
+      "to_file": "command-menu/src/is-react-component.ts",
+      "to_func": "isReactComponent"
+    }
+  ],
+  "languages": [
+    "javascript",
+    "php",
+    "typescript"
+  ],
+  "timestamp": 1770056855.768234
+}

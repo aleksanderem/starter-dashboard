@@ -540,7 +540,8 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         }
 
         // Get all form widgets from current document
-        $document = \Elementor\Plugin::$instance->documents->get(get_the_ID());
+        $page_id = get_the_ID();
+        $document = \Elementor\Plugin::$instance->documents->get($page_id);
         if (!$document) {
             return;
         }
@@ -563,12 +564,22 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
      */
     private function scan_elements_for_required_checkboxes($elements, &$all_required_fields) {
         foreach ($elements as $element) {
+            $widgetType = $element['widgetType'] ?? 'none';
+
+            // Handle global widgets (templates) - need to load their content
+            if ($widgetType === 'global' && !empty($element['templateID'])) {
+                $template_doc = \Elementor\Plugin::$instance->documents->get($element['templateID']);
+                if ($template_doc) {
+                    $template_data = $template_doc->get_elements_data();
+                    $this->scan_elements_for_required_checkboxes($template_data, $all_required_fields);
+                }
+            }
+
             // Check if this is a form widget
             if (isset($element['widgetType']) && $element['widgetType'] === 'form') {
                 $settings = $element['settings'] ?? [];
                 $form_fields = $settings['form_fields'] ?? [];
                 $form_id = $element['id'] ?? '';
-
                 $required_fields = [];
 
                 foreach ($form_fields as $field) {

@@ -87,20 +87,37 @@
      * Add required attributes to checkbox fields
      */
     function markRequiredCheckboxes($form) {
-        var formId = $form.closest('[data-element_type="form.default"]').data('id');
-        var requiredFields = window.starterRequiredCheckboxes && window.starterRequiredCheckboxes['form-' + formId];
-
-        if (!requiredFields) {
+        if (!window.starterRequiredCheckboxes) {
             return;
         }
 
-        requiredFields.forEach(function(field) {
-            var $field = $form.find('.elementor-field-group-' + field.id);
-            if ($field.length) {
-                $field.attr('data-required-checkbox', 'true');
-                $field.attr('data-field-label', field.label);
-            }
-        });
+        // Try to get form ID from widget wrapper (works for regular pages)
+        var $formWidget = $form.closest('[data-element_type="form.default"]');
+        var formId = $formWidget.length ? $formWidget.data('id') : null;
+
+        if (formId && window.starterRequiredCheckboxes['form-' + formId]) {
+            // Found form data by ID
+            var requiredFields = window.starterRequiredCheckboxes['form-' + formId];
+            requiredFields.forEach(function(field) {
+                var $field = $form.find('.elementor-field-group-' + field.id);
+                if ($field.length) {
+                    $field.attr('data-required-checkbox', 'true');
+                    $field.attr('data-field-label', field.label);
+                }
+            });
+        } else {
+            // Form is in a global template - try all available form data
+            Object.keys(window.starterRequiredCheckboxes).forEach(function(key) {
+                var requiredFields = window.starterRequiredCheckboxes[key];
+                requiredFields.forEach(function(field) {
+                    var $field = $form.find('.elementor-field-group-' + field.id);
+                    if ($field.length) {
+                        $field.attr('data-required-checkbox', 'true');
+                        $field.attr('data-field-label', field.label);
+                    }
+                });
+            });
+        }
     }
 
     /**
