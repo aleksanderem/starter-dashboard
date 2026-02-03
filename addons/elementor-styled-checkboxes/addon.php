@@ -600,7 +600,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             'starter-checkbox-validation',
             plugin_dir_url(__FILE__) . 'validation.js',
             ['jquery', 'elementor-frontend'],
-            '1.0.2', // Fixed settings location - get from widget scope
+            '1.0.3', // Added detailed field logging for debugging
             true
         );
 

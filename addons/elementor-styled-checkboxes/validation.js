@@ -128,7 +128,24 @@
             return;
         }
 
-        log('Form settings loaded', {fieldCount: formSettings.form_fields ? formSettings.form_fields.length : 0});
+        log('Form settings loaded', {
+            fieldCount: formSettings.form_fields ? formSettings.form_fields.length : 0,
+            hasFormFields: !!formSettings.form_fields,
+            settingsKeys: Object.keys(formSettings)
+        });
+
+        // Log all fields for debugging
+        if (formSettings.form_fields) {
+            formSettings.form_fields.forEach(function(field, index) {
+                log('Field ' + index, {
+                    type: field.field_type,
+                    label: field.field_label,
+                    required: field.required,
+                    requiredCheckbox: field.field_required_checkbox,
+                    customId: field.custom_id
+                });
+            });
+        }
 
         // Validate on submit
         $form.on('submit', function(e) {
