@@ -53,14 +53,14 @@ class Starter_Addon_Adaptive_Gallery {
             $handle,
             $addon_url . 'style.css',
             [],
-            '4.2.2' // Match plugin version for cache busting
+            '4.2.3' // Match plugin version for cache busting
         );
 
         wp_register_script(
             $handle,
             $addon_url . 'script.js',
             ['jquery'],
-            '4.2.2', // Match plugin version for cache busting
+            '4.2.3', // Match plugin version for cache busting
             true
         );
 
