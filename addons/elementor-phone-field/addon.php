@@ -20,7 +20,30 @@ class Starter_Addon_Elementor_Phone_Field {
         return self::$instance;
     }
 
+    /**
+     * Fix invalid pattern attribute in tel fields
+     */
+    public function fix_tel_field_pattern($item, $item_index) {
+        // Only for tel fields
+        if (isset($item['field_type']) && $item['field_type'] === 'tel') {
+            // Fix the invalid pattern [0-9()#&+*-=.]+
+            // The dash in middle makes it invalid regex
+            if (isset($item['field_html'])) {
+                // Remove the invalid pattern attribute entirely
+                $item['field_html'] = preg_replace(
+                    '/pattern=["\'][^"\']*["\']/',
+                    '',
+                    $item['field_html']
+                );
+            }
+        }
+        return $item;
+    }
+
     private function __construct() {
+        // Fix invalid pattern attribute before rendering
+        add_filter('elementor_pro/forms/render/item', [$this, 'fix_tel_field_pattern'], 10, 2);
+
         // Register scripts
         add_action('wp_enqueue_scripts', [$this, 'register_scripts'], 5);
         add_action('admin_enqueue_scripts', [$this, 'register_scripts'], 5);
