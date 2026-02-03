@@ -797,7 +797,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         /* Error state styles for required checkbox validation */
         .elementor-field-type-checkbox.elementor-error .elementor-field-subgroup,
         .elementor-field-type-acceptance.elementor-error .elementor-field-subgroup {
-            border: 1px solid #d32f2f;
+            border: 1px solid #d32f2f24;
             border-radius: 4px;
             padding: 12px;
             background-color: #ffebee;
