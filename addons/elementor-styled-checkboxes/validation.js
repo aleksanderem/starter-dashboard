@@ -112,13 +112,19 @@
     /**
      * Initialize validation for a single form
      */
-    function initFormValidation($form) {
+    function initFormValidation($form, $scope) {
         log('Initializing form validation', {formId: $form.attr('id')});
 
-        var formSettings = $form.data('settings');
+        // Get settings from widget scope, not from form element
+        var formSettings = $scope.data('settings');
 
         if (!formSettings) {
-            log('No form settings found on form');
+            log('No form settings found on widget scope, trying form element');
+            formSettings = $form.data('settings');
+        }
+
+        if (!formSettings) {
+            log('ERROR: No form settings found anywhere');
             return;
         }
 
@@ -190,7 +196,7 @@
                 return;
             }
 
-            initFormValidation($form);
+            initFormValidation($form, $scope);
         });
 
         log('Validation hooks registered');
