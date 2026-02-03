@@ -117,6 +117,30 @@
                 });
             }
 
+            // Update container height on mobile based on current slide
+            var isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                var $currentSlide = $slides.eq(currentIndex);
+                var $currentImg = $currentSlide.find('img');
+
+                // Wait for image to load if not loaded yet
+                if ($currentImg[0] && $currentImg[0].complete) {
+                    var imgHeight = $currentImg.outerHeight();
+                    $container.css({
+                        'height': imgHeight + 'px',
+                        'transition': 'height 0.5s ease'
+                    });
+                } else {
+                    $currentImg.on('load', function() {
+                        var imgHeight = $(this).outerHeight();
+                        $container.css({
+                            'height': imgHeight + 'px',
+                            'transition': 'height 0.5s ease'
+                        });
+                    });
+                }
+            }
+
             updateDots();
             updateArrows();
         }
@@ -173,7 +197,9 @@
 
         // Autoplay
         function startAutoplay() {
-            if (!settings.autoplay) return;
+            // Disable autoplay on mobile
+            var isMobile = window.innerWidth <= 768;
+            if (!settings.autoplay || isMobile) return;
 
             stopAutoplay();
             autoplayTimer = setInterval(function() {
