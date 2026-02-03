@@ -111,7 +111,17 @@
 /* Responsive */
 @media (max-width: 768px) {
     .adaptive-gallery-container {
-        height: 300px;
+        height: auto;
+    }
+
+    .adaptive-gallery-slide {
+        height: auto;
+    }
+
+    .adaptive-gallery-slide img {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
     }
 
     .adaptive-gallery-arrow {
