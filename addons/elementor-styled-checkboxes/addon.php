@@ -653,7 +653,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
                         : __('This field', 'starter-dashboard');
 
                     $error_message = sprintf(
-                        __('%s: Please select at least one option', 'starter-dashboard'),
+                        __('%s: This field is required', 'starter-dashboard'),
                         $field_label
                     );
 
@@ -692,7 +692,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         );
 
         wp_localize_script('starter-checkbox-validation', 'starterCheckboxValidation', [
-            'errorMessage' => __('Please select at least one option', 'starter-dashboard'),
+            'errorMessage' => __('This field is required', 'starter-dashboard'),
         ]);
     }
 
