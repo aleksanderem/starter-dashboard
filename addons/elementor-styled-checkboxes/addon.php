@@ -527,6 +527,89 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
 
         $element->end_controls_tabs();
 
+        // Error State Section
+        $element->add_control(
+            'checkbox_error_heading',
+            [
+                'label' => __('Error State', 'starter-dashboard'),
+                'type' => \Elementor\Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
+        $element->add_responsive_control(
+            'checkbox_error_padding',
+            [
+                'label' => __('Error Padding', 'starter-dashboard'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', 'em', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-field-type-checkbox.elementor-error .elementor-field-subgroup,
+                     {{WRAPPER}} .elementor-field-type-acceptance.elementor-error .elementor-field-subgroup' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $element->add_control(
+            'checkbox_error_bg_color',
+            [
+                'label' => __('Error Background', 'starter-dashboard'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-field-type-checkbox.elementor-error .elementor-field-subgroup,
+                     {{WRAPPER}} .elementor-field-type-acceptance.elementor-error .elementor-field-subgroup' => 'background-color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $element->add_group_control(
+            \Elementor\Group_Control_Border::get_type(),
+            [
+                'name' => 'checkbox_error_border',
+                'label' => __('Error Border', 'starter-dashboard'),
+                'selector' => '{{WRAPPER}} .elementor-field-type-checkbox.elementor-error .elementor-field-subgroup, {{WRAPPER}} .elementor-field-type-acceptance.elementor-error .elementor-field-subgroup',
+            ]
+        );
+
+        $element->add_control(
+            'checkbox_error_border_radius',
+            [
+                'label' => __('Error Border Radius', 'starter-dashboard'),
+                'type' => \Elementor\Controls_Manager::DIMENSIONS,
+                'size_units' => ['px', '%'],
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-field-type-checkbox.elementor-error .elementor-field-subgroup,
+                     {{WRAPPER}} .elementor-field-type-acceptance.elementor-error .elementor-field-subgroup' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $element->add_control(
+            'checkbox_error_checkbox_color',
+            [
+                'label' => __('Error Checkbox Color', 'starter-dashboard'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:not(:checked),
+                     {{WRAPPER}} .elementor-field-type-acceptance.elementor-error input[type="checkbox"]:not(:checked)' => 'border-color: {{VALUE}} !important; background-color: {{VALUE}}20 !important;',
+                    '{{WRAPPER}} .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:checked,
+                     {{WRAPPER}} .elementor-field-type-acceptance.elementor-error input[type="checkbox"]:checked' => 'border-color: {{VALUE}} !important; background-color: {{VALUE}} !important;',
+                ],
+            ]
+        );
+
+        $element->add_control(
+            'checkbox_error_label_color',
+            [
+                'label' => __('Error Label Color', 'starter-dashboard'),
+                'type' => \Elementor\Controls_Manager::COLOR,
+                'selectors' => [
+                    '{{WRAPPER}} .elementor-field-type-checkbox.elementor-error label,
+                     {{WRAPPER}} .elementor-field-type-acceptance.elementor-error label' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
         $element->end_controls_section();
     }
 
