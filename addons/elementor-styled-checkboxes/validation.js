@@ -84,9 +84,32 @@
     }
 
     /**
+     * Add required attributes to checkbox fields
+     */
+    function markRequiredCheckboxes($form) {
+        var formId = $form.closest('[data-element_type="form.default"]').data('id');
+        var requiredFields = window.starterRequiredCheckboxes && window.starterRequiredCheckboxes['form-' + formId];
+
+        if (!requiredFields) {
+            return;
+        }
+
+        requiredFields.forEach(function(field) {
+            var $field = $form.find('.elementor-field-group-' + field.id);
+            if ($field.length) {
+                $field.attr('data-required-checkbox', 'true');
+                $field.attr('data-field-label', field.label);
+            }
+        });
+    }
+
+    /**
      * Initialize validation for a single form
      */
     function initFormValidation($form) {
+        // Mark required checkboxes with data attributes
+        markRequiredCheckboxes($form);
+
         // Validate on submit
         $form.on('submit', function(e) {
             var hasError = validateRequiredCheckboxes($form);

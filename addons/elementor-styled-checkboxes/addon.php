@@ -25,8 +25,8 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         // Add required field control to checkbox fields
         add_action('elementor/element/form/section_form_fields/before_section_end', [$this, 'add_required_field_control'], 10, 2);
 
-        // Add data attribute to required checkbox fields when rendering
-        add_filter('elementor_pro/forms/render/item/checkbox', [$this, 'add_required_attribute_to_checkbox'], 10, 3);
+        // Inject required checkbox field info into page
+        add_action('elementor_pro/forms/before_render', [$this, 'inject_required_checkbox_fields'], 10, 2);
 
         // Add validation hooks
         add_action('elementor_pro/forms/validation', [$this, 'validate_required_checkboxes'], 10, 2);
@@ -531,28 +531,39 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
     }
 
     /**
-     * Add data-required attribute to checkbox fields that are required
+     * Inject required checkbox field info before form renders
      */
-    public function add_required_attribute_to_checkbox($item, $item_index, $form) {
-        $settings = $form->get_settings();
+    public function inject_required_checkbox_fields($record, $ajax_handler) {
+        $settings = $record->get('form_settings');
 
         if (!isset($settings['form_fields']) || !is_array($settings['form_fields'])) {
-            return $item;
+            return;
         }
 
-        $field = $settings['form_fields'][$item_index];
+        $required_fields = [];
 
-        // Check if this checkbox field has required enabled
-        if (isset($field['field_required_checkbox']) && $field['field_required_checkbox'] === 'yes') {
-            // Add data attribute to the field group
-            $item['field_html'] = str_replace(
-                'class="elementor-field-type-checkbox',
-                'class="elementor-field-type-checkbox" data-required-checkbox="true" data-field-label="' . esc_attr($field['field_label'] ?? '') . '"',
-                $item['field_html']
-            );
+        foreach ($settings['form_fields'] as $field) {
+            if (isset($field['field_type']) && $field['field_type'] === 'checkbox'
+                && isset($field['field_required_checkbox']) && $field['field_required_checkbox'] === 'yes') {
+
+                $field_id = isset($field['custom_id']) && !empty($field['custom_id'])
+                    ? $field['custom_id']
+                    : $field['_id'];
+
+                $required_fields[] = [
+                    'id' => $field_id,
+                    'label' => $field['field_label'] ?? ''
+                ];
+            }
         }
 
-        return $item;
+        if (!empty($required_fields)) {
+            $form_id = $record->get('form_settings')['id'];
+            echo '<script>
+            window.starterRequiredCheckboxes = window.starterRequiredCheckboxes || {};
+            window.starterRequiredCheckboxes["form-' . esc_js($form_id) . '"] = ' . wp_json_encode($required_fields) . ';
+            </script>';
+        }
     }
 
     /**
@@ -633,7 +644,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             'starter-checkbox-validation',
             plugin_dir_url(__FILE__) . 'validation.js',
             ['jquery', 'elementor-frontend'],
-            '1.1.1', // Fixed: don't load in editor
+            '1.2.0', // New approach: PHP outputs JS variable, JS adds attributes
             true
         );
 
