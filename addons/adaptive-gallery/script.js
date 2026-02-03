@@ -41,11 +41,17 @@
         // Calculate slide widths based on orientation
         function calculateLayout() {
             var containerWidth = $container.width();
-            var containerHeight = $container.height();
             var spacing = settings.spacing;
 
             // Check if mobile viewport
             var isMobile = window.innerWidth <= 768;
+
+            // Force container height to auto on mobile
+            if (isMobile) {
+                $container.css('height', 'auto');
+            }
+
+            var containerHeight = $container.height();
 
             $slides.each(function(index) {
                 var $slide = $(this);
