@@ -600,7 +600,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             'starter-checkbox-validation',
             plugin_dir_url(__FILE__) . 'validation.js',
             ['jquery', 'elementor-frontend'],
-            '1.0.0',
+            '1.0.1', // Incremented version to force cache refresh
             true
         );
 
