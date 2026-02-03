@@ -624,11 +624,16 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
      * Enqueue validation script
      */
     public function enqueue_validation_script() {
+        // Don't load in Elementor editor
+        if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
+            return;
+        }
+
         wp_enqueue_script(
             'starter-checkbox-validation',
             plugin_dir_url(__FILE__) . 'validation.js',
             ['jquery', 'elementor-frontend'],
-            '1.1.0', // Complete rewrite - PHP adds data attributes, JS simplified
+            '1.1.1', // Fixed: don't load in editor
             true
         );
 
