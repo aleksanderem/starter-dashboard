@@ -25,8 +25,8 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         // Add required field control to checkbox fields
         add_action('elementor/element/form/section_form_fields/before_section_end', [$this, 'add_required_field_control'], 10, 2);
 
-        // Inject required checkbox field info into page
-        add_action('elementor_pro/forms/before_render', [$this, 'inject_required_checkbox_fields'], 10, 2);
+        // Inject required checkbox field info into page footer
+        add_action('wp_footer', [$this, 'inject_required_checkbox_fields_footer'], 999);
 
         // Add validation hooks
         add_action('elementor_pro/forms/validation', [$this, 'validate_required_checkboxes'], 10, 2);
@@ -531,38 +531,70 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
     }
 
     /**
-     * Inject required checkbox field info before form renders
+     * Inject required checkbox field info in footer - scans all Elementor forms on page
      */
-    public function inject_required_checkbox_fields($record, $ajax_handler) {
-        $settings = $record->get('form_settings');
-
-        if (!isset($settings['form_fields']) || !is_array($settings['form_fields'])) {
+    public function inject_required_checkbox_fields_footer() {
+        // Only run on frontend, not in editor
+        if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
             return;
         }
 
-        $required_fields = [];
-
-        foreach ($settings['form_fields'] as $field) {
-            if (isset($field['field_type']) && $field['field_type'] === 'checkbox'
-                && isset($field['field_required_checkbox']) && $field['field_required_checkbox'] === 'yes') {
-
-                $field_id = isset($field['custom_id']) && !empty($field['custom_id'])
-                    ? $field['custom_id']
-                    : $field['_id'];
-
-                $required_fields[] = [
-                    'id' => $field_id,
-                    'label' => $field['field_label'] ?? ''
-                ];
-            }
+        // Get all form widgets from current document
+        $document = \Elementor\Plugin::$instance->documents->get(get_the_ID());
+        if (!$document) {
+            return;
         }
 
-        if (!empty($required_fields)) {
-            $form_id = $record->get('form_settings')['id'];
+        $all_required_fields = [];
+
+        // Get all elements recursively
+        $data = $document->get_elements_data();
+        $this->scan_elements_for_required_checkboxes($data, $all_required_fields);
+
+        if (!empty($all_required_fields)) {
             echo '<script>
-            window.starterRequiredCheckboxes = window.starterRequiredCheckboxes || {};
-            window.starterRequiredCheckboxes["form-' . esc_js($form_id) . '"] = ' . wp_json_encode($required_fields) . ';
+            window.starterRequiredCheckboxes = ' . wp_json_encode($all_required_fields) . ';
             </script>';
+        }
+    }
+
+    /**
+     * Recursively scan elements for form widgets with required checkboxes
+     */
+    private function scan_elements_for_required_checkboxes($elements, &$all_required_fields) {
+        foreach ($elements as $element) {
+            // Check if this is a form widget
+            if (isset($element['widgetType']) && $element['widgetType'] === 'form') {
+                $settings = $element['settings'] ?? [];
+                $form_fields = $settings['form_fields'] ?? [];
+                $form_id = $element['id'] ?? '';
+
+                $required_fields = [];
+
+                foreach ($form_fields as $field) {
+                    if (isset($field['field_type']) && $field['field_type'] === 'checkbox'
+                        && isset($field['field_required_checkbox']) && $field['field_required_checkbox'] === 'yes') {
+
+                        $field_id = isset($field['custom_id']) && !empty($field['custom_id'])
+                            ? $field['custom_id']
+                            : $field['_id'];
+
+                        $required_fields[] = [
+                            'id' => $field_id,
+                            'label' => $field['field_label'] ?? ''
+                        ];
+                    }
+                }
+
+                if (!empty($required_fields)) {
+                    $all_required_fields['form-' . $form_id] = $required_fields;
+                }
+            }
+
+            // Recursively scan children
+            if (isset($element['elements']) && is_array($element['elements'])) {
+                $this->scan_elements_for_required_checkboxes($element['elements'], $all_required_fields);
+            }
         }
     }
 
@@ -644,7 +676,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             'starter-checkbox-validation',
             plugin_dir_url(__FILE__) . 'validation.js',
             ['jquery', 'elementor-frontend'],
-            '1.2.0', // New approach: PHP outputs JS variable, JS adds attributes
+            '1.3.0', // CRITICAL FIX: wp_footer hook + document scanning
             true
         );
 
