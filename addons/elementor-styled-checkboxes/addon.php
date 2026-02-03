@@ -770,7 +770,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             'starter-checkbox-validation',
             plugin_dir_url(__FILE__) . 'validation.js',
             ['jquery', 'elementor-frontend'],
-            '1.3.0', // CRITICAL FIX: wp_footer hook + document scanning
+            '1.4.0', // Added Elementor controls for error state customization
             true
         );
 
