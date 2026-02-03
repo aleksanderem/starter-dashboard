@@ -63,28 +63,30 @@
     /**
      * Validate all required checkbox fields in a form
      */
-    function validateRequiredCheckboxes($form) {
-        var isValid = true;
-        var $requiredCheckboxFields = $form.find('.elementor-field-type-checkbox[data-required-checkbox="true"]');
+    function validateRequiredCheckboxes($form, formSettings) {
+        var hasError = false;
 
-        $requiredCheckboxFields.each(function() {
-            var $field = $(this);
+        if (!formSettings || !formSettings.form_fields) {
+            return hasError;
+        }
 
-            if (!isCheckboxFieldValid($field)) {
-                // Get field label from the label element
-                var fieldLabel = $field.find('.elementor-field-label').first().text().trim();
-                if (!fieldLabel) {
-                    fieldLabel = $field.data('field-label') || '';
+        formSettings.form_fields.forEach(function(field, index) {
+            if (field.field_type === 'checkbox' && field.field_required_checkbox === 'yes') {
+                var $field = $form.find('.elementor-field-type-checkbox').eq(index);
+
+                if ($field.length && !isCheckboxFieldValid($field)) {
+                    // Get field label
+                    var fieldLabel = field.field_label || '';
+
+                    showCheckboxError($field, starterCheckboxValidation.errorMessage, fieldLabel);
+                    hasError = true;
+                } else if ($field.length) {
+                    removeCheckboxError($field);
                 }
-
-                showCheckboxError($field, starterCheckboxValidation.errorMessage, fieldLabel);
-                isValid = false;
-            } else {
-                removeCheckboxError($field);
             }
         });
 
-        return isValid;
+        return hasError;
     }
 
     /**
@@ -92,8 +94,8 @@
      */
     function initValidation() {
         // Wait for Elementor to be ready
-        $(document).on('elementor/frontend/init', function() {
-            // Handle form submission
+        $(window).on('elementor/frontend/init', function() {
+            // Hook into each form widget
             elementorFrontend.hooks.addAction('frontend/element_ready/form.default', function($scope) {
                 var $form = $scope.find('.elementor-form');
 
@@ -101,48 +103,50 @@
                     return;
                 }
 
-                // Mark required checkbox fields with data attribute
                 var formSettings = $form.data('settings');
-                if (formSettings && formSettings.form_fields) {
-                    formSettings.form_fields.forEach(function(field) {
-                        if (field.field_type === 'checkbox' && field.field_required_checkbox === 'yes') {
-                            var $field = $form.find('.elementor-field-type-checkbox[data-field-id="' + field.custom_id + '"]');
-                            if (!$field.length) {
-                                $field = $form.find('.elementor-field-type-checkbox').eq(field._id - 1);
-                            }
-                            $field.attr('data-required-checkbox', 'true');
 
-                            // Store field label for error messages
-                            if (field.field_label) {
-                                $field.attr('data-field-label', field.field_label);
-                            }
-                        }
-                    });
-                }
+                // Hook into Elementor's validation system
+                $form.on('form/validate', function(event, field) {
+                    // Validate all checkbox fields
+                    var hasError = validateRequiredCheckboxes($form, formSettings);
 
-                // Hook into form validation
-                $form.on('submit_success', function() {
-                    // Clear errors on successful submission
-                    $form.find('.elementor-field-type-checkbox').each(function() {
-                        removeCheckboxError($(this));
-                    });
+                    if (hasError) {
+                        // Prevent form submission by adding an error
+                        event.preventDefault();
+                    }
                 });
 
-                // Validate before form submission
+                // Also validate on submit button click (backup)
                 $form.on('submit', function(e) {
-                    if (!validateRequiredCheckboxes($form)) {
+                    var hasError = validateRequiredCheckboxes($form, formSettings);
+
+                    if (hasError) {
                         e.preventDefault();
-                        e.stopPropagation();
+                        e.stopImmediatePropagation();
                         return false;
                     }
                 });
 
-                // Clear error when user checks a checkbox in a required field
-                $form.on('change', '.elementor-field-type-checkbox[data-required-checkbox="true"] input[type="checkbox"]', function() {
+                // Clear error when user checks a checkbox
+                $form.on('change', 'input[type="checkbox"]', function() {
                     var $field = $(this).closest('.elementor-field-type-checkbox');
-                    if (isCheckboxFieldValid($field)) {
-                        removeCheckboxError($field);
+                    var fieldIndex = $form.find('.elementor-field-type-checkbox').index($field);
+
+                    if (formSettings && formSettings.form_fields && formSettings.form_fields[fieldIndex]) {
+                        var field = formSettings.form_fields[fieldIndex];
+                        if (field.field_type === 'checkbox' && field.field_required_checkbox === 'yes') {
+                            if (isCheckboxFieldValid($field)) {
+                                removeCheckboxError($field);
+                            }
+                        }
                     }
+                });
+
+                // Clear all errors on successful submission
+                $form.on('submit_success', function() {
+                    $form.find('.elementor-field-type-checkbox').each(function() {
+                        removeCheckboxError($(this));
+                    });
                 });
             });
         });

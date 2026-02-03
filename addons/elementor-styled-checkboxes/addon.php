@@ -539,20 +539,29 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             return;
         }
 
-        foreach ($form_settings['form_fields'] as $field) {
+        foreach ($form_settings['form_fields'] as $index => $field) {
             // Check if this is a checkbox field with required enabled
             if (isset($field['field_type']) && $field['field_type'] === 'checkbox'
                 && isset($field['field_required_checkbox']) && $field['field_required_checkbox'] === 'yes') {
 
-                $field_id = $field['custom_id'];
+                $field_id = isset($field['custom_id']) && !empty($field['custom_id'])
+                    ? $field['custom_id']
+                    : $field['_id'];
 
                 // Check if the field was submitted and has at least one value
                 $has_value = false;
-                if (isset($fields[$field_id]) && is_array($fields[$field_id]['value'])) {
-                    $values = array_filter($fields[$field_id]['value']);
-                    $has_value = !empty($values);
-                } elseif (isset($fields[$field_id]) && !empty($fields[$field_id]['value'])) {
-                    $has_value = true;
+
+                if (isset($fields[$field_id])) {
+                    $field_value = $fields[$field_id]['value'];
+
+                    if (is_array($field_value)) {
+                        $values = array_filter($field_value, function($v) {
+                            return !empty($v) && $v !== '';
+                        });
+                        $has_value = !empty($values);
+                    } else {
+                        $has_value = !empty($field_value) && $field_value !== '';
+                    }
                 }
 
                 if (!$has_value) {
@@ -573,7 +582,11 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
                         $field
                     );
 
+                    // Add error to the specific field
                     $ajax_handler->add_error($field_id, $error_message);
+
+                    // Also add a form-level error to prevent the generic error message
+                    $ajax_handler->add_error_message($error_message);
                 }
             }
         }
