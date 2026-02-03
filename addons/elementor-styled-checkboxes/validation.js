@@ -24,15 +24,21 @@
     /**
      * Show error message for checkbox field
      */
-    function showCheckboxError($field, message) {
+    function showCheckboxError($field, message, fieldLabel) {
         // Remove existing error if any
         removeCheckboxError($field);
+
+        // Make message more specific with field label
+        var errorMessage = message;
+        if (fieldLabel) {
+            errorMessage = fieldLabel + ': ' + message;
+        }
 
         // Create error element
         var $error = $('<div>')
             .addClass('elementor-message elementor-message-danger elementor-help-inline')
             .attr('role', 'alert')
-            .text(message);
+            .text(errorMessage);
 
         // Insert error after the checkbox subgroup
         var $subgroup = $field.find('.elementor-field-subgroup');
@@ -65,7 +71,13 @@
             var $field = $(this);
 
             if (!isCheckboxFieldValid($field)) {
-                showCheckboxError($field, starterCheckboxValidation.errorMessage);
+                // Get field label from the label element
+                var fieldLabel = $field.find('.elementor-field-label').first().text().trim();
+                if (!fieldLabel) {
+                    fieldLabel = $field.data('field-label') || '';
+                }
+
+                showCheckboxError($field, starterCheckboxValidation.errorMessage, fieldLabel);
                 isValid = false;
             } else {
                 removeCheckboxError($field);
@@ -99,6 +111,11 @@
                                 $field = $form.find('.elementor-field-type-checkbox').eq(field._id - 1);
                             }
                             $field.attr('data-required-checkbox', 'true');
+
+                            // Store field label for error messages
+                            if (field.field_label) {
+                                $field.attr('data-field-label', field.field_label);
+                            }
                         }
                     });
                 }

@@ -556,9 +556,19 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
                 }
 
                 if (!$has_value) {
+                    // Get field label for more specific error message
+                    $field_label = isset($field['field_label']) && !empty($field['field_label'])
+                        ? $field['field_label']
+                        : __('This field', 'starter-dashboard');
+
+                    $error_message = sprintf(
+                        __('%s: Please select at least one option', 'starter-dashboard'),
+                        $field_label
+                    );
+
                     $error_message = apply_filters(
                         'starter_checkbox_required_error_message',
-                        __('Please select at least one option', 'starter-dashboard'),
+                        $error_message,
                         $field_id,
                         $field
                     );
@@ -690,6 +700,17 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             border-radius: 4px;
             padding: 12px;
             background-color: #ffebee;
+        }
+
+        /* Make checkboxes red when there's an error */
+        .elementor-field-type-checkbox.elementor-error input[type="checkbox"] {
+            border-color: #d32f2f !important;
+            background-color: #ffebee !important;
+        }
+
+        .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:checked {
+            border-color: #d32f2f !important;
+            background-color: #d32f2f !important;
         }
 
         .elementor-field-type-checkbox .elementor-message-danger {
