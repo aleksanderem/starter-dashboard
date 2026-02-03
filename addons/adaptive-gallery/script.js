@@ -44,24 +44,43 @@
             var containerHeight = $container.height();
             var spacing = settings.spacing;
 
+            // Check if mobile viewport
+            var isMobile = window.innerWidth <= 768;
+
             $slides.each(function(index) {
                 var $slide = $(this);
                 var $img = $slide.find('img');
                 var orientation = $slide.data('orientation');
 
-                // Set image to fill height, width auto
-                $img.css({
-                    'height': '100%',
-                    'width': 'auto',
-                    'max-width': 'none',
-                    'object-fit': 'contain'
-                });
+                if (isMobile) {
+                    // Mobile: full width, auto height
+                    $img.css({
+                        'width': '100%',
+                        'height': 'auto',
+                        'max-width': '100%',
+                        'object-fit': 'contain'
+                    });
 
-                $slide.css({
-                    'height': containerHeight + 'px',
-                    'margin-right': spacing + 'px',
-                    'flex-shrink': '0'
-                });
+                    $slide.css({
+                        'height': 'auto',
+                        'margin-right': spacing + 'px',
+                        'flex-shrink': '0'
+                    });
+                } else {
+                    // Desktop: fill height, width auto
+                    $img.css({
+                        'height': '100%',
+                        'width': 'auto',
+                        'max-width': 'none',
+                        'object-fit': 'contain'
+                    });
+
+                    $slide.css({
+                        'height': containerHeight + 'px',
+                        'margin-right': spacing + 'px',
+                        'flex-shrink': '0'
+                    });
+                }
             });
         }
 
