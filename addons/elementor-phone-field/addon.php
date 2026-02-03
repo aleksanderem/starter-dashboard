@@ -307,14 +307,12 @@ CSS;
 
     function initPhoneFields() {
         if (typeof window.intlTelInput === 'undefined') {
-            console.log('[Phone Field] intlTelInput not loaded yet, waiting...');
             setTimeout(initPhoneFields, 200);
             return;
         }
 
         // Find all tel inputs in Elementor forms
         var inputs = document.querySelectorAll('.elementor-field-type-tel input[type="tel"]');
-        console.log('[Phone Field] Found tel inputs:', inputs.length);
 
         inputs.forEach(function(input) {
             // Skip if already initialized
@@ -334,7 +332,6 @@ CSS;
 
             if (!isIntlEnabled) return;
 
-            console.log('[Phone Field] Initializing intl-tel-input on:', input.name);
 
             var options = {
                 utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js',
@@ -359,7 +356,6 @@ CSS;
             try {
                 var iti = window.intlTelInput(input, options);
                 input.intlTelInputInstance = iti;
-                console.log('[Phone Field] Successfully initialized');
 
                 // On form submit, set full number as the input value
                 // Use capture phase to run BEFORE Elementor's serialization
@@ -371,7 +367,6 @@ CSS;
                         allPhoneInputs.forEach(function(phoneInput) {
                             if (phoneInput.intlTelInputInstance) {
                                 var fullNumber = phoneInput.intlTelInputInstance.getNumber();
-                                console.log('[Phone Field] Setting full number:', fullNumber, 'for field:', phoneInput.name);
                                 phoneInput.value = fullNumber;
 
                                 // Also update any hidden field

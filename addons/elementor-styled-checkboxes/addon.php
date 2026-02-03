@@ -25,6 +25,9 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         // Add required field control to checkbox fields
         add_action('elementor/element/form/section_form_fields/before_section_end', [$this, 'add_required_field_control'], 10, 2);
 
+        // Add data attribute to required checkbox fields when rendering
+        add_filter('elementor_pro/forms/render/item/checkbox', [$this, 'add_required_attribute_to_checkbox'], 10, 3);
+
         // Add validation hooks
         add_action('elementor_pro/forms/validation', [$this, 'validate_required_checkboxes'], 10, 2);
 
@@ -528,6 +531,31 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
     }
 
     /**
+     * Add data-required attribute to checkbox fields that are required
+     */
+    public function add_required_attribute_to_checkbox($item, $item_index, $form) {
+        $settings = $form->get_settings();
+
+        if (!isset($settings['form_fields']) || !is_array($settings['form_fields'])) {
+            return $item;
+        }
+
+        $field = $settings['form_fields'][$item_index];
+
+        // Check if this checkbox field has required enabled
+        if (isset($field['field_required_checkbox']) && $field['field_required_checkbox'] === 'yes') {
+            // Add data attribute to the field group
+            $item['field_html'] = str_replace(
+                'class="elementor-field-type-checkbox',
+                'class="elementor-field-type-checkbox" data-required-checkbox="true" data-field-label="' . esc_attr($field['field_label'] ?? '') . '"',
+                $item['field_html']
+            );
+        }
+
+        return $item;
+    }
+
+    /**
      * Validate required checkbox fields
      */
     public function validate_required_checkboxes($record, $ajax_handler) {
@@ -600,7 +628,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             'starter-checkbox-validation',
             plugin_dir_url(__FILE__) . 'validation.js',
             ['jquery', 'elementor-frontend'],
-            '1.0.3', // Added detailed field logging for debugging
+            '1.1.0', // Complete rewrite - PHP adds data attributes, JS simplified
             true
         );
 
