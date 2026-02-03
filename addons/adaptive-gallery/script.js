@@ -68,6 +68,8 @@
                     });
 
                     $slide.css({
+                        'width': '100%',
+                        'max-width': '100%',
                         'height': 'auto',
                         'margin-right': spacing + 'px',
                         'flex-shrink': '0'
