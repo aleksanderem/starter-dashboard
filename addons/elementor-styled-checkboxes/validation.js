@@ -127,15 +127,12 @@
         // Mark required checkboxes with data attributes
         markRequiredCheckboxes($form);
 
-        // Validate on submit
+        // Show visual validation errors on submit attempt
+        // But DON'T prevent submission - let server handle it
         $form.on('submit', function(e) {
-            var hasError = validateRequiredCheckboxes($form);
-
-            if (hasError) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                return false;
-            }
+            // Only validate visually, don't prevent submission
+            validateRequiredCheckboxes($form);
+            // Let the form submit normally - server will validate and return errors if needed
         });
 
         // Clear error when user checks a checkbox in a required field
