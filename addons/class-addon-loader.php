@@ -30,6 +30,7 @@ class Starter_Addon_Loader {
 
     private function __construct() {
         $this->register_addons();
+        $this->register_external_addons();
         $this->load_active_addons();
 
         // AJAX handlers
@@ -160,6 +161,60 @@ class Starter_Addon_Loader {
     }
 
     /**
+     * Register external addons from standalone plugins
+     */
+    private function register_external_addons() {
+        /**
+         * Filter to allow external plugins to register as Starter Dashboard addons
+         *
+         * @param array $external_addons Array of addon definitions
+         *
+         * Example usage in external plugin:
+         *
+         * add_filter('starter_register_external_addons', function($addons) {
+         *     $addons['my-custom-addon'] = [
+         *         'name' => __('My Custom Addon', 'my-plugin'),
+         *         'description' => __('Description of what this addon does', 'my-plugin'),
+         *         'icon' => 'star-01',  // Icon name from Untitled UI icons
+         *         'category' => 'integration',  // elementor, integration, seo, ui, or custom
+         *         'file' => plugin_dir_path(__FILE__) . 'includes/starter-addon.php',
+         *         'has_settings' => true,
+         *         'settings_callback' => 'My_Addon_Class::render_settings',
+         *         'version' => '1.0.0',
+         *         'plugin_file' => __FILE__,  // Optional: main plugin file for dependency checks
+         *     ];
+         *     return $addons;
+         * });
+         */
+        $external_addons = apply_filters('starter_register_external_addons', []);
+
+        if (!is_array($external_addons)) {
+            return;
+        }
+
+        foreach ($external_addons as $addon_id => $addon_data) {
+            // Validate required fields
+            if (empty($addon_data['name']) || empty($addon_data['file'])) {
+                continue;
+            }
+
+            // Merge with defaults
+            $addon_data = array_merge([
+                'description' => '',
+                'icon' => 'puzzle',
+                'category' => 'integration',
+                'has_settings' => false,
+                'settings_callback' => '',
+                'version' => '1.0.0',
+                'external' => true,  // Mark as external addon
+            ], $addon_data);
+
+            // Add to addons array
+            $this->addons[$addon_id] = $addon_data;
+        }
+    }
+
+    /**
      * Load active addons
      */
     private function load_active_addons() {
@@ -266,12 +321,20 @@ class Starter_Addon_Loader {
 
         foreach ($this->addons as $id => $addon) {
             $cat = $addon['category'];
-            if (isset($categories[$cat])) {
-                // Check if addon has README file
-                $addon_dir = dirname($addon['file']);
-                $addon['has_readme'] = file_exists($addon_dir . '/README.md');
-                $categories[$cat]['addons'][$id] = $addon;
+
+            // Create category if it doesn't exist (for external addons with custom categories)
+            if (!isset($categories[$cat])) {
+                $categories[$cat] = [
+                    'label' => ucfirst($cat),
+                    'icon' => 'puzzle',
+                    'addons' => [],
+                ];
             }
+
+            // Check if addon has README file
+            $addon_dir = dirname($addon['file']);
+            $addon['has_readme'] = file_exists($addon_dir . '/README.md');
+            $categories[$cat]['addons'][$id] = $addon;
         }
 
         return $categories;
