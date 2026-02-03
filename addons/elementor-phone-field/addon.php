@@ -26,23 +26,27 @@ class Starter_Addon_Elementor_Phone_Field {
     public function fix_tel_field_pattern($item, $item_index) {
         // Only for tel fields
         if (isset($item['field_type']) && $item['field_type'] === 'tel') {
-            // Fix the invalid pattern [0-9()#&+*-=.]+
-            // The dash in middle makes it invalid regex
+            // Remove the pattern attribute entirely - intl-tel-input handles validation
             if (isset($item['field_html'])) {
-                // Remove the invalid pattern attribute entirely
+                // Remove pattern attribute
                 $item['field_html'] = preg_replace(
-                    '/pattern=["\'][^"\']*["\']/',
+                    '/\s*pattern=["\'][^"\']*["\']/',
                     '',
                     $item['field_html']
                 );
+            }
+
+            // Also remove from field settings to prevent re-injection
+            if (isset($item['field_pattern'])) {
+                unset($item['field_pattern']);
             }
         }
         return $item;
     }
 
     private function __construct() {
-        // Fix invalid pattern attribute before rendering
-        add_filter('elementor_pro/forms/render/item', [$this, 'fix_tel_field_pattern'], 10, 2);
+        // Fix invalid pattern attribute before rendering - high priority to run early
+        add_filter('elementor_pro/forms/render/item', [$this, 'fix_tel_field_pattern'], 5, 2);
 
         // Register scripts
         add_action('wp_enqueue_scripts', [$this, 'register_scripts'], 5);
@@ -338,14 +342,12 @@ CSS;
         var inputs = document.querySelectorAll('.elementor-field-type-tel input[type="tel"]');
 
         inputs.forEach(function(input) {
-            // Fix invalid regex pattern from Elementor
-            // [0-9()#&+*-=.]+ is invalid because - is in middle
-            // Fix: move - to end or escape it
-            var pattern = input.getAttribute('pattern');
-            if (pattern && pattern.includes('[0-9()#&+*-=.]')) {
-                // Replace with valid pattern (dash at the end)
-                input.setAttribute('pattern', '[0-9()#&+*=.-]+');
+            // Remove any pattern attribute - intl-tel-input handles validation
+            // Elementor sometimes adds invalid patterns like [0-9()-] or [0-9()#&+*-=.]+
+            if (input.hasAttribute('pattern')) {
+                input.removeAttribute('pattern');
             }
+
             // Skip if already initialized
             if (input.intlTelInputInstance) return;
 
