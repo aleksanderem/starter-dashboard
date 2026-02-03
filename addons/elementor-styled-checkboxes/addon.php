@@ -22,9 +22,46 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         // Add controls to Form widget
         add_action('elementor/element/form/section_form_style/after_section_end', [$this, 'add_checkbox_style_section'], 10, 2);
 
+        // Add required field control to checkbox fields
+        add_action('elementor/element/form/section_form_fields/before_section_end', [$this, 'add_required_field_control'], 10, 2);
+
+        // Add validation hooks
+        add_action('elementor_pro/forms/validation', [$this, 'validate_required_checkboxes'], 10, 2);
+
         // Frontend styles
         add_action('wp_head', [$this, 'print_base_styles']);
         add_action('elementor/frontend/after_enqueue_styles', [$this, 'print_base_styles']);
+
+        // Enqueue validation script
+        add_action('elementor/frontend/after_enqueue_scripts', [$this, 'enqueue_validation_script']);
+    }
+
+    /**
+     * Add required field control to checkbox fields
+     */
+    public function add_required_field_control($element, $args) {
+        $elementor = \Elementor\Plugin::$instance;
+
+        $control_data = $element->get_controls('form_fields');
+
+        if (!isset($control_data['fields'])) {
+            return;
+        }
+
+        // Add "Required" control for checkbox fields
+        $control_data['fields']['field_required_checkbox'] = [
+            'name' => 'field_required_checkbox',
+            'label' => __('Required', 'starter-dashboard'),
+            'type' => \Elementor\Controls_Manager::SWITCHER,
+            'condition' => [
+                'field_type' => 'checkbox',
+            ],
+            'tab' => 'content',
+            'inner_tab' => 'form_fields_content_tab',
+            'tabs_wrapper' => 'form_fields_tabs',
+        ];
+
+        $element->update_control('form_fields', $control_data);
     }
 
     /**
@@ -491,6 +528,65 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
     }
 
     /**
+     * Validate required checkbox fields
+     */
+    public function validate_required_checkboxes($record, $ajax_handler) {
+        $fields = $record->get('fields');
+        $form_settings = $record->get('form_settings');
+
+        // Get all form fields from settings
+        if (!isset($form_settings['form_fields']) || !is_array($form_settings['form_fields'])) {
+            return;
+        }
+
+        foreach ($form_settings['form_fields'] as $field) {
+            // Check if this is a checkbox field with required enabled
+            if (isset($field['field_type']) && $field['field_type'] === 'checkbox'
+                && isset($field['field_required_checkbox']) && $field['field_required_checkbox'] === 'yes') {
+
+                $field_id = $field['custom_id'];
+
+                // Check if the field was submitted and has at least one value
+                $has_value = false;
+                if (isset($fields[$field_id]) && is_array($fields[$field_id]['value'])) {
+                    $values = array_filter($fields[$field_id]['value']);
+                    $has_value = !empty($values);
+                } elseif (isset($fields[$field_id]) && !empty($fields[$field_id]['value'])) {
+                    $has_value = true;
+                }
+
+                if (!$has_value) {
+                    $error_message = apply_filters(
+                        'starter_checkbox_required_error_message',
+                        __('Please select at least one option', 'starter-dashboard'),
+                        $field_id,
+                        $field
+                    );
+
+                    $ajax_handler->add_error($field_id, $error_message);
+                }
+            }
+        }
+    }
+
+    /**
+     * Enqueue validation script
+     */
+    public function enqueue_validation_script() {
+        wp_enqueue_script(
+            'starter-checkbox-validation',
+            plugin_dir_url(__FILE__) . 'validation.js',
+            ['jquery', 'elementor-frontend'],
+            '1.0.0',
+            true
+        );
+
+        wp_localize_script('starter-checkbox-validation', 'starterCheckboxValidation', [
+            'errorMessage' => __('Please select at least one option', 'starter-dashboard'),
+        ]);
+    }
+
+    /**
      * Print base styles
      */
     public function print_base_styles() {
@@ -586,6 +682,25 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             display: flex;
             align-items: flex-start;
             gap: 12px;
+        }
+
+        /* Error state styles for required checkbox validation */
+        .elementor-field-type-checkbox.elementor-error .elementor-field-subgroup {
+            border: 1px solid #d32f2f;
+            border-radius: 4px;
+            padding: 12px;
+            background-color: #ffebee;
+        }
+
+        .elementor-field-type-checkbox .elementor-message-danger {
+            color: #d32f2f;
+            font-size: 0.875em;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .elementor-field-type-checkbox.elementor-error {
+            margin-bottom: 16px;
         }
         </style>
         <?php
