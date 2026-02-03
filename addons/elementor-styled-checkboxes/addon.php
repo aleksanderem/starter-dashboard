@@ -708,32 +708,57 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         }
 
         /* Error state styles for required checkbox validation */
-        .elementor-field-type-checkbox.elementor-error .elementor-field-subgroup {
+        .elementor-field-type-checkbox.elementor-error .elementor-field-subgroup,
+        .elementor-field-type-acceptance.elementor-error .elementor-field-subgroup {
             border: 1px solid #d32f2f;
             border-radius: 4px;
             padding: 12px;
             background-color: #ffebee;
         }
 
-        /* Make checkboxes red when there's an error */
-        .elementor-field-type-checkbox.elementor-error input[type="checkbox"] {
+        /* Make checkboxes red when there's an error - all states */
+        .elementor-field-type-checkbox.elementor-error input[type="checkbox"],
+        .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:not(:checked),
+        .elementor-field-type-acceptance.elementor-error input[type="checkbox"],
+        .elementor-field-type-acceptance.elementor-error input[type="checkbox"]:not(:checked) {
             border-color: #d32f2f !important;
             background-color: #ffebee !important;
         }
 
-        .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:checked {
+        /* Error state for checked checkboxes */
+        .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:checked,
+        .elementor-field-type-acceptance.elementor-error input[type="checkbox"]:checked {
             border-color: #d32f2f !important;
             background-color: #d32f2f !important;
         }
 
-        .elementor-field-type-checkbox .elementor-message-danger {
+        /* Error state for hover - override hover styles */
+        .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:hover,
+        .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:not(:checked):hover,
+        .elementor-field-type-acceptance.elementor-error input[type="checkbox"]:hover,
+        .elementor-field-type-acceptance.elementor-error input[type="checkbox"]:not(:checked):hover {
+            border-color: #b71c1c !important;
+            background-color: #ffcdd2 !important;
+        }
+
+        /* Error state for checked hover */
+        .elementor-field-type-checkbox.elementor-error input[type="checkbox"]:checked:hover,
+        .elementor-field-type-acceptance.elementor-error input[type="checkbox"]:checked:hover {
+            border-color: #b71c1c !important;
+            background-color: #b71c1c !important;
+        }
+
+        /* Error message styling */
+        .elementor-field-type-checkbox .elementor-message-danger,
+        .elementor-field-type-acceptance .elementor-message-danger {
             color: #d32f2f;
             font-size: 0.875em;
             margin-top: 8px;
             display: block;
         }
 
-        .elementor-field-type-checkbox.elementor-error {
+        .elementor-field-type-checkbox.elementor-error,
+        .elementor-field-type-acceptance.elementor-error {
             margin-bottom: 16px;
         }
         </style>
