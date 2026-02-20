@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.3.0
+ * Version: 4.3.1
  * Author: Alex M.
  * Author URI: https://developer.dev
  */
@@ -785,14 +785,18 @@ class Starter_Dashboard {
     private function get_all_menu_items() {
         global $menu, $submenu;
 
+        // Use original menu (captured before restrictions) so hidden items remain visible in settings
+        $menu_to_scan = !empty($this->original_menu) ? $this->original_menu : $menu;
+        $submenu_to_scan = !empty($this->original_submenu) ? $this->original_submenu : $submenu;
+
         $menu_items = [];
 
         // Ensure $menu is available
-        if (empty($menu) || !is_array($menu)) {
+        if (empty($menu_to_scan) || !is_array($menu_to_scan)) {
             return $menu_items;
         }
 
-        foreach ($menu as $position => $item) {
+        foreach ($menu_to_scan as $position => $item) {
             // Skip if not a valid menu item array
             if (!is_array($item) || count($item) < 3) {
                 continue;
@@ -841,7 +845,7 @@ class Starter_Dashboard {
                 'slug'     => $slug,
                 'icon'     => $icon,
                 'position' => $position,
-                'children' => isset($submenu[$slug]) ? $this->format_submenu($submenu[$slug]) : [],
+                'children' => isset($submenu_to_scan[$slug]) ? $this->format_submenu($submenu_to_scan[$slug]) : [],
             ];
         }
 

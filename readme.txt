@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.1.6
+Stable tag: 4.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,11 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.3.1 =
+* FIXED: Menu Visibility - hidden menu items now appear in settings so they can be unhidden again
+* FIXED: Modal fallback - if modal fails to open or AJAX errors, falls back to direct page navigation
+* FIXED: Iframe modal fallback for Elementor edit links and quick actions
 
 = 4.1.6 =
 * FIXED: HubSpot Forms - select fields now send option labels (e.g. "Connecticut - CT") instead of just values (e.g. "CT")

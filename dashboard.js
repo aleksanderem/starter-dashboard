@@ -492,16 +492,23 @@
                 return;
             }
 
-            // Handle link clicks that should open modal
+            // Handle link clicks that should open modal (with fallback to direct navigation)
             $(document).on('click', '.bp-card__link--modal', function(e) {
                 e.preventDefault();
                 var $link = $(this);
+                var href = $link.attr('href');
+
+                // Fallback: if modal element is missing, navigate directly
+                if (!self.modal || !self.modal.length) {
+                    window.location.href = href;
+                    return;
+                }
 
                 var data = {
                     itemType: $link.data('modal-type'),
                     sourceType: $link.data('source-type') || '',
                     templateType: $link.data('template-type') || '',
-                    url: $link.attr('href')
+                    url: href
                 };
 
                 self.openModal(data);
@@ -566,8 +573,11 @@
                     }
                 },
                 error: function() {
-                    self.modal.removeClass('bp-modal--loading').addClass('bp-modal--empty');
-                    self.modal.find('.bp-modal__title').text('Error');
+                    // Fallback: close modal and navigate to the full page
+                    self.closeModal();
+                    if (data.url) {
+                        window.location.href = data.url;
+                    }
                 }
             });
         },
@@ -715,18 +725,26 @@
                 return;
             }
 
-            // Handle Elementor edit button clicks
+            // Handle Elementor edit button clicks (with fallback)
             $(document).on('click', '.bp-modal__item-action--elementor', function(e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
+                if (!self.iframeModal || !self.iframeModal.length) {
+                    window.location.href = url;
+                    return;
+                }
                 var title = $(this).closest('.bp-modal__list-item').find('.bp-modal__item-title').text();
                 self.openIframeModal(url, title, '#92003B'); // Elementor magenta
             });
 
-            // Handle Quick Action iframe clicks (Media Library, Add Media)
+            // Handle Quick Action iframe clicks (with fallback)
             $(document).on('click', '.bp-action--iframe', function(e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
+                if (!self.iframeModal || !self.iframeModal.length) {
+                    window.location.href = url;
+                    return;
+                }
                 var title = $(this).data('iframe-title') || 'Loading...';
                 var color = $(this).css('--action-color') || getComputedStyle(this).getPropertyValue('--action-color') || '#2ABADE';
                 self.openIframeModal(url, title, color.trim());
@@ -760,6 +778,14 @@
             // Handle iframe load
             this.iframeModal.find('.bp-iframe-modal__iframe').on('load', function() {
                 self.iframeModal.addClass('bp-iframe-modal--loaded');
+            }).on('error', function() {
+                // Fallback: if iframe fails to load, redirect to the URL directly
+                var src = $(this).attr('src');
+                if (src) {
+                    self.closeIframeModal();
+                    // Strip the bp_iframe param for direct navigation
+                    window.location.href = src.replace(/[?&]bp_iframe=1/, '');
+                }
             });
         },
 
