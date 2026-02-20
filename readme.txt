@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.3.3
+Stable tag: 4.3.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.3.4 =
+* FIXED: External addons (BP Leadership etc.) now show correct active/enabled state in addon settings
 
 = 4.3.3 =
 * FIXED: Additional Elements - WPML and other plugin-path slugs now link correctly (e.g. sitepress-multilingual-cms/menu/languages.php)
