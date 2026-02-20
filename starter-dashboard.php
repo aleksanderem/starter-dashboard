@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.3.1
+ * Version: 4.3.2
  * Author: Alex M.
  * Author URI: https://developer.dev
  */
@@ -4454,6 +4454,17 @@ class Starter_Dashboard {
     }
 
     /**
+     * Build correct admin URL for a menu slug.
+     * File-based slugs (containing .php) map directly, page-based slugs need admin.php?page= prefix.
+     */
+    private function build_menu_url($slug) {
+        if (strpos($slug, '.php') !== false || strpos($slug, '/') !== false) {
+            return admin_url($slug);
+        }
+        return admin_url('admin.php?page=' . $slug);
+    }
+
+    /**
      * Render additional element card (for hidden menu items)
      */
     private function render_additional_element_card($element) {
@@ -4471,7 +4482,7 @@ class Starter_Dashboard {
             </div>
 
             <div class="bp-card__primary-actions">
-                <a href="<?php echo esc_url(admin_url($element['slug'])); ?>"
+                <a href="<?php echo esc_url($this->build_menu_url($element['slug'])); ?>"
                    class="bp-card__primary-btn bp-card__primary-btn--view bp-action--iframe"
                    data-iframe-title="<?php echo esc_attr($element['title']); ?>">
                     <easier-icon name="eye" variant="twotone" size="18" stroke-color="currentColor" color="currentColor" aria-hidden="true"></easier-icon>
@@ -4485,7 +4496,7 @@ class Starter_Dashboard {
                     <div class="bp-card__nav-label"><?php _e('Menu Items', 'starter-dashboard'); ?></div>
                     <div class="bp-card__nav-links">
                         <?php foreach ($element['children'] as $child): ?>
-                            <a href="<?php echo esc_url(admin_url($child['slug'])); ?>"
+                            <a href="<?php echo esc_url($this->build_menu_url($child['slug'])); ?>"
                                class="bp-card__link bp-action--iframe"
                                data-iframe-title="<?php echo esc_attr($child['title']); ?>">
                                 <easier-icon name="arrow-right-03" variant="twotone" size="16" color="currentColor" aria-hidden="true"></easier-icon>
