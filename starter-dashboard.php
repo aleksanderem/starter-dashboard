@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.3.3
+ * Version: 4.3.5
  * Author: Alex M.
  * Author URI: https://developer.dev
  */
@@ -59,6 +59,11 @@ if (class_exists('YahnisElsts\PluginUpdateChecker\v5\PucFactory')) {
     // Optional: Enable release assets (attach ZIP to GitHub release)
     $starter_dashboard_update_checker->getVcsApi()->enableReleaseAssets();
 }
+
+// Load textdomain early to avoid WP 6.7+ notice
+add_action('init', function() {
+    load_plugin_textdomain('starter-dashboard', false, dirname(plugin_basename(__FILE__)) . '/languages');
+}, 0);
 
 class Starter_Dashboard {
 

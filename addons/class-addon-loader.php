@@ -246,6 +246,10 @@ class Starter_Addon_Loader {
      * Check if addon is active
      */
     public function is_addon_active($addon_id) {
+        // External addons with a plugin_file are active when their plugin is active
+        if (isset($this->addons[$addon_id]['external']) && !empty($this->addons[$addon_id]['plugin_file'])) {
+            return true; // If registered via filter, the plugin is already active
+        }
         $active = $this->get_active_addons();
         return in_array($addon_id, $active);
     }
