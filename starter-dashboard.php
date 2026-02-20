@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.3.2
+ * Version: 4.3.3
  * Author: Alex M.
  * Author URI: https://developer.dev
  */
@@ -4455,10 +4455,14 @@ class Starter_Dashboard {
 
     /**
      * Build correct admin URL for a menu slug.
-     * File-based slugs (containing .php) map directly, page-based slugs need admin.php?page= prefix.
+     * Simple .php filenames (edit.php, options-general.php) map directly under /wp-admin/.
+     * Plugin path slugs (sitepress-multilingual-cms/menu/languages.php) and plain slugs
+     * (cptui_main_menu) route through admin.php?page=.
      */
     private function build_menu_url($slug) {
-        if (strpos($slug, '.php') !== false || strpos($slug, '/') !== false) {
+        $base = explode('?', $slug, 2)[0];
+        // Only simple .php filenames (no directory separators) are true wp-admin files
+        if (strpos($base, '/') === false && strpos($base, '.php') !== false) {
             return admin_url($slug);
         }
         return admin_url('admin.php?page=' . $slug);
