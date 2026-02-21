@@ -1,0 +1,45 @@
+/**
+ * Image Compare - Persistent Labels
+ *
+ * Hides original clipped labels and styles the JS-cloned
+ * persistent labels that sit in a wrapper around the widget.
+ */
+
+/* Hide original labels (they get clipped by overflow:hidden) */
+.ha-image-compare .twentytwenty-before-label,
+.ha-image-compare .twentytwenty-after-label {
+    display: none !important;
+}
+
+/* Wrapper created by JS around .ha-image-compare */
+.ha-ic-wrapper {
+    position: relative;
+}
+
+/* Persistent labels */
+.ha-ic-label {
+    position: absolute;
+    top: 50%;
+    z-index: 30;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.ha-ic-label--before {
+    right: 0;
+    transform: rotate(90deg) translateX(50%);
+    transform-origin: top right;
+}
+
+.ha-ic-label--after {
+    left: 0;
+    transform: rotate(-90deg) translateX(-50%);
+    transform-origin: top left;
+}
+
+@media screen and (max-width: 768px) {
+    .ha-ic-label {
+        font-size: 13px !important;
+        padding: 4px 10px !important;
+    }
+}

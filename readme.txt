@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.3.5
+Stable tag: 4.3.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,11 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.3.6 =
+* NEW: Image Compare Labels addon - persistent before/after labels on Happy Addons Image Compare widget
+* NEW: Video Controls addon - shortcode for mute/unmute, play/pause and progress bar on Elementor background videos
+* NEW: Addon loader supports `requires` field for plugin dependencies
 
 = 4.3.5 =
 * FIXED: WP 6.7+ translation loading notice (load_plugin_textdomain called early)

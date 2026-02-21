@@ -1,0 +1,149 @@
+/**
+ * Elementor Video Controls Styles
+ */
+
+.elementor-video-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    z-index: 100;
+    position: relative;
+}
+
+/* Position variants - when absolute positioning is needed */
+.elementor-video-controls.evc-absolute {
+    position: absolute;
+}
+
+.elementor-video-controls.evc-absolute.evc-position-top-left {
+    top: 0;
+    left: 0;
+}
+
+.elementor-video-controls.evc-absolute.evc-position-top-right {
+    top: 0;
+    right: 0;
+}
+
+.elementor-video-controls.evc-absolute.evc-position-bottom-left {
+    bottom: 0;
+    left: 0;
+}
+
+.elementor-video-controls.evc-absolute.evc-position-bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+.elementor-video-controls.evc-absolute.evc-position-custom {
+    /* Allow custom positioning via additional CSS */
+}
+
+/* Button styles */
+.evc-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    width: 32px;
+    height: 32px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    line-height: 1;
+}
+
+.evc-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.evc-btn:active {
+    transform: scale(0.92);
+}
+
+.evc-btn:focus {
+    outline: 1px solid rgba(255, 255, 255, 0.4);
+    outline-offset: 1px;
+}
+
+/* Icon styles */
+.evc-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+/* Text button styles */
+.evc-btn span {
+    white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .evc-btn {
+        width: 28px;
+        height: 28px;
+        padding: 5px;
+    }
+
+    .evc-icon {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* Progress bar */
+.evc-progress {
+    flex: 1;
+    min-width: 80px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    align-self: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.evc-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #ffffff;
+    border-radius: 3px;
+    transition: width 0.1s linear;
+}
+
+.evc-progress:hover {
+    height: 10px;
+}
+
+.evc-progress:hover .evc-progress-bar {
+    transition: none;
+}
+
+/* Animation for state changes */
+.evc-icon,
+.evc-btn span {
+    transition: opacity 0.2s ease;
+}
+
+/* Custom color variants (can be overridden) */
+.elementor-video-controls.evc-theme-light .evc-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #000000;
+}
+
+.elementor-video-controls.evc-theme-light .evc-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    border-color: rgba(0, 0, 0, 0.2);
+}

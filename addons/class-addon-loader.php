@@ -147,6 +147,30 @@ class Starter_Addon_Loader {
             'version' => '1.0.0',
         ];
 
+        // Image Compare Labels
+        $this->addons['image-compare'] = [
+            'name' => __('Image Compare Labels', 'starter-dashboard'),
+            'description' => __('Persistent before/after labels on Happy Addons Image Compare widget', 'starter-dashboard'),
+            'icon' => 'image-02',
+            'category' => 'elementor',
+            'file' => $addons_dir . '/image-compare/addon.php',
+            'has_settings' => false,
+            'version' => '1.0.0',
+            'requires' => 'happy-elementor-addons/plugin.php',
+        ];
+
+        // Video Controls
+        $this->addons['video-controls'] = [
+            'name' => __('Video Controls', 'starter-dashboard'),
+            'description' => __('Shortcode for mute/unmute and play/pause on Elementor background videos', 'starter-dashboard'),
+            'icon' => 'play',
+            'category' => 'elementor',
+            'file' => $addons_dir . '/video-controls/addon.php',
+            'has_settings' => false,
+            'version' => '1.0.3',
+            'requires' => 'elementor/elementor.php',
+        ];
+
         // 301 Redirects
         $this->addons['redirects-301'] = [
             'name' => __('301 Redirects', 'starter-dashboard'),
@@ -229,9 +253,21 @@ class Starter_Addon_Loader {
         }
 
         foreach ($active as $addon_id) {
-            if (isset($this->addons[$addon_id]) && file_exists($this->addons[$addon_id]['file'])) {
-                require_once $this->addons[$addon_id]['file'];
+            if (!isset($this->addons[$addon_id]) || !file_exists($this->addons[$addon_id]['file'])) {
+                continue;
             }
+
+            // Check required plugin dependency
+            if (!empty($this->addons[$addon_id]['requires'])) {
+                if (!function_exists('is_plugin_active')) {
+                    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+                }
+                if (!is_plugin_active($this->addons[$addon_id]['requires'])) {
+                    continue;
+                }
+            }
+
+            require_once $this->addons[$addon_id]['file'];
         }
     }
 
