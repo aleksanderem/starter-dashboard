@@ -797,14 +797,16 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
         }
 
         .elementor-field-type-checkbox .elementor-field-option,
-        .elementor-field-type-radio .elementor-field-option {
+        .elementor-field-type-radio .elementor-field-option,
+        .elementor-field-type-acceptance .elementor-field-option {
             display: flex !important;
             align-items: center;
             margin: 0 !important;
         }
 
         .elementor-field-type-checkbox .elementor-field-option label,
-        .elementor-field-type-radio .elementor-field-option label {
+        .elementor-field-type-radio .elementor-field-option label,
+        .elementor-field-type-acceptance .elementor-field-option label {
             display: inline-flex !important;
             align-items: center;
             gap: 12px;
@@ -821,12 +823,13 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             width: 22px;
             height: 22px;
             min-width: 22px;
-            border: 2px solid #d1d5db;
-            background: #fff;
+            border: 2px solid #d1d5db !important;
+            background: #fff !important;
             cursor: pointer;
             transition: all 0.2s ease;
             margin: 0;
             flex-shrink: 0;
+            position: relative;
         }
 
         .elementor-field-type-checkbox input[type="checkbox"],
@@ -834,15 +837,30 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             border-radius: 6px;
         }
 
+        .elementor-field-type-checkbox input.elementor-field[type="checkbox"]:focus,
+        .elementor-field-type-checkbox input.elementor-field[type="checkbox"]:active,
+        .elementor-field-type-acceptance input.elementor-field[type="checkbox"]:focus,
+        .elementor-field-type-acceptance input.elementor-field[type="checkbox"]:active,
+        .elementor-field-type-radio input.elementor-field[type="radio"]:focus,
+        .elementor-field-type-radio input.elementor-field[type="radio"]:active {
+            background: #fff !important;
+            border-color: var(--e-global-color-primary, #22c55e) !important;
+            outline: none;
+            box-shadow: none !important;
+        }
+
         .elementor-field-type-radio input[type="radio"] {
             border-radius: 50%;
         }
 
-        .elementor-field-type-checkbox input[type="checkbox"]:checked,
-        .elementor-field-type-acceptance input[type="checkbox"]:checked {
-            background-color: var(--e-global-color-primary, #22c55e);
-            border-color: var(--e-global-color-primary, #22c55e);
-            position: relative;
+        .elementor-field-type-checkbox input.elementor-field[type="checkbox"]:checked,
+        .elementor-field-type-acceptance input.elementor-field[type="checkbox"]:checked,
+        .elementor-field-type-checkbox input.elementor-field[type="checkbox"]:checked:focus,
+        .elementor-field-type-acceptance input.elementor-field[type="checkbox"]:checked:focus,
+        .elementor-field-type-checkbox input.elementor-field[type="checkbox"]:checked:active,
+        .elementor-field-type-acceptance input.elementor-field[type="checkbox"]:checked:active {
+            background-color: var(--e-global-color-primary, #22c55e) !important;
+            border-color: var(--e-global-color-primary, #22c55e) !important;
         }
 
         .elementor-field-type-checkbox input[type="checkbox"]::after,

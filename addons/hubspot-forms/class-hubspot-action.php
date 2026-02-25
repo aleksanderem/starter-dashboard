@@ -83,6 +83,15 @@ class EHFA_HubSpot_Action extends Action_Base {
             ]
         );
 
+        // Hidden field to store consent mapping
+        $widget->add_control(
+            'hubspot_consent_mapping_json',
+            [
+                'type' => Controls_Manager::HIDDEN,
+                'default' => '{}',
+            ]
+        );
+
         // Legacy repeater for backward compatibility
         $repeater = new Repeater();
 
@@ -190,7 +199,8 @@ class EHFA_HubSpot_Action extends Action_Base {
         unset(
             $element['settings']['hubspot_form_id'],
             $element['settings']['hubspot_fields_map'],
-            $element['settings']['hubspot_field_mapping_json']
+            $element['settings']['hubspot_field_mapping_json'],
+            $element['settings']['hubspot_consent_mapping_json']
         );
         return $element;
     }
@@ -302,11 +312,29 @@ class EHFA_HubSpot_Action extends Action_Base {
             $context['send_to_hubspot'] = false;
         }
 
+        // Build consent data from mapped checkbox fields
+        $consent_data = [];
+        if (!empty($settings['hubspot_consent_mapping_json'])) {
+            $consent_mappings = json_decode($settings['hubspot_consent_mapping_json'], true);
+            if (is_array($consent_mappings)) {
+                foreach ($consent_mappings as $consent_key => $elementor_field_id) {
+                    if (empty($elementor_field_id) || !isset($submitted_data[$elementor_field_id])) {
+                        continue;
+                    }
+                    $raw_value = $submitted_data[$elementor_field_id];
+                    // Checkbox: treat non-empty / "on" / "yes" / "1" as true
+                    $is_checked = !empty($raw_value) && !in_array(strtolower($raw_value), ['no', '0', 'false', 'off'], true);
+                    $consent_data[$consent_key] = $is_checked;
+                }
+            }
+        }
+
         // Submit to HubSpot
         $result = Starter_Addon_HubSpot_Forms::submit_to_hubspot(
             $settings['hubspot_form_id'],
             $hubspot_fields,
-            $context
+            $context,
+            $consent_data
         );
 
         if (is_wp_error($result)) {

@@ -1188,10 +1188,14 @@ class Starter_Addon_HubSpot_Forms {
             }
 
             // Render form fields
-            function renderFormFields(formId, fields) {
+            function renderFormFields(formId, data) {
                 var container = $('#bp-hubspot-form-details');
                 var form = formsCache.find(function(f) { return f.id === formId; });
                 var formName = form ? form.name : formId;
+
+                // Support both old flat array and new {fields, consent} format
+                var fields = Array.isArray(data) ? data : (data.fields || []);
+                var consent = Array.isArray(data) ? {} : (data.consent || {});
 
                 var html = '<div class="bp-hubspot-form-details__content">';
                 html += '<div class="bp-hubspot-form-details__header">';
@@ -1220,6 +1224,28 @@ class Starter_Addon_HubSpot_Forms {
                     html += '</tbody></table>';
                 } else {
                     html += '<p><?php _e('No fields found in this form', 'starter-dashboard'); ?></p>';
+                }
+
+                // Consent / Marketing Subscriptions
+                if (consent.communications && consent.communications.length > 0) {
+                    html += '<h5 style="margin:16px 0 8px;font-size:13px;color:#ff7a59;"><?php _e('Marketing Consent', 'starter-dashboard'); ?></h5>';
+                    if (consent.consentToProcess) {
+                        html += '<p style="font-size:12px;color:#666;margin-bottom:8px;"><strong><?php _e('Consent to Process:', 'starter-dashboard'); ?></strong> ' + escapeHtml(consent.consentToProcess.label) + '</p>';
+                    }
+                    html += '<table class="bp-hubspot-fields-table">';
+                    html += '<thead><tr>';
+                    html += '<th><?php _e('Subscription Type ID', 'starter-dashboard'); ?></th>';
+                    html += '<th><?php _e('Label', 'starter-dashboard'); ?></th>';
+                    html += '<th><?php _e('Required', 'starter-dashboard'); ?></th>';
+                    html += '</tr></thead><tbody>';
+                    consent.communications.forEach(function(c) {
+                        html += '<tr>';
+                        html += '<td><span class="bp-hubspot-field-name">' + c.subscriptionTypeId + '</span></td>';
+                        html += '<td>' + escapeHtml(c.label || '-') + '</td>';
+                        html += '<td>' + (c.required ? '<span class="bp-hubspot-field-required">*</span>' : '-') + '</td>';
+                        html += '</tr>';
+                    });
+                    html += '</tbody></table>';
                 }
 
                 html += '</div>';
@@ -1595,7 +1621,8 @@ class Starter_Addon_HubSpot_Forms {
         }
 
         if (ehfaFieldsCache[formId]) {
-            buildMappingUI(ehfaFieldsCache[formId], model, forceReset);
+            var cached = ehfaFieldsCache[formId];
+            buildMappingUI(cached.fields || cached, model, forceReset, cached.consent || {});
             return;
         }
 
@@ -1612,10 +1639,16 @@ class Starter_Addon_HubSpot_Forms {
             success: function(response) {
                 console.log('[EHFA] AJAX response:', response);
                 if (response.success && response.data) {
-                    console.log('[EHFA] Fields received:', response.data);
-                    console.log('[EHFA] Required fields:', response.data.filter(function(f) { return f.required; }));
-                    ehfaFieldsCache[formId] = response.data;
-                    buildMappingUI(response.data, model, forceReset);
+                    // Support both flat array (old) and {fields, consent} (new)
+                    var payload = response.data;
+                    if (Array.isArray(payload)) {
+                        payload = { fields: payload, consent: {} };
+                    }
+                    console.log('[EHFA] Fields received:', payload.fields);
+                    console.log('[EHFA] Consent data:', payload.consent);
+                    console.log('[EHFA] Required fields:', payload.fields.filter(function(f) { return f.required; }));
+                    ehfaFieldsCache[formId] = payload;
+                    buildMappingUI(payload.fields, model, forceReset, payload.consent);
                 } else {
                     container.html('<p style="color:#d63638; padding:10px;">Failed to load HubSpot fields</p>');
                 }
@@ -1626,8 +1659,9 @@ class Starter_Addon_HubSpot_Forms {
         });
     }
 
-    function buildMappingUI(hubspotFields, model, forceReset) {
-        console.log('[EHFA] buildMappingUI called', {fieldsCount: hubspotFields.length, forceReset: forceReset});
+    function buildMappingUI(hubspotFields, model, forceReset, consentData) {
+        consentData = consentData || {};
+        console.log('[EHFA] buildMappingUI called', {fieldsCount: hubspotFields.length, forceReset: forceReset, hasConsent: !!(consentData.communications && consentData.communications.length)});
 
         var container = $('#ehfa-field-mapping-container');
         if (!container.length || !hubspotFields.length) return;
@@ -1730,6 +1764,10 @@ class Starter_Addon_HubSpot_Forms {
         html += '.ehfa-mapping-row.ehfa-required { border-left: 2px solid #ff7a59; }';
         html += '.ehfa-required-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; text-transform: uppercase; color: #ff7a59; letter-spacing: 0.5px; margin-left: 8px; }';
         html += '.ehfa-required-badge svg { width: 10px; height: 10px; fill: currentColor; }';
+        html += '.ehfa-consent-actions { display: flex; justify-content: flex-end; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.05); }';
+        html += '.ehfa-pull-label { background: none; border: 1px solid rgba(255,122,89,0.3); color: #ff7a59; cursor: pointer; padding: 4px 10px; font-size: 11px; display: flex; align-items: center; gap: 5px; border-radius: 3px; transition: all 0.15s; }';
+        html += '.ehfa-pull-label:hover { background: rgba(255,122,89,0.1); border-color: #ff7a59; }';
+        html += '.ehfa-pull-label.ehfa-pulled { border-color: rgba(100,200,100,0.4); color: #6c6; }';
         html += '</style>';
 
         html += '<div class="ehfa-mapping-wrapper">';
@@ -1763,6 +1801,70 @@ class Starter_Addon_HubSpot_Forms {
         html += '<button type="button" class="ehfa-add-mapping">';
         html += '<svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>';
         html += 'Add Field Mapping</button>';
+
+        // Consent / Marketing Subscription mapping
+        var communications = (consentData.communications || []);
+        if (communications.length > 0 || consentData.consentToProcess) {
+            // Load existing consent mappings
+            var currentConsentMappings = {};
+            try {
+                currentConsentMappings = JSON.parse(model.get('settings').get('hubspot_consent_mapping_json') || '{}');
+            } catch(e) {}
+
+            html += '<div class="ehfa-consent-section" style="margin-top:16px; border-top:1px solid rgba(255,255,255,0.08); padding-top:14px;">';
+            html += '<div style="font-size:11px; text-transform:uppercase; color:#ff7a59; letter-spacing:0.5px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">';
+            html += '<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#ff7a59;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>';
+            html += 'Marketing Consent</div>';
+
+            // Helper: encode label text for data attribute
+            function encAttr(str) { return (str || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+            // Consent to process
+            if (consentData.consentToProcess) {
+                var ctpLabel = consentData.consentToProcess.label || '';
+                var ctpVal = currentConsentMappings._consentToProcess || '';
+                html += '<div class="ehfa-consent-row" style="background:rgba(0,0,0,0.15); border:1px solid rgba(255,255,255,0.06); border-radius:4px; padding:12px; margin-bottom:8px;">';
+                html += '<div class="ehfa-field-group">';
+                html += '<label class="ehfa-field-label">Consent to Process <span class="ehfa-required-badge"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:currentColor;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>Required</span></label>';
+                html += '<div style="font-size:11px; color:rgba(255,255,255,0.35); margin-bottom:6px;">' + ctpLabel.replace(/</g, '&lt;') + '</div>';
+                html += '</div>';
+                html += '<div class="ehfa-field-group">';
+                html += '<label class="ehfa-field-label">Elementor Checkbox Field</label>';
+                html += '<select class="ehfa-consent-el-select" data-consent-key="_consentToProcess">' + elOptions + '</select>';
+                html += '</div>';
+                html += '<div class="ehfa-consent-actions">';
+                html += '<button type="button" class="ehfa-pull-label" data-consent-label="' + encAttr(ctpLabel) + '" title="Set HubSpot consent text as Elementor field label">';
+                html += '<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Pull label';
+                html += '</button>';
+                html += '</div>';
+                html += '</div>';
+            }
+
+            // Communication subscription checkboxes
+            communications.forEach(function(comm) {
+                var key = 'sub_' + comm.subscriptionTypeId;
+                var savedVal = currentConsentMappings[key] || '';
+                var commLabel = comm.label || '';
+                html += '<div class="ehfa-consent-row" style="background:rgba(0,0,0,0.15); border:1px solid rgba(255,255,255,0.06); border-radius:4px; padding:12px; margin-bottom:8px;">';
+                html += '<div class="ehfa-field-group">';
+                html += '<label class="ehfa-field-label">Subscription: ' + commLabel.replace(/</g, '&lt;') + (comm.required ? ' <span class="ehfa-required-badge"><svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:currentColor;"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>Required</span>' : '') + '</label>';
+                html += '<div style="font-size:11px; color:rgba(255,255,255,0.35); margin-bottom:6px;">ID: ' + comm.subscriptionTypeId + '</div>';
+                html += '</div>';
+                html += '<div class="ehfa-field-group">';
+                html += '<label class="ehfa-field-label">Elementor Checkbox Field</label>';
+                html += '<select class="ehfa-consent-el-select" data-consent-key="' + key + '">' + elOptions + '</select>';
+                html += '</div>';
+                html += '<div class="ehfa-consent-actions">';
+                html += '<button type="button" class="ehfa-pull-label" data-consent-label="' + encAttr(commLabel) + '" title="Set HubSpot consent text as Elementor field label">';
+                html += '<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Pull label';
+                html += '</button>';
+                html += '</div>';
+                html += '</div>';
+            });
+
+            html += '</div>';
+        }
+
         html += '</div>';
 
         container.html(html);
@@ -1796,6 +1898,69 @@ class Starter_Addon_HubSpot_Forms {
                 if (currentMappings[idx].hubspot) {
                     $(this).find('.ehfa-hs-select').val(currentMappings[idx].hubspot).trigger('change.select2');
                 }
+            }
+        });
+
+        // Initialize consent selects
+        container.find('.ehfa-consent-el-select').each(function() {
+            var key = $(this).data('consent-key');
+            $(this).select2({
+                placeholder: 'Select Elementor field...',
+                allowClear: true,
+                width: '100%',
+                dropdownParent: container
+            });
+            // Restore saved value
+            var saved = {};
+            try { saved = JSON.parse(model.get('settings').get('hubspot_consent_mapping_json') || '{}'); } catch(e) {}
+            if (saved[key]) {
+                $(this).val(saved[key]).trigger('change.select2');
+            }
+        });
+
+        // Bind consent select changes
+        container.off('change', '.ehfa-consent-el-select').on('change', '.ehfa-consent-el-select', function() {
+            saveConsentMappings();
+        });
+
+        // Pull label: set HubSpot consent text as Elementor field label
+        container.off('click', '.ehfa-pull-label').on('click', '.ehfa-pull-label', function() {
+            var btn = $(this);
+            var consentLabel = btn.data('consent-label');
+            var row = btn.closest('.ehfa-consent-row');
+            var selectedFieldId = row.find('.ehfa-consent-el-select').val();
+
+            if (!selectedFieldId) {
+                btn.text('Select a field first').css('color', '#d63638');
+                setTimeout(function() { btn.html('<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Pull label').css('color', ''); }, 1500);
+                return;
+            }
+
+            if (!consentLabel || !ehfaCurrentModel) return;
+
+            // Find the Elementor form field and update its label
+            try {
+                var settings = ehfaCurrentModel.get('settings');
+                var formFields = settings.get('form_fields');
+                if (formFields && formFields.models) {
+                    formFields.models.forEach(function(fieldModel) {
+                        var attrs = fieldModel.attributes;
+                        var fieldId = attrs.custom_id || attrs._id || '';
+                        if (fieldId === selectedFieldId) {
+                            fieldModel.set('field_label', consentLabel);
+                            // Also set acceptance_text if it's an acceptance field
+                            if (attrs.field_type === 'acceptance') {
+                                fieldModel.set('acceptance_text', consentLabel);
+                            }
+                            console.log('[EHFA] Updated field label for', fieldId, 'to:', consentLabel);
+                        }
+                    });
+                }
+
+                btn.addClass('ehfa-pulled').html('<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Done');
+                setTimeout(function() { btn.removeClass('ehfa-pulled').html('<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor;"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> Pull label'); }, 2000);
+            } catch(e) {
+                console.log('[EHFA] Error updating field label:', e);
             }
         });
 
@@ -1954,6 +2119,25 @@ class Starter_Addon_HubSpot_Forms {
             console.log('[EHFA] Mappings saved successfully');
         } catch(e) {
             console.log('[EHFA] Error saving mappings:', e);
+        }
+    }
+
+    function saveConsentMappings() {
+        if (!ehfaCurrentModel) return;
+        var mappings = {};
+        $('#ehfa-field-mapping-container .ehfa-consent-el-select').each(function() {
+            var key = $(this).data('consent-key');
+            var val = $(this).val();
+            if (key && val) {
+                mappings[key] = val;
+            }
+        });
+        var jsonValue = JSON.stringify(mappings);
+        console.log('[EHFA] Saving consent mappings:', jsonValue);
+        try {
+            ehfaCurrentModel.setSetting('hubspot_consent_mapping_json', jsonValue);
+        } catch(e) {
+            console.log('[EHFA] Error saving consent mappings:', e);
         }
     }
 
@@ -2356,6 +2540,13 @@ JS;
             return new WP_Error('no_token', __('HubSpot access token not configured', 'starter-dashboard'));
         }
 
+        // Check cache (5 min)
+        $cache_key = 'starter_hs_fields_' . md5($form_guid);
+        $cached = get_transient($cache_key);
+        if ($cached !== false) {
+            return $cached;
+        }
+
         $response = wp_remote_get('https://api.hubapi.com/marketing/v3/forms/' . $form_guid, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $access_token,
@@ -2400,7 +2591,45 @@ JS;
             }
         }
 
-        return $fields;
+        // Parse legal consent / marketing subscription options
+        $consent = [];
+        $legal = $body['legalConsentOptions'] ?? null;
+        if ($legal) {
+            $consent['type'] = $legal['type'] ?? 'none';
+
+            if (!empty($legal['consentToProcessCheckboxLabel'])) {
+                $consent['consentToProcess'] = [
+                    'label' => $legal['consentToProcessCheckboxLabel'],
+                    'required' => true,
+                ];
+            }
+
+            if (!empty($legal['privacyPolicyText'])) {
+                $consent['privacyText'] = $legal['privacyPolicyText'];
+            }
+
+            $checkboxes = $legal['communicationConsentCheckboxes']
+                ?? $legal['communicationsCheckboxes']
+                ?? [];
+
+            $consent['communications'] = [];
+            foreach ($checkboxes as $cb) {
+                $consent['communications'][] = [
+                    'subscriptionTypeId' => $cb['subscriptionTypeId'] ?? 0,
+                    'label'              => $cb['label'] ?? '',
+                    'required'           => $cb['required'] ?? false,
+                ];
+            }
+        }
+
+        $result = [
+            'fields'  => $fields,
+            'consent' => $consent,
+        ];
+
+        set_transient($cache_key, $result, 5 * MINUTE_IN_SECONDS);
+
+        return $result;
     }
 
     /**
@@ -2425,7 +2654,7 @@ JS;
     /**
      * Submit form to HubSpot
      */
-    public static function submit_to_hubspot($form_guid, $fields, $context = []) {
+    public static function submit_to_hubspot($form_guid, $fields, $context = [], $consent_data = []) {
         $instance = self::instance();
         $portal_id = get_option($instance->option_portal, '');
         $access_token = get_option($instance->option_token, '');
@@ -2504,6 +2733,79 @@ JS;
                     'name' => $hubspot_name,
                     'value' => is_array($value) ? implode(';', $value) : (string) $value,
                 ];
+            }
+        }
+
+        // Build legalConsentOptions if consent data provided
+        if (!empty($consent_data)) {
+            // Fetch the form's consent configuration to get labels
+            $form_consent = [];
+            $form_details = $instance->get_form_fields($form_guid);
+            if (!is_wp_error($form_details) && !empty($form_details['consent'])) {
+                $form_consent = $form_details['consent'];
+            }
+
+            $consent_type = $form_consent['type'] ?? 'explicit_consent_to_process';
+
+            if ($consent_type === 'legitimate_interest') {
+                // Legitimate interest: send per-subscription
+                foreach ($consent_data as $key => $value) {
+                    if (strpos($key, 'sub_') === 0) {
+                        $sub_id = (int) substr($key, 4);
+                        // Find label from form consent data
+                        $label = '';
+                        foreach ($form_consent['communications'] ?? [] as $comm) {
+                            if ((int) $comm['subscriptionTypeId'] === $sub_id) {
+                                $label = $comm['label'];
+                                break;
+                            }
+                        }
+                        $payload['legalConsentOptions']['legitimateInterest'] = [
+                            'value' => (bool) $value,
+                            'subscriptionTypeId' => $sub_id,
+                            'legalBasis' => 'LEAD',
+                            'text' => $label,
+                        ];
+                    }
+                }
+            } else {
+                // Explicit consent to process (GDPR)
+                $communications = [];
+                foreach ($consent_data as $key => $value) {
+                    if (strpos($key, 'sub_') === 0) {
+                        $sub_id = (int) substr($key, 4);
+                        // Find label from form consent data
+                        $label = '';
+                        foreach ($form_consent['communications'] ?? [] as $comm) {
+                            if ((int) $comm['subscriptionTypeId'] === $sub_id) {
+                                $label = $comm['label'];
+                                break;
+                            }
+                        }
+                        $communications[] = [
+                            'value' => (bool) $value,
+                            'subscriptionTypeId' => $sub_id,
+                            'text' => $label,
+                        ];
+                    }
+                }
+
+                $consent_payload = [
+                    'communications' => $communications,
+                ];
+
+                // Consent to process
+                if (isset($consent_data['_consentToProcess'])) {
+                    $consent_payload['consentToProcess'] = (bool) $consent_data['_consentToProcess'];
+                    $consent_payload['text'] = $form_consent['consentToProcess']['label'] ?? '';
+                }
+
+                $payload['legalConsentOptions']['consent'] = $consent_payload;
+            }
+
+            if ($debug_mode) {
+                $log_data['consent_data'] = $consent_data;
+                $log_data['consent_payload'] = $payload['legalConsentOptions'] ?? null;
             }
         }
 
