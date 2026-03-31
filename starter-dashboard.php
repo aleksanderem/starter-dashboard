@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.3.7
+ * Version: 4.4.0
  * Author: Alex M.
  * Author URI: https://developer.dev
  */
@@ -2304,8 +2304,8 @@ class Starter_Dashboard {
             <table class="wp-list-table widefat striped">
                 <thead>
                     <tr>
-                        <th style="width:6%;"><?php _e('Hub', 'starter-dashboard'); ?></th>
-                        <th style="width:22%;"><?php _e('Post Type', 'starter-dashboard'); ?></th>
+                        <th style="width:6%;min-width:60px;"><?php _e('Hub', 'starter-dashboard'); ?></th>
+                        <th style="width:22%;min-width:180px;"><?php _e('Post Type', 'starter-dashboard'); ?></th>
                         <th style="width:10%;"><?php _e('Source', 'starter-dashboard'); ?></th>
                         <th style="width:8%;"><?php _e('Items', 'starter-dashboard'); ?></th>
                         <th style="width:20%;"><?php _e('Taxonomies', 'starter-dashboard'); ?></th>
@@ -2452,8 +2452,19 @@ class Starter_Dashboard {
                     <div class="bp-addons-grid">
                         <?php foreach ($category['addons'] as $addon_id => $addon):
                             $is_active = $addon_loader->is_addon_active($addon_id);
+                            // Check for available update (external addons with plugin_file)
+                            $update_available = false;
+                            $update_version = '';
+                            if (!empty($addon['plugin_file'])) {
+                                $plugin_basename = plugin_basename($addon['plugin_file']);
+                                $update_plugins = get_site_transient('update_plugins');
+                                if ($update_plugins && isset($update_plugins->response[$plugin_basename])) {
+                                    $update_available = true;
+                                    $update_version = $update_plugins->response[$plugin_basename]->new_version ?? '';
+                                }
+                            }
                         ?>
-                        <div class="bp-addon-card <?php echo $is_active ? 'bp-addon-card--active' : ''; ?>" data-addon="<?php echo esc_attr($addon_id); ?>">
+                        <div class="bp-addon-card <?php echo $is_active ? 'bp-addon-card--active' : ''; ?> <?php echo $update_available ? 'bp-addon-card--has-update' : ''; ?>" data-addon="<?php echo esc_attr($addon_id); ?>">
                             <div class="bp-addon-card__header">
                                 <div class="bp-addon-card__icon">
                                     <easier-icon name="<?php echo esc_attr($addon['icon']); ?>" variant="twotone" size="24" stroke-color="#fff" color="#fff"></easier-icon>
@@ -2461,7 +2472,11 @@ class Starter_Dashboard {
                                 <div class="bp-addon-card__info">
                                     <h4 class="bp-addon-card__title"><?php echo esc_html($addon['name']); ?></h4>
                                     <span class="bp-addon-card__version">v<?php echo esc_html($addon['version']); ?></span>
+                                    <?php if ($update_available): ?>
+                                        <span class="bp-addon-card__update-badge"><?php printf(__('v%s available', 'starter-dashboard'), esc_html($update_version)); ?></span>
+                                    <?php endif; ?>
                                 </div>
+                                <?php if (empty($addon['external'])): ?>
                                 <label class="bp-addon-card__toggle">
                                     <input type="checkbox"
                                            class="bp-addon-toggle"
@@ -2469,18 +2484,25 @@ class Starter_Dashboard {
                                            <?php checked($is_active); ?>>
                                     <span class="bp-toggle-slider"></span>
                                 </label>
+                                <?php endif; ?>
                             </div>
 
                             <p class="bp-addon-card__desc"><?php echo esc_html($addon['description']); ?></p>
 
-                            <?php if (!empty($addon['has_readme'])): ?>
                             <div class="bp-addon-card__footer">
+                                <?php if (!empty($addon['has_readme'])): ?>
                                 <button type="button" class="bp-addon-readme-btn" data-addon="<?php echo esc_attr($addon_id); ?>" title="<?php _e('View documentation', 'starter-dashboard'); ?>">
                                     <easier-icon name="book-02" variant="twotone" size="16" stroke-color="currentColor" color="currentColor"></easier-icon>
                                     <?php _e('Documentation', 'starter-dashboard'); ?>
                                 </button>
+                                <?php endif; ?>
+                                <?php if ($update_available && !empty($addon['plugin_file'])): ?>
+                                <button type="button" class="bp-addon-update-btn" data-plugin="<?php echo esc_attr(plugin_basename($addon['plugin_file'])); ?>" data-addon="<?php echo esc_attr($addon_id); ?>">
+                                    <easier-icon name="download-01" variant="twotone" size="16" stroke-color="currentColor" color="currentColor"></easier-icon>
+                                    <?php _e('Update', 'starter-dashboard'); ?>
+                                </button>
+                                <?php endif; ?>
                             </div>
-                            <?php endif; ?>
                         </div>
                         <?php endforeach; ?>
                     </div>
@@ -2687,6 +2709,57 @@ class Starter_Dashboard {
             .bp-addon-card__version {
                 font-size: 11px;
                 color: #757575;
+            }
+
+            .bp-addon-card__update-badge {
+                display: inline-block;
+                font-size: 10px;
+                font-weight: 600;
+                color: #fff;
+                background: #d63638;
+                padding: 1px 7px;
+                border-radius: 10px;
+                margin-left: 6px;
+                vertical-align: middle;
+            }
+
+            .bp-addon-card--has-update {
+                border-color: #d63638;
+                box-shadow: 0 0 0 1px rgba(214, 54, 56, 0.2);
+            }
+
+            .bp-addon-update-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 5px 14px;
+                font-size: 12px;
+                font-weight: 600;
+                color: #fff;
+                background: #d63638;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background 0.2s;
+                margin-left: auto;
+            }
+
+            .bp-addon-update-btn:hover {
+                background: #b32d2e;
+            }
+
+            .bp-addon-update-btn.is-updating {
+                opacity: 0.7;
+                pointer-events: none;
+            }
+
+            .bp-addon-card__footer {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px solid #e5e7eb;
             }
 
             .bp-addon-card__toggle {

@@ -38,6 +38,7 @@ class Starter_Addon_Loader {
         add_action('wp_ajax_starter_get_addon_settings', [$this, 'ajax_get_addon_settings']);
         add_action('wp_ajax_starter_save_addon_settings', [$this, 'ajax_save_addon_settings']);
         add_action('wp_ajax_starter_get_addon_readme', [$this, 'ajax_get_addon_readme']);
+        add_action('wp_ajax_starter_update_plugin', [$this, 'ajax_update_plugin']);
     }
 
     /**
@@ -566,6 +567,49 @@ class Starter_Addon_Loader {
         } catch (Exception $e) {
             return '<p>Error parsing markdown: ' . esc_html($e->getMessage()) . '</p>';
         }
+    }
+
+    /**
+     * AJAX: Update a plugin from the addons page
+     */
+    public function ajax_update_plugin() {
+        check_ajax_referer('starter_settings_nonce', 'nonce');
+
+        if (!current_user_can('update_plugins')) {
+            wp_send_json_error(['message' => __('Permission denied', 'starter-dashboard')]);
+        }
+
+        $plugin = isset($_POST['plugin']) ? sanitize_text_field($_POST['plugin']) : '';
+
+        if (empty($plugin)) {
+            wp_send_json_error(['message' => __('No plugin specified', 'starter-dashboard')]);
+        }
+
+        require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+        $skin = new WP_Ajax_Upgrader_Skin();
+        $upgrader = new Plugin_Upgrader($skin);
+        $result = $upgrader->upgrade($plugin);
+
+        if (is_wp_error($result)) {
+            wp_send_json_error(['message' => $result->get_error_message()]);
+        }
+
+        if ($result === false) {
+            $errors = $skin->get_errors();
+            $message = is_wp_error($errors) ? $errors->get_error_message() : __('Update failed', 'starter-dashboard');
+            wp_send_json_error(['message' => $message]);
+        }
+
+        // Get new version after update
+        $plugin_data = get_plugin_data(WP_PLUGIN_DIR . '/' . $plugin);
+        $new_version = $plugin_data['Version'] ?? '';
+
+        wp_send_json_success([
+            'message' => sprintf(__('%s updated successfully', 'starter-dashboard'), $plugin_data['Name'] ?? $plugin),
+            'new_version' => $new_version,
+        ]);
     }
 }
 

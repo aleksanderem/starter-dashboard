@@ -1081,6 +1081,46 @@
                 $('#bp-addon-readme-modal').fadeOut(200);
             });
 
+            // Update plugin from addon card
+            $(document).on('click', '.bp-addon-update-btn', function() {
+                var btn = $(this);
+                if (btn.hasClass('is-updating')) return;
+
+                var pluginSlug = btn.data('plugin');
+                var card = btn.closest('.bp-addon-card');
+
+                btn.addClass('is-updating').html('<span class="spinner is-active" style="float:none;margin:0;"></span> Updating...');
+
+                $.ajax({
+                    url: window.starterSettings.ajaxUrl,
+                    type: 'POST',
+                    data: {
+                        action: 'starter_update_plugin',
+                        nonce: window.starterSettings.nonce,
+                        plugin: pluginSlug
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            card.removeClass('bp-addon-card--has-update');
+                            card.find('.bp-addon-card__update-badge').remove();
+                            card.find('.bp-addon-card__version').text('v' + response.data.new_version);
+                            btn.remove();
+                            // Show brief success
+                            var notice = $('<span style="color:#00a32a;font-size:12px;font-weight:600;margin-left:auto;">Updated!</span>');
+                            card.find('.bp-addon-card__footer').append(notice);
+                            setTimeout(function() { notice.fadeOut(400, function() { notice.remove(); }); }, 3000);
+                        } else {
+                            btn.removeClass('is-updating').html('<easier-icon name="download-01" variant="twotone" size="16" stroke-color="currentColor" color="currentColor"></easier-icon> Retry');
+                            alert(response.data.message || 'Update failed');
+                        }
+                    },
+                    error: function() {
+                        btn.removeClass('is-updating').html('<easier-icon name="download-01" variant="twotone" size="16" stroke-color="currentColor" color="currentColor"></easier-icon> Retry');
+                        alert('Update request failed');
+                    }
+                });
+            });
+
             // Save addon settings
             $(document).on('click', '.bp-addon-save-settings', function() {
                 if (!currentAddonId) return;

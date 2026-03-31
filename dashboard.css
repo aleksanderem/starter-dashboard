@@ -382,7 +382,7 @@
 }
 
 .bp-dashboard__column-main .bp-dashboard__grid--content {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
 }
 
 .bp-dashboard__column-side {
@@ -1067,7 +1067,7 @@
 
 @media (max-width: 1199px) {
     .bp-dashboard__grid--content {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     }
 }
 
