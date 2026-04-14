@@ -305,14 +305,16 @@ class EHFA_HubSpot_Action extends Action_Base {
 
         if (is_array($meta)) {
             if (isset($meta['page_url'])) {
-                $page_url = is_array($meta['page_url'])
+                $raw_url = is_array($meta['page_url'])
                     ? ($meta['page_url']['value'] ?? '')
                     : $meta['page_url'];
+                $page_url = esc_url_raw($raw_url);
             }
             if (isset($meta['page_title'])) {
-                $page_title = is_array($meta['page_title'])
+                $raw_title = is_array($meta['page_title'])
                     ? ($meta['page_title']['value'] ?? '')
                     : $meta['page_title'];
+                $page_title = sanitize_text_field($raw_title);
             }
         }
 
@@ -320,7 +322,7 @@ class EHFA_HubSpot_Action extends Action_Base {
         if (empty($page_url)) {
             $referer = wp_get_referer();
             if ($referer) {
-                $page_url = $referer;
+                $page_url = esc_url_raw($referer);
             }
         }
 
@@ -328,7 +330,7 @@ class EHFA_HubSpot_Action extends Action_Base {
         if (empty($page_title) && !empty($page_url)) {
             $post_id = url_to_postid($page_url);
             if ($post_id) {
-                $page_title = get_the_title($post_id);
+                $page_title = sanitize_text_field(get_the_title($post_id));
             }
         }
 

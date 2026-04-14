@@ -2693,22 +2693,21 @@ JS;
             return new WP_Error('not_configured', __('HubSpot not configured', 'starter-dashboard'));
         }
 
-        // Always send context to HubSpot API (required by API)
+        // Build payload — page context sent only when "Send Page Context" is enabled
         $payload = [
             'fields' => [],
-            'context' => [
-                'pageUri' => $context['page_url'] ?? '',
-                'pageName' => $context['page_title'] ?? '',
-            ],
         ];
 
-        // Add IP and tracking cookie only if "Send Page Context" is enabled
         if (!empty($context['send_to_hubspot'])) {
-            $payload['context']['ipAddress'] = $context['ip'] ?? '';
-        }
+            $payload['context'] = [
+                'pageUri' => $context['page_url'] ?? '',
+                'pageName' => $context['page_title'] ?? '',
+                'ipAddress' => $context['ip'] ?? '',
+            ];
 
-        if (!empty($_COOKIE['hubspotutk'])) {
-            $payload['context']['hutk'] = sanitize_text_field($_COOKIE['hubspotutk']);
+            if (!empty($_COOKIE['hubspotutk'])) {
+                $payload['context']['hutk'] = sanitize_text_field($_COOKIE['hubspotutk']);
+            }
         }
 
         // Common field name mappings (Elementor → HubSpot)
