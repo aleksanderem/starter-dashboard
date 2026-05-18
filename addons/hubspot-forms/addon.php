@@ -14,8 +14,10 @@ class Starter_Addon_HubSpot_Forms {
     private $option_portal = 'starter_hubspot_portal_id';
     private $option_token = 'starter_hubspot_access_token';
     private $option_debug = 'starter_hubspot_debug_mode';
+    private $option_honeypot = 'starter_hubspot_honeypot';
     private $log_option = 'starter_hubspot_submission_log';
     private $max_log_entries = 100;
+    private $is_buffering_form = false;
 
     public static function instance() {
         if (self::$instance === null) {
@@ -40,6 +42,89 @@ class Starter_Addon_HubSpot_Forms {
 
         // Settings save handler
         add_filter('starter_addon_save_settings_hubspot-forms', [$this, 'save_settings'], 10, 2);
+
+        // Honeypot spam protection for forms using the HubSpot action
+        add_action('elementor/frontend/widget/before_render', [$this, 'maybe_start_form_buffer']);
+        add_action('elementor/frontend/widget/after_render', [$this, 'maybe_inject_honeypot']);
+        add_action('elementor_pro/forms/validation', [$this, 'validate_honeypot'], 5, 2);
+    }
+
+    /**
+     * Honeypot: start output buffering when an Elementor form widget that uses
+     * the HubSpot submit action is about to render.
+     */
+    public function maybe_start_form_buffer($widget) {
+        if (!is_object($widget) || !method_exists($widget, 'get_name')) {
+            return;
+        }
+        if ($widget->get_name() !== 'form') {
+            return;
+        }
+        if (get_option($this->option_honeypot, 'yes') !== 'yes') {
+            return;
+        }
+        if (!$this->form_uses_hubspot_action($widget)) {
+            return;
+        }
+        $this->is_buffering_form = true;
+        ob_start();
+    }
+
+    /**
+     * Honeypot: inject the hidden honeypot field just before </form> in the
+     * captured widget HTML.
+     */
+    public function maybe_inject_honeypot($widget) {
+        if (!$this->is_buffering_form) {
+            return;
+        }
+        if (!is_object($widget) || !method_exists($widget, 'get_name') || $widget->get_name() !== 'form') {
+            return;
+        }
+        $this->is_buffering_form = false;
+        $html = ob_get_clean();
+        $honeypot = '<div class="bp-hubspot-hp" style="display:none;" aria-hidden="true">'
+            . '<label>Credit Card</label>'
+            . '<input type="tel" name="credit_card_number" tabindex="-1" autocomplete="off" />'
+            . '</div>';
+        $injected = preg_replace('#</form>#i', $honeypot . '</form>', $html, 1, $count);
+        echo ($count > 0) ? $injected : $html;
+    }
+
+    /**
+     * Honeypot: reject form submissions whose honeypot field was filled in.
+     * Only applies to forms whose submit actions include the HubSpot action.
+     */
+    public function validate_honeypot($record, $ajax_handler) {
+        if (get_option($this->option_honeypot, 'yes') !== 'yes') {
+            return;
+        }
+        $settings = $record->get('form_settings');
+        $submit_actions = (array) ($settings['submit_actions'] ?? []);
+        if (!in_array('hubspot', $submit_actions, true)) {
+            return;
+        }
+        $honeypot_value = isset($_POST['credit_card_number']) ? trim(wp_unslash($_POST['credit_card_number'])) : '';
+        if ($honeypot_value !== '') {
+            $ajax_handler->add_error_message(__('Submission rejected.', 'starter-dashboard'));
+            if (method_exists($record, 'set_status')) {
+                $record->set_status('invalid', 'honeypot');
+            }
+        }
+    }
+
+    /**
+     * Check whether an Elementor form widget has the HubSpot submit action enabled.
+     */
+    private function form_uses_hubspot_action($widget) {
+        if (!method_exists($widget, 'get_settings_for_display')) {
+            return false;
+        }
+        $submit_actions = $widget->get_settings_for_display('submit_actions');
+        if (empty($submit_actions)) {
+            return false;
+        }
+        return in_array('hubspot', (array) $submit_actions, true);
     }
 
     /**
@@ -58,6 +143,7 @@ class Starter_Addon_HubSpot_Forms {
         $portal_id = get_option($instance->option_portal, '');
         $token = get_option($instance->option_token, '');
         $debug_mode = get_option($instance->option_debug, 'no');
+        $honeypot_enabled = get_option($instance->option_honeypot, 'yes');
         $is_configured = !empty($portal_id) && !empty($token);
         ?>
         <div class="bp-addon-settings bp-hubspot-dashboard" data-addon="hubspot-forms">
@@ -137,6 +223,34 @@ class Starter_Addon_HubSpot_Forms {
                             <strong><?php _e('Enable detailed error logging', 'starter-dashboard'); ?></strong>
                             <p class="description">
                                 <?php _e('When enabled, submissions log will show all submitted field values, API responses, and detailed error information. Independent of WP_DEBUG.', 'starter-dashboard'); ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spam Protection Section -->
+            <div class="bp-hubspot-section bp-hubspot-honeypot">
+                <div class="bp-hubspot-section__header">
+                    <easier-icon name="shield-01" variant="twotone" size="20" color="#ff7a59"></easier-icon>
+                    <h4><?php _e('Spam Protection (Honeypot)', 'starter-dashboard'); ?></h4>
+                </div>
+                <div class="bp-hubspot-section__content">
+                    <div class="bp-hubspot-debug-toggle">
+                        <label class="bp-hubspot-switch">
+                            <input type="checkbox"
+                                   name="honeypot"
+                                   value="yes"
+                                   <?php checked($honeypot_enabled, 'yes'); ?>>
+                            <span class="bp-hubspot-switch-slider"></span>
+                        </label>
+                        <div class="bp-hubspot-debug-info">
+                            <strong><?php _e('Inject hidden honeypot field into HubSpot forms', 'starter-dashboard'); ?></strong>
+                            <p class="description">
+                                <?php _e('Adds a hidden "Credit Card" input to every Elementor form using the HubSpot submit action. Real users never see it, but bots auto-fill it and the submission is silently rejected before it reaches HubSpot. Enabled by default.', 'starter-dashboard'); ?>
+                            </p>
+                            <p class="description" style="margin-top:6px;">
+                                <code>&lt;div style="display:none;"&gt;&lt;label&gt;Credit Card&lt;/label&gt;&lt;input type="tel" name="credit_card_number" /&gt;&lt;/div&gt;</code>
                             </p>
                         </div>
                     </div>
@@ -1517,6 +1631,11 @@ class Starter_Addon_HubSpot_Forms {
             update_option($this->option_debug, $settings['debug_mode'] === 'yes' ? 'yes' : 'no');
         } else {
             update_option($this->option_debug, 'no');
+        }
+        if (isset($settings['honeypot'])) {
+            update_option($this->option_honeypot, $settings['honeypot'] === 'yes' ? 'yes' : 'no');
+        } else {
+            update_option($this->option_honeypot, 'no');
         }
         // Clear caches when settings change
         delete_transient('starter_hubspot_forms_list');

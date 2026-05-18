@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.4.0
+ * Version: 4.5.0
  * Author: Alex M.
  * Author URI: https://developer.dev
  */
@@ -6332,3 +6332,84 @@ class Starter_Dashboard {
 
 // Initialize
 Starter_Dashboard::instance();
+
+/**
+ * Environment indicator (Production / Staging / Dev).
+ *
+ * Visible only to logged-in users. Detection is based on the site host:
+ *   - host contains "dev"  → DEV
+ *   - host contains "stg"  → STAGING
+ *   - otherwise            → PRODUCTION
+ */
+if (!function_exists('starter_dashboard_detect_environment')) {
+    function starter_dashboard_detect_environment() {
+        $host = '';
+        if (function_exists('home_url')) {
+            $parsed = wp_parse_url(home_url('/'));
+            if (!empty($parsed['host'])) {
+                $host = strtolower($parsed['host']);
+            }
+        }
+        if ($host === '' && !empty($_SERVER['HTTP_HOST'])) {
+            $host = strtolower((string) $_SERVER['HTTP_HOST']);
+        }
+
+        if (strpos($host, 'dev') !== false) {
+            return ['key' => 'dev', 'label' => 'DEV', 'bg' => '#7c3aed', 'fg' => '#ffffff'];
+        }
+        if (strpos($host, 'stg') !== false) {
+            return ['key' => 'staging', 'label' => 'STAGING', 'bg' => '#f59e0b', 'fg' => '#1f2937'];
+        }
+        return ['key' => 'production', 'label' => 'PRODUCTION', 'bg' => '#dc2626', 'fg' => '#ffffff'];
+    }
+}
+
+add_action('admin_bar_menu', function ($wp_admin_bar) {
+    if (!is_user_logged_in()) {
+        return;
+    }
+    $env = starter_dashboard_detect_environment();
+    $title = sprintf(
+        '<span class="sd-env-badge sd-env-badge--%1$s" style="background:%2$s;color:%3$s;">%4$s</span>',
+        esc_attr($env['key']),
+        esc_attr($env['bg']),
+        esc_attr($env['fg']),
+        esc_html($env['label'])
+    );
+    $wp_admin_bar->add_node([
+        'id'    => 'starter-dashboard-env',
+        'title' => $title,
+        'href'  => false,
+        'meta'  => [
+            'title' => sprintf('Environment: %s', $env['label']),
+        ],
+    ]);
+}, 100);
+
+add_action('wp_head', 'starter_dashboard_env_badge_css');
+add_action('admin_head', 'starter_dashboard_env_badge_css');
+if (!function_exists('starter_dashboard_env_badge_css')) {
+    function starter_dashboard_env_badge_css() {
+        if (!is_user_logged_in() || !is_admin_bar_showing()) {
+            return;
+        }
+        ?>
+        <style>
+            #wpadminbar #wp-admin-bar-starter-dashboard-env .ab-item { padding: 0 10px !important; height: 32px; display: flex; align-items: center; }
+            #wpadminbar .sd-env-badge {
+                display: inline-flex;
+                align-items: center;
+                height: 22px;
+                padding: 0 10px;
+                border-radius: 999px;
+                font-weight: 700;
+                font-size: 11px;
+                letter-spacing: 0.06em;
+                line-height: 1;
+                text-transform: uppercase;
+                box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+            }
+        </style>
+        <?php
+    }
+}
