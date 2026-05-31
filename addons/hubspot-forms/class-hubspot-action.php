@@ -295,17 +295,70 @@ class EHFA_HubSpot_Action extends Action_Base {
         }
 
         // Prepare context - always collect for logging
-        $page_url = $record->get('meta')['page_url']['value'] ?? '';
-        $page_title = $record->get('meta')['page_title']['value'] ?? '';
+        // Elementor Pro versions vary in meta structure:
+        // - Some: ['page_url' => ['value' => '...', 'type' => '...']]
+        // - Others: ['page_url' => '...']
+        // - Some versions may omit these entirely
+        $meta = $record->get('meta');
+        $page_url = '';
+        $page_title = '';
+
+        if (is_array($meta)) {
+            if (isset($meta['page_url'])) {
+                $raw_url = is_array($meta['page_url'])
+                    ? ($meta['page_url']['value'] ?? '')
+                    : $meta['page_url'];
+                $page_url = esc_url_raw($raw_url);
+            }
+            if (isset($meta['page_title'])) {
+                $raw_title = is_array($meta['page_title'])
+                    ? ($meta['page_title']['value'] ?? '')
+                    : $meta['page_title'];
+                $page_title = sanitize_text_field($raw_title);
+            }
+        }
+
+        // Fallback: use referer header when page_url is empty
+        if (empty($page_url)) {
+            $referer = wp_get_referer();
+            if ($referer) {
+                $page_url = esc_url_raw($referer);
+            }
+        }
+
+        // Fallback: derive page title from URL when empty
+        if (empty($page_title) && !empty($page_url)) {
+            $post_id = url_to_postid($page_url);
+            if ($post_id) {
+                $page_title = sanitize_text_field(get_the_title($post_id));
+            } else {
+                // url_to_postid returns 0 for taxonomy/archive pages — try term lookup
+                $path = trim(wp_parse_url($page_url, PHP_URL_PATH) ?? '', '/');
+                if ($path) {
+                    $slug = basename($path);
+                    $taxonomies = get_taxonomies(['public' => true], 'names');
+                    foreach ($taxonomies as $taxonomy) {
+                        $term = get_term_by('slug', $slug, $taxonomy);
+                        if ($term && !is_wp_error($term) && !empty($term->name)) {
+                            $page_title = sanitize_text_field($term->name);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         $client_ip = $this->get_client_ip();
 
-        // Only send context to HubSpot if setting is enabled
+        // Send context to HubSpot — default ON for forms that lack the setting (created before it was added)
         $context = [
             'page_url' => $page_url,
             'page_title' => $page_title,
         ];
 
-        if (!empty($settings['hubspot_send_context']) && $settings['hubspot_send_context'] === 'yes') {
+        $send_context = !isset($settings['hubspot_send_context']) || $settings['hubspot_send_context'] === 'yes';
+
+        if ($send_context) {
             $context['ip'] = $client_ip;
             $context['send_to_hubspot'] = true;
         } else {
