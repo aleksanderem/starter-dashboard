@@ -348,23 +348,9 @@ CSS;
                 input.removeAttribute('pattern');
             }
 
-            // Skip if already initialized
+            // Skip if already initialized (check instance AND DOM wrapper to prevent nested .iti)
             if (input.intlTelInputInstance) return;
-
-            // Check if this field has international enabled via data attribute or class
-            var fieldGroup = input.closest('.elementor-field-group');
-            var isIntlEnabled = fieldGroup && (
-                fieldGroup.classList.contains('intl-phone-enabled') ||
-                fieldGroup.dataset.intlPhone === 'yes' ||
-                input.classList.contains('intl-phone-enabled')
-            );
-
-            // For now, enable on ALL tel fields (can be made conditional later)
-            // This makes the feature work immediately
-            isIntlEnabled = true;
-
-            if (!isIntlEnabled) return;
-
+            if (input.closest('.iti')) return;
 
             var options = {
                 utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js',
@@ -411,10 +397,9 @@ CSS;
                         });
                     }, true); // USE CAPTURE PHASE (true) to fire before Elementor
 
-                    // Also bind to Elementor's before_submit event if available
+                    // Re-init after Elementor resets the form on success/error
                     if (typeof jQuery !== 'undefined') {
                         jQuery(form).on('submit_success submit_error', function() {
-                            // Reset to formatted number after submission
                             setTimeout(function() {
                                 initPhoneFields();
                             }, 100);
@@ -456,10 +441,17 @@ CSS;
 
     // MutationObserver for dynamically added forms
     var observer = new MutationObserver(function(mutations) {
-        var hasNewInputs = mutations.some(function(m) {
-            return m.addedNodes.length > 0;
+        var hasNewTelInputs = mutations.some(function(m) {
+            return Array.from(m.addedNodes).some(function(node) {
+                if (node.nodeType !== 1) return false;
+                // Only trigger for actual tel inputs, not intl-tel-input's own DOM changes
+                return node.matches && (
+                    node.matches('.elementor-field-type-tel') ||
+                    node.querySelector('.elementor-field-type-tel')
+                );
+            });
         });
-        if (hasNewInputs) {
+        if (hasNewTelInputs) {
             setTimeout(initPhoneFields, 100);
         }
     });
