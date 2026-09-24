@@ -8,6 +8,8 @@
 
 defined('ABSPATH') || exit;
 
+require_once __DIR__ . '/class-language-routing.php';
+
 class Starter_Addon_HubSpot_Forms {
 
     private static $instance = null;
@@ -307,6 +309,30 @@ class Starter_Addon_HubSpot_Forms {
 
             <!-- Tab: Elementor Mappings -->
             <div class="bp-hubspot-tab-content" data-tab="mappings">
+                <?php
+                $lang_context = Starter_HubSpot_Language_Routing::get_context();
+                if ($lang_context['plugin'] !== null):
+                ?>
+                <div class="bp-hubspot-section bp-hubspot-lang-routing-section">
+                    <div class="bp-hubspot-section__header">
+                        <easier-icon name="globe" variant="twotone" size="20" color="#ff7a59"></easier-icon>
+                        <h4><?php _e('Language Routing', 'starter-dashboard'); ?> (<?php echo esc_html(strtoupper($lang_context['plugin'])); ?>)</h4>
+                    </div>
+                    <div class="bp-hubspot-section__content">
+                        <p class="description" style="margin-bottom: 15px;">
+                            <?php _e('Translated pages copy the HubSpot form chosen on the original. Pick which HubSpot form should receive submissions from each language instead. Leave "Same form" to keep the original. Save with the button below.', 'starter-dashboard'); ?>
+                        </p>
+                        <input type="hidden" name="lang_routing_json" id="bp-hubspot-lang-routing-json"
+                               value="<?php echo esc_attr(wp_json_encode((object) Starter_HubSpot_Language_Routing::get_routing())); ?>">
+                        <div id="bp-hubspot-lang-routing">
+                            <div class="bp-hubspot-loading">
+                                <span class="spinner is-active"></span>
+                                <?php _e('Loading...', 'starter-dashboard'); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <div class="bp-hubspot-section">
                     <div class="bp-hubspot-section__header">
                         <easier-icon name="shuffle" variant="twotone" size="20" color="#ff7a59"></easier-icon>
@@ -739,6 +765,25 @@ class Starter_Addon_HubSpot_Forms {
             text-align: left;
         }
 
+        .bp-hubspot-lang-badge {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 4px;
+            background: #eef2fb;
+            color: #1C3C8B;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .bp-hubspot-lang-routed {
+            color: #1a7f37;
+        }
+
+        .bp-hubspot-lang-routing-table select {
+            width: 100%;
+            max-width: 260px;
+        }
+
         .bp-hubspot-elementor-form__toggle {
             color: #666;
             transition: transform 0.2s;
@@ -1107,6 +1152,8 @@ class Starter_Addon_HubSpot_Forms {
             var ajaxUrl = '<?php echo admin_url('admin-ajax.php'); ?>';
             var formsCache = {};
             var fieldsCache = {};
+            var langContext = <?php echo wp_json_encode(Starter_HubSpot_Language_Routing::get_context()); ?>;
+            var elementorFormsData = null;
 
             // Initialize
             function init() {
@@ -1224,6 +1271,7 @@ class Starter_Addon_HubSpot_Forms {
                         if (response.success && response.data) {
                             formsCache = response.data;
                             renderFormsList(response.data);
+                            renderLangRouting();
                         } else {
                             container.html('<div class="bp-hubspot-log-empty"><easier-icon name="alert-02" variant="twotone" size="24" color="#ff7a59"></easier-icon><p>' + (response.data || 'Error loading forms') + '</p></div>');
                         }
@@ -1380,7 +1428,9 @@ class Starter_Addon_HubSpot_Forms {
                     },
                     success: function(response) {
                         if (response.success && response.data) {
+                            elementorFormsData = response.data;
                             renderElementorForms(response.data);
+                            renderLangRouting();
                         } else {
                             container.html('<div class="bp-hubspot-log-empty"><easier-icon name="information-circle" variant="twotone" size="24" color="#999"></easier-icon><p>' + (response.data || '<?php _e('No forms with HubSpot integration found', 'starter-dashboard'); ?>') + '</p></div>');
                         }
@@ -1408,7 +1458,13 @@ class Starter_Addon_HubSpot_Forms {
                     html += '<span class="bp-hubspot-elementor-form__title">' + escapeHtml(form.page_title) + '</span>';
                     html += '</div>';
                     html += '<div class="bp-hubspot-elementor-form__hubspot">';
+                    if (form.language) {
+                        html += '<span class="bp-hubspot-lang-badge">' + escapeHtml(form.language.toUpperCase()) + '</span> ';
+                    }
                     html += escapeHtml(form.hubspot_form_name || form.hubspot_form_id);
+                    if (form.effective_form_id && form.effective_form_id !== form.hubspot_form_id) {
+                        html += ' <span class="bp-hubspot-lang-routed">→ ' + escapeHtml(form.effective_form_name || form.effective_form_id) + '</span>';
+                    }
                     html += '</div>';
                     html += '<span class="bp-hubspot-elementor-form__toggle"><easier-icon name="arrow-down-03" variant="twotone" size="16" color="#999"></easier-icon></span>';
                     html += '</div>';
@@ -1450,6 +1506,105 @@ class Starter_Addon_HubSpot_Forms {
                     $(this).closest('.bp-hubspot-elementor-form').toggleClass('bp-hubspot-elementor-form--expanded');
                 });
             }
+
+            // Language routing: source HubSpot form x language => target HubSpot form
+            function readLangRouting() {
+                try {
+                    return JSON.parse($('#bp-hubspot-lang-routing-json').val() || '{}') || {};
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            function writeLangRouting(routing) {
+                $('#bp-hubspot-lang-routing-json').val(JSON.stringify(routing));
+            }
+
+            function langFormPrefix(code) {
+                return code === 'cs' ? 'CZ' : code.toUpperCase();
+            }
+
+            function buildLangOptions(allForms, code, sourceId, selectedId) {
+                var prefix = langFormPrefix(code);
+                var suggested = [];
+                var others = [];
+                allForms.forEach(function(form) {
+                    if (form.id === sourceId) return;
+                    var option = '<option value="' + escapeHtml(form.id) + '"' + (form.id === selectedId ? ' selected' : '') + '>' + escapeHtml(form.name) + '</option>';
+                    if ((form.name || '').toUpperCase().indexOf(prefix) === 0) {
+                        suggested.push(option);
+                    } else {
+                        others.push(option);
+                    }
+                });
+                var html = '<option value=""><?php echo esc_js(__('Same form', 'starter-dashboard')); ?></option>';
+                if (suggested.length) {
+                    html += '<optgroup label="<?php echo esc_js(__('Suggested', 'starter-dashboard')); ?>">' + suggested.join('') + '</optgroup>';
+                }
+                html += '<optgroup label="<?php echo esc_js(__('All forms', 'starter-dashboard')); ?>">' + others.join('') + '</optgroup>';
+                return html;
+            }
+
+            function renderLangRouting() {
+                var container = $('#bp-hubspot-lang-routing');
+                if (!container.length || !langContext.plugin || !elementorFormsData) return;
+
+                var allForms = Array.isArray(formsCache) ? formsCache : (formsCache.forms || []);
+                if (!allForms.length) return;
+                allForms = allForms.slice().sort(function(a, b) {
+                    return (a.name || '').localeCompare(b.name || '');
+                });
+
+                var sources = {};
+                elementorFormsData.forEach(function(form) {
+                    if (form.hubspot_form_id && !sources[form.hubspot_form_id]) {
+                        sources[form.hubspot_form_id] = form.hubspot_form_name || form.hubspot_form_id;
+                    }
+                });
+
+                var languages = Object.keys(langContext.languages).filter(function(code) {
+                    return code !== langContext.default;
+                });
+                if (!languages.length || !Object.keys(sources).length) {
+                    container.html('<p class="description"><?php echo esc_js(__('No translated languages or HubSpot forms to route.', 'starter-dashboard')); ?></p>');
+                    return;
+                }
+
+                var routing = readLangRouting();
+                var html = '<table class="bp-hubspot-mapping-table bp-hubspot-lang-routing-table"><thead><tr>';
+                html += '<th><?php echo esc_js(__('HubSpot form on the original', 'starter-dashboard')); ?></th>';
+                languages.forEach(function(code) {
+                    html += '<th>' + escapeHtml(langContext.languages[code]) + ' (' + escapeHtml(code.toUpperCase()) + ')</th>';
+                });
+                html += '</tr></thead><tbody>';
+
+                Object.keys(sources).forEach(function(sourceId) {
+                    html += '<tr><td><span class="bp-hubspot-field-name">' + escapeHtml(sources[sourceId]) + '</span></td>';
+                    languages.forEach(function(code) {
+                        var selected = (routing[sourceId] || {})[code] || '';
+                        html += '<td><select class="bp-hubspot-lang-routing-select" data-source="' + escapeHtml(sourceId) + '" data-lang="' + escapeHtml(code) + '">';
+                        html += buildLangOptions(allForms, code, sourceId, selected);
+                        html += '</select></td>';
+                    });
+                    html += '</tr>';
+                });
+                html += '</tbody></table>';
+                container.html(html);
+            }
+
+            $(document).on('change', '.bp-hubspot-lang-routing-select', function() {
+                var routing = readLangRouting();
+                var sourceId = $(this).data('source');
+                var code = $(this).data('lang');
+                var target = $(this).val();
+                routing[sourceId] = routing[sourceId] || {};
+                if (target) {
+                    routing[sourceId][code] = target;
+                } else {
+                    delete routing[sourceId][code];
+                }
+                writeLangRouting(routing);
+            });
 
             // Load Submission Log
             function loadSubmissionLog() {
@@ -1627,16 +1782,23 @@ class Starter_Addon_HubSpot_Forms {
         if (isset($settings['access_token'])) {
             update_option($this->option_token, sanitize_text_field($settings['access_token']));
         }
-        if (isset($settings['debug_mode'])) {
-            update_option($this->option_debug, $settings['debug_mode'] === 'yes' ? 'yes' : 'no');
-        } else {
-            update_option($this->option_debug, 'no');
+        // The dashboard sends checkboxes as 1/0, older code as 'yes'/'no'
+        $debug_enabled = isset($settings['debug_mode']) && Starter_HubSpot_Language_Routing::is_truthy($settings['debug_mode']);
+        update_option($this->option_debug, $debug_enabled ? 'yes' : 'no');
+
+        $honeypot_enabled = isset($settings['honeypot']) && Starter_HubSpot_Language_Routing::is_truthy($settings['honeypot']);
+        update_option($this->option_honeypot, $honeypot_enabled ? 'yes' : 'no');
+
+        if (isset($settings['lang_routing_json'])) {
+            $raw_routing = json_decode(wp_unslash($settings['lang_routing_json']), true);
+            // Malformed JSON must not wipe existing routing
+            if (is_array($raw_routing)) {
+                $context = Starter_HubSpot_Language_Routing::get_context();
+                $routing = Starter_HubSpot_Language_Routing::sanitize($raw_routing, array_keys($context['languages']));
+                update_option(Starter_HubSpot_Language_Routing::OPTION, $routing, false);
+            }
         }
-        if (isset($settings['honeypot'])) {
-            update_option($this->option_honeypot, $settings['honeypot'] === 'yes' ? 'yes' : 'no');
-        } else {
-            update_option($this->option_honeypot, 'no');
-        }
+
         // Clear caches when settings change
         delete_transient('starter_hubspot_forms_list');
         delete_transient('starter_hubspot_all_fields');
@@ -2500,16 +2662,21 @@ JS;
             AND p.post_status IN ('publish', 'draft', 'private')
         ");
 
+        $routing = Starter_HubSpot_Language_Routing::get_routing();
+        $is_multilingual = Starter_HubSpot_Language_Routing::get_context()['plugin'] !== null;
+
         foreach ($results as $row) {
             $elementor_data = json_decode($row->meta_value, true);
             if (!is_array($elementor_data)) continue;
 
             $found_forms = $this->extract_hubspot_forms_from_elementor($elementor_data);
+            $language = $is_multilingual ? Starter_HubSpot_Language_Routing::detect('', [$row->ID]) : null;
 
             foreach ($found_forms as $form_data) {
                 $hubspot_form_name = isset($hubspot_forms_map[$form_data['hubspot_form_id']])
                     ? $hubspot_forms_map[$form_data['hubspot_form_id']]
                     : null;
+                $effective_form_id = Starter_HubSpot_Language_Routing::resolve($form_data['hubspot_form_id'], $language, $routing);
 
                 $forms[] = [
                     'page_id' => $row->ID,
@@ -2518,6 +2685,9 @@ JS;
                     'form_name' => $form_data['form_name'],
                     'hubspot_form_id' => $form_data['hubspot_form_id'],
                     'hubspot_form_name' => $hubspot_form_name,
+                    'language' => $language,
+                    'effective_form_id' => $effective_form_id,
+                    'effective_form_name' => $hubspot_forms_map[$effective_form_id] ?? null,
                     'mappings' => $form_data['mappings'],
                 ];
             }
@@ -2798,6 +2968,8 @@ JS;
             'page_title' => $context['page_title'] ?? '',
             'fields_count' => count($fields),
             'debug_mode' => $debug_mode,
+            'language' => $context['language'] ?? null,
+            'source_form_id' => $context['source_form_id'] ?? $form_guid,
         ];
 
         // Include full field data in debug mode

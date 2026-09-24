@@ -62,6 +62,8 @@ find "${BUILD_DIR}" -name ".git*" -delete
 find "${BUILD_DIR}" -name "README.md" -delete
 find "${BUILD_DIR}" -name "composer.json" -delete
 find "${BUILD_DIR}" -name "license.txt" -delete
+find "${BUILD_DIR}" -name "*.log" -delete
+find "${BUILD_DIR}" -name "*.backup" -delete
 
 # Clean up plugin-update-checker - remove unnecessary files
 if [ -d "${BUILD_DIR}/${PLUGIN_SLUG}/lib/plugin-update-checker" ]; then

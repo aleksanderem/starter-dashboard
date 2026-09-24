@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.3.6
+Stable tag: 4.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,14 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.6.0 =
+* NEW: HubSpot Forms - Language Routing (WPML/Polylang): send submissions from each language to a different HubSpot form, set in Elementor Mappings tab. Translated forms no longer end up in the original language's HubSpot form
+* NEW: HubSpot Forms - submissions log records detected language and the original form
+* NEW: `starter_hubspot_form_id` filter to override the target HubSpot form
+* IMPROVED: Phone Field - default dial code follows the page language (cs_CZ -> +420, sk_SK -> +421); IP lookup only for English pages. Filter: `starter_phone_field_initial_country`
+* FIXED: HubSpot Forms - Debug Mode and Honeypot toggles were always saved as off (dashboard sends 1/0)
+* FIXED: Release zip no longer includes local debug logs and backup files
 
 = 4.3.6 =
 * NEW: Image Compare Labels addon - persistent before/after labels on Happy Addons Image Compare widget

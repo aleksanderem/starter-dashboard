@@ -25,3 +25,9 @@ tasks_progress_verbose.txt
 
 # Package locks (keep package-lock.json)
 bun.lock
+
+# Local logs and backups (may contain form submissions)
+*.log
+*.backup
+*.before
+*.after

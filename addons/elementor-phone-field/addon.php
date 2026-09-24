@@ -93,7 +93,32 @@ class Starter_Addon_Elementor_Phone_Field {
     public function frontend_scripts() {
         wp_enqueue_style('intl-tel-input');
         wp_enqueue_script('intl-tel-input');
+        wp_add_inline_script('intl-tel-input', $this->get_frontend_config_script(), 'before');
         wp_add_inline_script('intl-tel-input', $this->get_frontend_init_script());
+    }
+
+    /**
+     * Default country for the dial code picker, taken from the page locale
+     * (WPML/Polylang switch it per language, e.g. cs_CZ -> cz). English pages
+     * and locales without a region fall back to IP lookup ('auto').
+     */
+    public function get_initial_country() {
+        $locale = function_exists('determine_locale') ? determine_locale() : get_locale();
+        $parts = explode('_', (string) $locale);
+        $language = strtolower($parts[0] ?? '');
+        $region = strtolower($parts[1] ?? '');
+
+        $country = ($language !== 'en' && preg_match('/^[a-z]{2}$/', $region)) ? $region : 'auto';
+        return apply_filters('starter_phone_field_initial_country', $country, $locale);
+    }
+
+    /**
+     * Frontend config consumed by the init script
+     */
+    public function get_frontend_config_script() {
+        return 'window.starterPhoneField = ' . wp_json_encode([
+            'initialCountry' => $this->get_initial_country(),
+        ]) . ';';
     }
 
     /**
@@ -112,6 +137,7 @@ class Starter_Addon_Elementor_Phone_Field {
         $this->register_scripts();
         wp_enqueue_style('intl-tel-input');
         wp_enqueue_script('intl-tel-input');
+        wp_add_inline_script('intl-tel-input', $this->get_frontend_config_script(), 'before');
         wp_add_inline_script('intl-tel-input', $this->get_frontend_init_script());
     }
 
@@ -366,11 +392,20 @@ CSS;
             if (!isIntlEnabled) return;
 
 
+            var config = window.starterPhoneField || {};
+            var initialCountry = config.initialCountry || 'auto';
+            var preferredCountries = ['us', 'gb', 'ca', 'au', 'de', 'fr', 'pl'];
+            if (initialCountry !== 'auto') {
+                preferredCountries = [initialCountry].concat(preferredCountries.filter(function(code) {
+                    return code !== initialCountry;
+                }));
+            }
+
             var options = {
                 utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js',
                 separateDialCode: true,
-                preferredCountries: ['us', 'gb', 'ca', 'au', 'de', 'fr', 'pl'],
-                initialCountry: 'auto',
+                preferredCountries: preferredCountries,
+                initialCountry: initialCountry,
                 nationalMode: false,
                 autoPlaceholder: 'aggressive',
                 formatOnDisplay: true,

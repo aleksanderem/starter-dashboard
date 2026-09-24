@@ -213,6 +213,20 @@ class EHFA_HubSpot_Action extends Action_Base {
             return;
         }
 
+        // Translated forms keep the original's HubSpot form; route by visitor language
+        $source_form_id = $settings['hubspot_form_id'];
+        $page_url = $record->get('meta')['page_url']['value'] ?? '';
+        $language = Starter_HubSpot_Language_Routing::detect($page_url, [
+            $_POST['post_id'] ?? 0,
+            $_POST['queried_id'] ?? 0,
+        ]);
+        $form_id = Starter_HubSpot_Language_Routing::resolve(
+            $source_form_id,
+            $language,
+            Starter_HubSpot_Language_Routing::get_routing()
+        );
+        $form_id = apply_filters('starter_hubspot_form_id', $form_id, $source_form_id, $language, $record);
+
         // Get submitted fields
         $raw_fields = $record->get('fields');
         $form_fields = $settings['form_fields'] ?? [];
@@ -303,6 +317,8 @@ class EHFA_HubSpot_Action extends Action_Base {
         $context = [
             'page_url' => $page_url,
             'page_title' => $page_title,
+            'language' => $language,
+            'source_form_id' => $source_form_id,
         ];
 
         if (!empty($settings['hubspot_send_context']) && $settings['hubspot_send_context'] === 'yes') {
@@ -331,7 +347,7 @@ class EHFA_HubSpot_Action extends Action_Base {
 
         // Submit to HubSpot
         $result = Starter_Addon_HubSpot_Forms::submit_to_hubspot(
-            $settings['hubspot_form_id'],
+            $form_id,
             $hubspot_fields,
             $context,
             $consent_data
@@ -361,7 +377,7 @@ class EHFA_HubSpot_Action extends Action_Base {
             // Log to error_log if debug mode or WP_DEBUG
             if ($debug_mode || (defined('WP_DEBUG') && WP_DEBUG)) {
                 error_log('[Starter HubSpot] Submission failed: ' . $error_message);
-                error_log('[Starter HubSpot] Form ID: ' . $settings['hubspot_form_id']);
+                error_log('[Starter HubSpot] Form ID: ' . $form_id . ' (source: ' . $source_form_id . ', language: ' . ($language ?: '-') . ')');
                 error_log('[Starter HubSpot] Fields: ' . json_encode($hubspot_fields));
             }
         }
