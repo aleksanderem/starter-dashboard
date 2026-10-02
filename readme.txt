@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.6.0
+Stable tag: 4.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,11 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.6.1 =
+* FIXED: Dashboard tabs could stop working (ERR_INSUFFICIENT_RESOURCES) - each ezicons icon was fetched separately, hundreds of parallel requests made Chrome drop the dashboard script. Identical icons now share one request
+* FIXED: Custom action icon picker (154 icons) is built on first open instead of on every dashboard load
+* FIXED: dashboard.js cache version bumped so browsers load the new script
 
 = 4.6.0 =
 * NEW: HubSpot Forms - Language Routing (WPML/Polylang): send submissions from each language to a different HubSpot form, set in Elementor Mappings tab. Translated forms no longer end up in the original language's HubSpot form

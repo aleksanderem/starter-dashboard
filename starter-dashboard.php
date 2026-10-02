@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Starter Dashboard
  * Description: Custom admin dashboard with post type tiles, menu visibility control, role editor, CPT management, and addon system
- * Version: 4.6.0
+ * Version: 4.6.1
  * Author: Alex M.
  * Author URI: https://developer.dev
  */
@@ -356,7 +356,7 @@ class Starter_Dashboard {
                 'starter-dashboard-js',
                 $plugin_url . 'dashboard.js',
                 ['jquery', 'starter-sortable'],
-                '3.9.2',
+                '4.6.1',
                 true
             );
 
@@ -4934,6 +4934,32 @@ class Starter_Dashboard {
      */
     public function add_ezicons_sdk() {
         ?>
+        <script>
+        // The ezicons SDK fetches every <easier-icon> separately, even when the same
+        // icon is already in flight. With hundreds of icons Chrome hits its request
+        // limit (ERR_INSUFFICIENT_RESOURCES) and drops our own scripts. Share one
+        // request per icon URL; failed requests are forgotten so they can retry.
+        (function() {
+            var nativeFetch = window.fetch.bind(window);
+            var pending = new Map();
+            window.fetch = function(input, init) {
+                var url = typeof input === 'string' ? input : '';
+                if (url.indexOf('https://ezicons.com/api/icon/') !== 0 || (init && init.method && init.method !== 'GET')) {
+                    return nativeFetch(input, init);
+                }
+                if (!pending.has(url)) {
+                    pending.set(url, nativeFetch(url).then(function(response) {
+                        if (!response.ok) pending.delete(url);
+                        return response;
+                    }, function(error) {
+                        pending.delete(url);
+                        throw error;
+                    }));
+                }
+                return pending.get(url).then(function(response) { return response.clone(); });
+            };
+        })();
+        </script>
         <script src="https://ezicons.com/sdk.js" data-key="iek_oYNmSmglKJTtwcB1AHUMdI2XDxW98DHP" data-global-inline="true"></script>
         <?php
     }

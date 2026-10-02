@@ -1064,9 +1064,6 @@
                     self.closeModal();
                 }
             });
-
-            // Populate icon grid
-            this.populateIcons();
         },
 
         openModal: function() {
@@ -1125,6 +1122,10 @@
             $('#bp-custom-action-list').hide();
             $('#bp-custom-action-search').closest('.bp-custom-action__search').hide();
             $('.bp-custom-action__selected-label').text(this.selectedItem.label);
+            // Build the grid on first open - each icon is a separate request
+            if (!$('#bp-icon-grid').children().length) {
+                this.populateIcons();
+            }
             $('#bp-icon-picker').show();
             $('#bp-icon-search').val('').focus();
             this.filterIcons('');
