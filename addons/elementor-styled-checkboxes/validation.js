@@ -51,6 +51,7 @@
 
         // Add error class to field
         $field.addClass('elementor-error');
+        $field.find('input[type="checkbox"]').attr('aria-invalid', 'true');
     }
 
     /**
@@ -59,6 +60,7 @@
     function removeCheckboxError($field) {
         $field.find('.elementor-message-danger').remove();
         $field.removeClass('elementor-error');
+        $field.find('input[type="checkbox"]').removeAttr('aria-invalid');
     }
 
     /**
@@ -72,7 +74,7 @@
             var $field = $(this);
 
             if (!isCheckboxFieldValid($field)) {
-                var fieldLabel = $field.data('field-label') || '';
+                var fieldLabel = $field.attr('data-field-label') || $field.find('label').first().text().trim();
                 showCheckboxError($field, starterCheckboxValidation.errorMessage, fieldLabel);
                 hasError = true;
             } else {
@@ -91,33 +93,23 @@
             return;
         }
 
-        // Try to get form ID from widget wrapper (works for regular pages)
-        var $formWidget = $form.closest('[data-element_type="form.default"]');
-        var formId = $formWidget.length ? $formWidget.data('id') : null;
-
-        if (formId && window.starterRequiredCheckboxes['form-' + formId]) {
-            // Found form data by ID
-            var requiredFields = window.starterRequiredCheckboxes['form-' + formId];
-            requiredFields.forEach(function(field) {
-                var $field = $form.find('.elementor-field-group-' + field.id);
-                if ($field.length) {
-                    $field.attr('data-required-checkbox', 'true');
-                    $field.attr('data-field-label', field.label);
-                }
+        var formId = $form.find('input[name="form_id"]').val() ||
+            $form.closest('[data-widget_type="form.default"]').attr('data-id');
+        var requiredFields = window.starterRequiredCheckboxes['form-' + formId] || [];
+        requiredFields.forEach(function(field) {
+            var $field = $form.find('.elementor-field-type-checkbox').filter(function() {
+                return this.classList.contains('elementor-field-group-' + field.id);
             });
-        } else {
-            // Form is in a global template - try all available form data
-            Object.keys(window.starterRequiredCheckboxes).forEach(function(key) {
-                var requiredFields = window.starterRequiredCheckboxes[key];
-                requiredFields.forEach(function(field) {
-                    var $field = $form.find('.elementor-field-group-' + field.id);
-                    if ($field.length) {
-                        $field.attr('data-required-checkbox', 'true');
-                        $field.attr('data-field-label', field.label);
-                    }
-                });
-            });
-        }
+            if (!$field.length) return;
+            $field.attr('data-required-checkbox', 'true');
+            $field.attr('data-field-label', field.label);
+            $field.find('input[type="checkbox"]').attr('aria-required', 'true');
+            if (!$field.find('.starter-checkbox-required-label').length) {
+                $('<span>').addClass('starter-checkbox-required-label')
+                    .text(' (' + starterCheckboxValidation.requiredLabel + ')')
+                    .appendTo($field.find('label').first());
+            }
+        });
     }
 
     /**
@@ -126,14 +118,18 @@
     function initFormValidation($form) {
         // Mark required checkboxes with data attributes
         markRequiredCheckboxes($form);
+        if ($form.data('starterCheckboxValidationBound')) return;
+        $form.data('starterCheckboxValidationBound', true);
 
-        // Show visual validation errors on submit attempt
-        // But DON'T prevent submission - let server handle it
-        $form.on('submit', function(e) {
-            // Only validate visually, don't prevent submission
-            validateRequiredCheckboxes($form);
-            // Let the form submit normally - server will validate and return errors if needed
-        });
+        // Capture runs before Elementor's submit handler and serialization.
+        $form[0].addEventListener('submit', function(e) {
+            markRequiredCheckboxes($form);
+            if (validateRequiredCheckboxes($form)) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                $form.find('.elementor-field-type-checkbox.elementor-error input[type="checkbox"]').first().trigger('focus');
+            }
+        }, true);
 
         // Clear error when user checks a checkbox in a required field
         $form.on('change', '.elementor-field-type-checkbox[data-required-checkbox="true"] input[type="checkbox"]', function() {
@@ -155,10 +151,16 @@
      * Initialize validation for all forms
      */
     function initValidation() {
+        // Widgets may already be ready when this script loads (cached/deferred pages).
+        $('.elementor-form').each(function() {
+            initFormValidation($(this));
+        });
         // Check if Elementor frontend is available
         if (typeof elementorFrontend === 'undefined') {
             return;
         }
+        if (elementorHookBound) return;
+        elementorHookBound = true;
 
         // Hook into each form widget
         elementorFrontend.hooks.addAction('frontend/element_ready/form.default', function($scope) {
@@ -172,6 +174,8 @@
         });
     }
 
+    var elementorHookBound = false;
+
     // Wait for Elementor to be ready
     $(window).on('elementor/frontend/init', function() {
         initValidation();
@@ -179,9 +183,7 @@
 
     // Fallback: if Elementor is already initialized
     $(document).ready(function() {
-        if (typeof elementorFrontend !== 'undefined' && elementorFrontend.isEditMode && !elementorFrontend.isEditMode()) {
-            setTimeout(initValidation, 100);
-        }
+        initValidation();
     });
 
 })(jQuery);

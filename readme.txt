@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.6.1
+Stable tag: 4.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,12 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.6.2 =
+* Required checkbox validation now initializes on forms that are already on the page and runs before Elementor submits.
+* Missing agreement messages use the visible checkbox text, identify the missing agreement, and focus its checkbox.
+* Required agreements are marked clearly, and validation stays scoped to the correct form.
+* Existing checkbox requirements and HubSpot routing remain unchanged.
 
 = 4.6.1 =
 * FIXED: Dashboard tabs could stop working (ERR_INSUFFICIENT_RESOURCES) - each ezicons icon was fetched separately, hundreds of parallel requests made Chrome drop the dashboard script. Identical icons now share one request

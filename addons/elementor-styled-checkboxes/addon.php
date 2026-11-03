@@ -675,7 +675,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
 
                         $required_fields[] = [
                             'id' => $field_id,
-                            'label' => $field['field_label'] ?? ''
+                            'label' => $this->get_checkbox_label($field)
                         ];
                     }
                 }
@@ -690,6 +690,23 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
                 $this->scan_elements_for_required_checkboxes($element['elements'], $all_required_fields);
             }
         }
+    }
+
+    /** Use the visible option text when a consent checkbox has no group label. */
+    private function get_checkbox_label($field) {
+        $label = trim($field['field_label'] ?? '');
+        if ($label === '') {
+            $options = preg_split('/\r\n|\r|\n/', $field['field_options'] ?? '');
+            $labels = [];
+            foreach ($options as $option) {
+                $option_label = trim(explode('|', $option, 2)[0]);
+                if ($option_label !== '') {
+                    $labels[] = $option_label;
+                }
+            }
+            $label = implode(', ', $labels);
+        }
+        return $label !== '' ? wp_strip_all_tags($label) : __('This field', 'starter-dashboard');
     }
 
     /**
@@ -731,9 +748,7 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
 
                 if (!$has_value) {
                     // Get field label for more specific error message
-                    $field_label = isset($field['field_label']) && !empty($field['field_label'])
-                        ? $field['field_label']
-                        : __('This field', 'starter-dashboard');
+                    $field_label = $this->get_checkbox_label($field);
 
                     $error_message = sprintf(
                         __('%s: This field is required', 'starter-dashboard'),
@@ -770,12 +785,13 @@ class Starter_Addon_Elementor_Styled_Checkboxes {
             'starter-checkbox-validation',
             plugin_dir_url(__FILE__) . 'validation.js',
             ['jquery', 'elementor-frontend'],
-            '1.4.0', // Added Elementor controls for error state customization
+            '1.4.1', // Validate required consent before Elementor submits.
             true
         );
 
         wp_localize_script('starter-checkbox-validation', 'starterCheckboxValidation', [
             'errorMessage' => __('This field is required', 'starter-dashboard'),
+            'requiredLabel' => __('Required', 'starter-dashboard'),
         ]);
     }
 
