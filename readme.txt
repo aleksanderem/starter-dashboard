@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.6.2
+Stable tag: 4.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,20 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.7.0 =
+* HubSpot Forms: optional Cloudflare Turnstile check on every Elementor form that uses the HubSpot action, verified on the server before anything is sent to HubSpot. Missing, invalid or unverifiable tokens are rejected.
+* HubSpot Forms: optional limit of submissions per IP address (all forms and per HubSpot form). Proxy headers (Cloudflare, X-Forwarded-For) are only trusted when "behind a trusted proxy" is switched on.
+* HubSpot Forms: optional minimum fill time with a signed time stamp, so instant bot submissions are rejected.
+* HubSpot Forms: rejected submissions (honeypot, Turnstile, rate limit, too fast) now appear in the Submission Log with the reason and a hashed IP, without form contents.
+* FIXED: a filled-in honeypot field now really stops the submission; before, the HubSpot action still ran.
+* All new protections are off by default. Language routing, field mappings and the existing honeypot keep working as before.
+* HubSpot Forms: the plugin now checks the HubSpot forms it sends to (each source form and every language routing target) every hour (or twice a day / daily / on demand with "Check now") and notices new required fields, removed fields, changed field types and changed dropdown options.
+* HubSpot Forms: when the HubSpot form for the visitor's language requires fields the Elementor form does not send, those fields are added to the form automatically, with HubSpot's labels and options. A consent checkbox is added unticked and is never filled in for the visitor. Can be switched off.
+* HubSpot Forms: if HubSpot still rejects a submission because a plain text field is missing, it is sent once more with a placeholder value (default "-") for just those fields, so the lead is not lost. E-mail, dropdown and consent fields are never filled in.
+* HubSpot Forms: a dashboard notice and an e-mail (at most once per form per day, recipient configurable) when a HubSpot form changes, a submission had to be repaired, or a submission failed. Lists the form, the missing fields and the pages that use it.
+* HubSpot Forms: the Elementor editor and the Mappings tab show, for each language, which required HubSpot fields are mapped and which are missing.
+* HubSpot Forms: the Submission Log shows HubSpot's error type and the field name separately (for example "REQUIRED_FIELD (company)") and has a "Repaired" filter. The log is now also available to administrators when Elementor Pro is inactive.
 
 = 4.6.2 =
 * Required checkbox validation now initializes on forms that are already on the page and runs before Elementor submits.

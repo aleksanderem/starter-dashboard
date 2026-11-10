@@ -213,6 +213,14 @@ class EHFA_HubSpot_Action extends Action_Base {
             return;
         }
 
+        // Anti-spam checks normally run in elementor_pro/forms/validation; this
+        // reuses that verdict (or runs the checks if validation was skipped)
+        // so nothing reaches HubSpot without passing them.
+        if (class_exists('Starter_HubSpot_Antispam_Guard')
+            && !Starter_HubSpot_Antispam_Guard::instance()->allow_submission($record, $ajax_handler)) {
+            return;
+        }
+
         // Translated forms keep the original's HubSpot form; route by visitor language
         $source_form_id = $settings['hubspot_form_id'];
         $page_url = $record->get('meta')['page_url']['value'] ?? '';
@@ -343,6 +351,16 @@ class EHFA_HubSpot_Action extends Action_Base {
                     $consent_data[$consent_key] = $is_checked;
                 }
             }
+        }
+
+        // Fields and consent checkboxes added to the form automatically because the
+        // target HubSpot form requires them (whitelisted against its stored schema)
+        if (class_exists('Starter_HubSpot_Schema_Sync')) {
+            foreach (Starter_HubSpot_Schema_Sync::extra_fields($form_id, $hubspot_fields, $_POST) as $name => $value) {
+                $hubspot_fields[$name] = $value;
+            }
+            $consent_mapping = json_decode($settings['hubspot_consent_mapping_json'] ?? '', true);
+            $consent_data += Starter_HubSpot_Schema_Sync::extra_consent($form_id, is_array($consent_mapping) ? $consent_mapping : [], $_POST);
         }
 
         // Submit to HubSpot

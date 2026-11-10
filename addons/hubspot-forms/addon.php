@@ -9,6 +9,8 @@
 defined('ABSPATH') || exit;
 
 require_once __DIR__ . '/class-language-routing.php';
+require_once __DIR__ . '/class-antispam-guard.php';
+require_once __DIR__ . '/class-schema-sync.php';
 
 class Starter_Addon_HubSpot_Forms {
 
@@ -49,11 +51,18 @@ class Starter_Addon_HubSpot_Forms {
         add_action('elementor/frontend/widget/before_render', [$this, 'maybe_start_form_buffer']);
         add_action('elementor/frontend/widget/after_render', [$this, 'maybe_inject_honeypot']);
         add_action('elementor_pro/forms/validation', [$this, 'validate_honeypot'], 5, 2);
+
+        // Turnstile, rate limit and minimum fill time (validation hook, frontend assets, admin notice)
+        Starter_HubSpot_Antispam_Guard::instance();
+
+        // HubSpot form schema sync, missing required fields, repair retry, admin alerts
+        Starter_HubSpot_Schema_Sync::instance();
     }
 
     /**
-     * Honeypot: start output buffering when an Elementor form widget that uses
-     * the HubSpot submit action is about to render.
+     * Start output buffering when an Elementor form widget that uses the
+     * HubSpot submit action is about to render, so the honeypot and the
+     * anti-spam block can be injected.
      */
     public function maybe_start_form_buffer($widget) {
         if (!is_object($widget) || !method_exists($widget, 'get_name')) {
@@ -62,7 +71,10 @@ class Starter_Addon_HubSpot_Forms {
         if ($widget->get_name() !== 'form') {
             return;
         }
-        if (get_option($this->option_honeypot, 'yes') !== 'yes') {
+        $honeypot_on = get_option($this->option_honeypot, 'yes') === 'yes';
+        if (!$honeypot_on
+            && !Starter_HubSpot_Antispam_Guard::instance()->needs_form_markup()
+            && !Starter_HubSpot_Schema_Sync::instance()->wants_buffer()) {
             return;
         }
         if (!$this->form_uses_hubspot_action($widget)) {
@@ -85,12 +97,15 @@ class Starter_Addon_HubSpot_Forms {
         }
         $this->is_buffering_form = false;
         $html = ob_get_clean();
-        $honeypot = '<div class="bp-hubspot-hp" style="display:none;" aria-hidden="true">'
-            . '<label>Credit Card</label>'
-            . '<input type="tel" name="credit_card_number" tabindex="-1" autocomplete="off" />'
-            . '</div>';
-        $injected = preg_replace('#</form>#i', $honeypot . '</form>', $html, 1, $count);
-        echo ($count > 0) ? $injected : $html;
+        if (get_option($this->option_honeypot, 'yes') === 'yes') {
+            $honeypot = '<div class="bp-hubspot-hp" style="display:none;" aria-hidden="true">'
+                . '<label>Credit Card</label>'
+                . '<input type="tel" name="credit_card_number" tabindex="-1" autocomplete="off" />'
+                . '</div>';
+            $html = preg_replace('#</form>#i', $honeypot . '</form>', $html, 1);
+        }
+        $html = Starter_HubSpot_Schema_Sync::instance()->inject_missing_fields($html, $widget);
+        echo Starter_HubSpot_Antispam_Guard::instance()->inject_markup($html, $widget);
     }
 
     /**
@@ -108,10 +123,9 @@ class Starter_Addon_HubSpot_Forms {
         }
         $honeypot_value = isset($_POST['credit_card_number']) ? trim(wp_unslash($_POST['credit_card_number'])) : '';
         if ($honeypot_value !== '') {
-            $ajax_handler->add_error_message(__('Submission rejected.', 'starter-dashboard'));
-            if (method_exists($record, 'set_status')) {
-                $record->set_status('invalid', 'honeypot');
-            }
+            // add_error() (not only add_error_message()) is what makes Elementor skip the actions
+            Starter_HubSpot_Antispam_Guard::add_rejection_error($ajax_handler, 'honeypot');
+            Starter_HubSpot_Antispam_Guard::log_rejection('honeypot', $record);
         }
     }
 
@@ -259,6 +273,10 @@ class Starter_Addon_HubSpot_Forms {
                 </div>
             </div>
 
+            <?php Starter_HubSpot_Antispam_Guard::render_settings_section(); ?>
+
+            <?php Starter_HubSpot_Schema_Sync::render_settings_section(); ?>
+
             <?php if ($is_configured): ?>
 
             <!-- Tabs Navigation -->
@@ -382,6 +400,8 @@ class Starter_Addon_HubSpot_Forms {
                                 <option value="all"><?php _e('All Submissions', 'starter-dashboard'); ?></option>
                                 <option value="success"><?php _e('Successful Only', 'starter-dashboard'); ?></option>
                                 <option value="error"><?php _e('Errors Only', 'starter-dashboard'); ?></option>
+                                <option value="rejected"><?php _e('Rejected as Spam', 'starter-dashboard'); ?></option>
+                                <option value="repaired"><?php _e('Repaired (placeholders sent)', 'starter-dashboard'); ?></option>
                             </select>
                         </div>
                         <div class="bp-hubspot-log-container" id="bp-hubspot-log-container">
@@ -885,6 +905,22 @@ class Starter_Addon_HubSpot_Forms {
             color: #721c24;
         }
 
+        .bp-hubspot-log-entry__status--repaired {
+            background: #e7f1fb;
+            color: #1d4f7c;
+        }
+
+        .bp-hubspot-log-entry__error.bp-hubspot-log-entry__error--repaired {
+            background: #e7f1fb;
+            border-left-color: #2271b1;
+            color: #1d4f7c;
+        }
+
+        .bp-hubspot-log-entry__status--rejected {
+            background: #fff3cd;
+            color: #856404;
+        }
+
         .bp-hubspot-log-entry__time {
             font-size: 12px;
             color: #888;
@@ -1223,6 +1259,27 @@ class Starter_Addon_HubSpot_Forms {
                     });
                 });
 
+                // Re-read every HubSpot form definition (source + language targets)
+                $('.bp-hubspot-sync-schemas').on('click', function() {
+                    var btn = $(this);
+                    var result = $('.bp-hubspot-sync-result');
+                    btn.prop('disabled', true);
+                    result.text('<?php echo esc_js(__('Checking...', 'starter-dashboard')); ?>');
+                    $.post(ajaxUrl, { action: 'starter_hubspot_sync_schemas', nonce: hubspotNonce }, function(response) {
+                        btn.prop('disabled', false);
+                        if (response.success) {
+                            var d = response.data;
+                            result.text('<?php echo esc_js(__('Checked', 'starter-dashboard')); ?>: ' + d.forms + ' · <?php echo esc_js(__('changed', 'starter-dashboard')); ?>: ' + d.changed + ' · <?php echo esc_js(__('errors', 'starter-dashboard')); ?>: ' + Object.keys(d.errors || {}).length);
+                            if ($('#bp-hubspot-elementor-forms').length) { loadElementorForms(); }
+                        } else {
+                            result.text(response.data || 'Error');
+                        }
+                    }).fail(function() {
+                        btn.prop('disabled', false);
+                        result.text('Error');
+                    });
+                });
+
                 // Refresh buttons
                 $('.bp-hubspot-refresh-forms').on('click', function() {
                     formsCache = {};
@@ -1492,6 +1549,8 @@ class Starter_Addon_HubSpot_Forms {
                         html += '<p style="color: #888; font-style: italic;"><?php _e('No field mappings configured. Fields will be auto-mapped by ID.', 'starter-dashboard'); ?></p>';
                     }
 
+                    html += renderCoverage(form.coverage || []);
+
                     html += '<div style="margin-top: 15px; font-size: 12px; color: #888;">';
                     html += '<strong><?php _e('Page:', 'starter-dashboard'); ?></strong> <a href="' + form.edit_url + '" target="_blank">' + escapeHtml(form.page_title) + ' <easier-icon name="share-08" variant="twotone" size="12" color="currentColor" style="vertical-align:middle;"></easier-icon></a>';
                     html += '</div>';
@@ -1505,6 +1564,34 @@ class Starter_Addon_HubSpot_Forms {
                 container.on('click', '.bp-hubspot-elementor-form__header', function() {
                     $(this).closest('.bp-hubspot-elementor-form').toggleClass('bp-hubspot-elementor-form--expanded');
                 });
+            }
+
+            // Required HubSpot fields per language target that the mapping does not send
+            function renderCoverage(coverage) {
+                if (!coverage.length) { return ''; }
+                var html = '<div class="bp-hubspot-coverage" style="margin-top:15px;">';
+                html += '<strong><?php echo esc_js(__('Required HubSpot fields per language', 'starter-dashboard')); ?></strong>';
+                html += '<table class="bp-hubspot-mapping-table" style="margin-top:6px;"><tbody>';
+                coverage.forEach(function(target) {
+                    var lang = target.language ? target.language.toUpperCase() : '<?php echo esc_js(__('Original', 'starter-dashboard')); ?>';
+                    var status;
+                    if (!target.synced) {
+                        status = '<span style="color:#888;"><?php echo esc_js(__('not checked yet', 'starter-dashboard')); ?></span>';
+                    } else if (!target.missing.length && !target.consent_missing.length) {
+                        status = '<span style="color:#155724;">✓ <?php echo esc_js(__('all required fields mapped', 'starter-dashboard')); ?></span>';
+                    } else {
+                        status = '<span style="color:#b32d2e;">✗ <?php echo esc_js(__('not mapped:', 'starter-dashboard')); ?> ' + target.missing.map(function(f) {
+                            return escapeHtml(f.label) + ' <code>' + escapeHtml(f.name) + '</code>' + (f.renderable ? '' : ' (<?php echo esc_js(__('cannot be added automatically', 'starter-dashboard')); ?>)');
+                        }).join(', ');
+                        if (target.consent_missing.length) {
+                            status += (target.missing.length ? '; ' : '') + '<?php echo esc_js(__('required consent not mapped', 'starter-dashboard')); ?>';
+                        }
+                        status += '</span>';
+                    }
+                    html += '<tr><td><span class="bp-hubspot-lang-badge">' + escapeHtml(lang) + '</span> ' + escapeHtml(target.name || target.guid) + '</td><td>' + status + '</td></tr>';
+                });
+                html += '</tbody></table></div>';
+                return html;
             }
 
             // Language routing: source HubSpot form x language => target HubSpot form
@@ -1641,11 +1728,39 @@ class Starter_Addon_HubSpot_Forms {
                 }
 
                 var html = '';
+                var rejectReasons = <?php echo wp_json_encode([
+                    'honeypot' => __('Honeypot field filled in', 'starter-dashboard'),
+                    'turnstile' => __('Turnstile check failed', 'starter-dashboard'),
+                    'rate-limit' => __('Too many submissions from this IP', 'starter-dashboard'),
+                    'too-fast' => __('Sent too fast or invalid time stamp', 'starter-dashboard'),
+                ]); ?>;
                 entries.forEach(function(entry, index) {
-                    var statusClass = entry.success ? 'success' : 'error';
-                    var statusText = entry.success ? '<?php _e('Success', 'starter-dashboard'); ?>' : '<?php _e('Error', 'starter-dashboard'); ?>';
-                    var statusIcon = entry.success ? 'yes-alt' : 'dismiss';
                     var time = new Date(entry.timestamp * 1000).toLocaleString();
+
+                    if (entry.status === 'rejected') {
+                        html += '<div class="bp-hubspot-log-entry" data-status="rejected">';
+                        html += '<div class="bp-hubspot-log-entry__header">';
+                        html += '<span class="bp-hubspot-log-entry__status bp-hubspot-log-entry__status--rejected">';
+                        html += '<easier-icon name="shield-01" variant="twotone" size="16" color="currentColor"></easier-icon> <?php _e('Rejected', 'starter-dashboard'); ?>';
+                        html += '</span>';
+                        html += '<span class="bp-hubspot-log-entry__time">' + time + '</span>';
+                        html += '</div>';
+                        html += '<div class="bp-hubspot-log-entry__info">';
+                        html += '<div><div class="bp-hubspot-log-entry__label"><?php _e('Reason', 'starter-dashboard'); ?></div>';
+                        html += '<div class="bp-hubspot-log-entry__value">' + escapeHtml(rejectReasons[entry.reason] || entry.reason || '-') + (entry.detail ? ' <code>' + escapeHtml(entry.detail) + '</code>' : '') + '</div></div>';
+                        html += '<div><div class="bp-hubspot-log-entry__label"><?php _e('Form', 'starter-dashboard'); ?></div>';
+                        html += '<div class="bp-hubspot-log-entry__value">' + escapeHtml(entry.form_name || entry.form_id || entry.elementor_form_id || '-') + (entry.language ? ' (' + escapeHtml(entry.language) + ')' : '') + '</div></div>';
+                        html += '<div><div class="bp-hubspot-log-entry__label"><?php _e('IP (hashed)', 'starter-dashboard'); ?></div>';
+                        html += '<div class="bp-hubspot-log-entry__value"><code>' + escapeHtml(entry.ip_hash || '-') + '</code></div></div>';
+                        html += '</div>';
+                        html += '</div>';
+                        return;
+                    }
+
+                    var isRepaired = entry.status === 'repaired';
+                    var statusClass = isRepaired ? 'repaired' : (entry.success ? 'success' : 'error');
+                    var statusText = isRepaired ? '<?php _e('Repaired', 'starter-dashboard'); ?>' : (entry.success ? '<?php _e('Success', 'starter-dashboard'); ?>' : '<?php _e('Error', 'starter-dashboard'); ?>');
+                    var statusIcon = entry.success ? 'yes-alt' : 'dismiss';
 
                     html += '<div class="bp-hubspot-log-entry" data-status="' + statusClass + '">';
                     html += '<div class="bp-hubspot-log-entry__header">';
@@ -1664,9 +1779,26 @@ class Starter_Addon_HubSpot_Forms {
                     html += '<div class="bp-hubspot-log-entry__value">' + (entry.fields_count || 0) + '</div></div>';
                     html += '</div>';
 
+                    if (isRepaired) {
+                        html += '<div class="bp-hubspot-log-entry__error bp-hubspot-log-entry__error--repaired">';
+                        html += '<strong><?php _e('Sent with placeholders for missing required fields:', 'starter-dashboard'); ?></strong> ' + escapeHtml((entry.repaired_fields || []).join(', '));
+                        html += '</div>';
+                    }
+
                     if (!entry.success && entry.error) {
                         html += '<div class="bp-hubspot-log-entry__error">';
-                        html += '<strong><?php _e('Error:', 'starter-dashboard'); ?></strong> ' + escapeHtml(entry.error);
+                        if (entry.errors && entry.errors.length) {
+                            html += '<strong><?php _e('HubSpot rejected the submission:', 'starter-dashboard'); ?></strong><ul style="margin:4px 0 0 18px;list-style:disc;">';
+                            entry.errors.forEach(function(e) {
+                                html += '<li><code>' + escapeHtml(e.type || 'ERROR') + '</code>' + (e.field ? ' <?php _e('field', 'starter-dashboard'); ?> <code>' + escapeHtml(e.field) + '</code>' : '') + (e.message ? ' — ' + escapeHtml(e.message) : '') + '</li>';
+                            });
+                            html += '</ul>';
+                            if (entry.repair_attempted && entry.repair_attempted.length) {
+                                html += '<?php _e('Retry with placeholders also failed for:', 'starter-dashboard'); ?> ' + escapeHtml(entry.repair_attempted.join(', ')) + '<br>';
+                            }
+                        } else {
+                            html += '<strong><?php _e('Error:', 'starter-dashboard'); ?></strong> ' + escapeHtml(entry.error);
+                        }
                         if (entry.response_code) {
                             html += '<br><strong><?php _e('Response Code:', 'starter-dashboard'); ?></strong> ' + entry.response_code;
                         }
@@ -1788,6 +1920,9 @@ class Starter_Addon_HubSpot_Forms {
 
         $honeypot_enabled = isset($settings['honeypot']) && Starter_HubSpot_Language_Routing::is_truthy($settings['honeypot']);
         update_option($this->option_honeypot, $honeypot_enabled ? 'yes' : 'no');
+
+        Starter_HubSpot_Antispam_Guard::save_settings((array) $settings);
+        Starter_HubSpot_Schema_Sync::save_settings((array) $settings);
 
         if (isset($settings['lang_routing_json'])) {
             $raw_routing = json_decode(wp_unslash($settings['lang_routing_json']), true);
@@ -2247,6 +2382,9 @@ class Starter_Addon_HubSpot_Forms {
 
         bindMappingEvents(container, elOptions, hsOptions);
 
+        // Required fields of every Language Routing target (class-schema-sync.php)
+        if (window.ehfaRenderTargets) { window.ehfaRenderTargets(ehfaCurrentFormId); }
+
         // Update disabled options after initial setup
         updateDisabledOptions(container);
 
@@ -2401,6 +2539,7 @@ class Starter_Addon_HubSpot_Forms {
         } catch(e) {
             console.log('[EHFA] Error saving mappings:', e);
         }
+        if (window.ehfaRenderTargets) { window.ehfaRenderTargets(ehfaCurrentFormId); }
     }
 
     function saveConsentMappings() {
@@ -2733,6 +2872,8 @@ JS;
                         'form_name' => $settings['form_name'] ?? 'Unnamed Form',
                         'hubspot_form_id' => $settings['hubspot_form_id'],
                         'mappings' => $mappings,
+                        // Required fields of the source and every language target not covered by the mapping
+                        'coverage' => Starter_HubSpot_Schema_Sync::instance()->coverage_for_settings($settings),
                     ];
                 }
             }
@@ -2864,6 +3005,7 @@ JS;
                     'label' => $field['label'] ?? $field['name'],
                     'type' => $field['fieldType'] ?? 'text',
                     'required' => $field['required'] ?? false,
+                    'hidden' => $field['hidden'] ?? false,
                 ];
 
                 // Include options for dropdown/select/radio/checkbox fields
@@ -3122,6 +3264,110 @@ JS;
             file_put_contents($debug_file, date('Y-m-d H:i:s') . " Payload: " . $json_body . "\n", FILE_APPEND);
         }
 
+        $response = self::post_submission($url, $payload, $debug_mode);
+
+        if (is_wp_error($response)) {
+            $log_data['success'] = false;
+            $log_data['error'] = $response->get_error_message();
+            self::log_submission($log_data);
+            Starter_HubSpot_Schema_Sync::instance()->raise_alert('failed', $form_guid, [
+                'error' => $response->get_error_message(),
+                'pages' => array_filter([$context['page_title'] ?? '']),
+            ]);
+            return $response;
+        }
+
+        $code = (int) wp_remote_retrieve_response_code($response);
+        $body = json_decode(wp_remote_retrieve_body($response), true);
+
+        if ($code >= 200 && $code < 300) {
+            $log_data['success'] = true;
+            if ($debug_mode && !empty($body)) {
+                $log_data['response_body'] = $body;
+            }
+            self::log_submission($log_data);
+            return true;
+        }
+
+        $errors = Starter_HubSpot_Schema::parse_submit_errors($body);
+        $sync = Starter_HubSpot_Schema_Sync::instance();
+
+        // The HubSpot form requires fields this form does not send (form changed,
+        // or a language target has other required fields): retry ONCE with a
+        // placeholder for plain text fields only, so the lead is not lost.
+        if ($code === 400 && !empty($errors)) {
+            $plan = $sync->repair_plan($form_guid, $errors, array_column($payload['fields'], 'name'));
+            if ($plan['retry']) {
+                foreach ($plan['fields'] as $name => $value) {
+                    $payload['fields'][] = ['name' => $name, 'value' => $value];
+                }
+                $log_data['first_errors'] = $errors;
+                $log_data['repair_attempted'] = array_keys($plan['fields']);
+                $retry = self::post_submission($url, $payload, $debug_mode);
+                $retry_code = is_wp_error($retry) ? 0 : (int) wp_remote_retrieve_response_code($retry);
+
+                if ($retry_code >= 200 && $retry_code < 300) {
+                    $log_data['success'] = true;
+                    $log_data['status'] = 'repaired';
+                    $log_data['repaired_fields'] = array_keys($plan['fields']);
+                    $log_data['fields_count'] = count($payload['fields']);
+                    self::log_submission($log_data);
+                    $sync->raise_alert('repaired', $form_guid, [
+                        'fields' => array_keys($plan['fields']),
+                        'pages' => array_filter([$context['page_title'] ?? '']),
+                    ]);
+                    return true;
+                }
+                if (is_wp_error($retry)) {
+                    $errors = [['type' => 'NETWORK', 'field' => '', 'message' => $retry->get_error_message()]];
+                } else {
+                    $code = $retry_code;
+                    $body = json_decode(wp_remote_retrieve_body($retry), true);
+                    $errors = Starter_HubSpot_Schema::parse_submit_errors($body);
+                }
+            } elseif (in_array('consent', $plan['unrepairable'], true)) {
+                $consent_fields = array_keys(array_filter($plan['unrepairable'], function ($reason) {
+                    return $reason === 'consent';
+                }));
+                $sync->raise_alert('consent_missing', $form_guid, [
+                    'fields' => $consent_fields,
+                    'pages' => array_filter([$context['page_title'] ?? '']),
+                ]);
+            }
+        }
+
+        $error = self::format_submit_errors($body, $errors);
+
+        $log_data['success'] = false;
+        $log_data['error'] = $error;
+        $log_data['errors'] = $errors;
+        $log_data['response_code'] = $code;
+        $log_data['response_body'] = $body;
+        self::log_submission($log_data);
+
+        // Visitor typos (invalid e-mail etc.) are not a configuration problem
+        $config_problem = empty($errors) || array_filter($errors, function ($e) {
+            return strpos($e['type'], 'INVALID_') !== 0 && $e['type'] !== 'BLOCKED_EMAIL';
+        });
+        if ($config_problem) {
+            $sync->raise_alert('failed', $form_guid, [
+                'fields' => array_values(array_filter(array_column($errors, 'field'))),
+                // HubSpot may echo submitted values; keep e-mail addresses out of the stored alert
+                'error' => preg_replace('/[^\s@\'"<>]+@[^\s@\'"<>]+/', '[e-mail]', $error),
+                'pages' => array_filter([$context['page_title'] ?? '']),
+            ]);
+        }
+
+        return new WP_Error('submission_failed', $error);
+    }
+
+    /**
+     * POST a submission to the HubSpot Forms v3 integration endpoint.
+     *
+     * @return array|WP_Error
+     */
+    private static function post_submission($url, array $payload, $debug_mode) {
+        $json_body = json_encode($payload);
         $response = wp_remote_post($url, [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -3136,67 +3382,37 @@ JS;
             file_put_contents($debug_file, date('Y-m-d H:i:s') . " Response Code: " . wp_remote_retrieve_response_code($response) . "\n", FILE_APPEND);
             file_put_contents($debug_file, date('Y-m-d H:i:s') . " Response Body: " . wp_remote_retrieve_body($response) . "\n\n", FILE_APPEND);
         }
+        return $response;
+    }
 
-        if (is_wp_error($response)) {
-            $log_data['success'] = false;
-            $log_data['error'] = $response->get_error_message();
-            self::log_submission($log_data);
-            return $response;
+    /**
+     * "REQUIRED_FIELD (company): Required field 'company' is missing; ..."
+     * errorType and field name are kept apart (HubSpot stores the field in
+     * `name` or only inside the message).
+     */
+    private static function format_submit_errors($body, array $errors) {
+        $parts = [];
+        if (is_array($body) && !empty($body['message'])) {
+            $parts[] = (string) $body['message'];
         }
-
-        $code = wp_remote_retrieve_response_code($response);
-        $body = json_decode(wp_remote_retrieve_body($response), true);
-
-        if ($code >= 200 && $code < 300) {
-            $log_data['success'] = true;
-            if ($debug_mode && !empty($body)) {
-                $log_data['response_body'] = $body;
+        foreach ($errors as $error) {
+            $label = $error['type'] !== '' ? $error['type'] : 'ERROR';
+            if ($error['field'] !== '') {
+                $label .= ' (' . $error['field'] . ')';
             }
-            self::log_submission($log_data);
-            return true;
+            $parts[] = $error['message'] !== '' ? $label . ': ' . $error['message'] : $label;
         }
-
-        // Extract detailed error information
-        $error_parts = [];
-
-        // Main error message
-        if (!empty($body['message'])) {
-            $error_parts[] = $body['message'];
+        if (empty($parts)) {
+            $parts[] = __('Submission failed', 'starter-dashboard');
         }
-
-        // Field-level errors
-        if (!empty($body['errors']) && is_array($body['errors'])) {
-            foreach ($body['errors'] as $err) {
-                if (is_array($err)) {
-                    $field_name = $err['errorType'] ?? $err['name'] ?? 'unknown';
-                    $field_message = $err['message'] ?? 'validation error';
-                    $error_parts[] = sprintf('%s: %s', $field_name, $field_message);
-                } elseif (is_string($err)) {
-                    $error_parts[] = $err;
-                }
-            }
-        }
-
-        // If no specific errors, use generic message
-        if (empty($error_parts)) {
-            $error_parts[] = __('Submission failed', 'starter-dashboard');
-        }
-
-        $error = implode('; ', $error_parts);
-
-        $log_data['success'] = false;
-        $log_data['error'] = $error;
-        $log_data['response_code'] = $code;
-        $log_data['response_body'] = $body;
-        self::log_submission($log_data);
-
-        return new WP_Error('submission_failed', $error);
+        return implode('; ', $parts);
     }
 }
 
 // Initialize only if Elementor Pro is active
 add_action('plugins_loaded', function() {
-    if (class_exists('ElementorPro\Plugin')) {
+    // In admin (incl. admin-ajax) always, so administrators can open the settings and Submission Log
+    if (class_exists('ElementorPro\Plugin') || is_admin()) {
         Starter_Addon_HubSpot_Forms::instance();
     }
 }, 20);
