@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.7.1
+Stable tag: 4.7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.7.2 =
+* NEW addon "Front Speed" (on, mode "test" by default): defers non-critical JavaScript (jQuery, consent and scripts with inline "after" code stay synchronous) and loads selected stylesheets asynchronously for logged-out visitors, removes Dashicons for visitors and preconnects to cdn.jsdelivr.net. Modes: off, test (only with ?mwtperf=1 in the URL), on (all logged-out visitors). Filters: mwts_front_speed_mode, mwts_front_speed_js_exclude, mwts_front_speed_css_async.
 
 = 4.7.1 =
 * NEW addon "Image Alt Filter" (on by default, can be switched off in the Addons panel): fills an empty or missing alt attribute of images on the front end while the page is rendered, from the attachment's alt, title or file name. Nothing is written to the database; decorative images (aria-hidden, role=presentation, data-mwts-decorative, icons) keep alt="". Override with the mwts_image_alt_text filter.

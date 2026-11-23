@@ -100,6 +100,19 @@ class Starter_Addon_Loader {
             'default_active' => true,
         ];
 
+        // Front Speed (defer JS, async non-critical CSS; safe test mode)
+        $this->addons['front-speed'] = [
+            'name' => __('Front Speed', 'starter-dashboard'),
+            'description' => __('Defers JavaScript and loads non-critical CSS asynchronously for logged-out visitors, with a ?mwtperf=1 test mode', 'starter-dashboard'),
+            'icon' => 'dashboard-speed-01',
+            'category' => 'seo',
+            'file' => $addons_dir . '/front-speed/addon.php',
+            'has_settings' => true,
+            'settings_callback' => 'Starter_Addon_Front_Speed::render_settings',
+            'version' => '1.0.0',
+            'default_active' => true,
+        ];
+
         // Vertical Menu Shortcode
         $this->addons['vertical-menu'] = [
             'name' => __('Vertical Menu', 'starter-dashboard'),
