@@ -21,6 +21,12 @@ class Starter_Addon_Loader {
      */
     private $option_name = 'starter_active_addons';
 
+    /**
+     * Addons registered with 'default_active' => true that the user switched off.
+     * Without an entry here such an addon counts as active.
+     */
+    private $disabled_option_name = 'starter_disabled_addons';
+
     public static function instance() {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -80,6 +86,18 @@ class Starter_Addon_Loader {
             'has_settings' => true,
             'settings_callback' => 'Starter_Addon_OG_Image::render_settings',
             'version' => '1.0.0',
+        ];
+
+        // Image Alt Filter (front-end alt text for images without one)
+        $this->addons['image-alt-filter'] = [
+            'name' => __('Image Alt Filter', 'starter-dashboard'),
+            'description' => __('Fills empty image alt attributes on the front end from attachment titles or file names (no database changes)', 'starter-dashboard'),
+            'icon' => 'image-02',
+            'category' => 'seo',
+            'file' => $addons_dir . '/image-alt-filter/addon.php',
+            'has_settings' => false,
+            'version' => '1.0.0',
+            'default_active' => true,
         ];
 
         // Vertical Menu Shortcode
@@ -276,7 +294,25 @@ class Starter_Addon_Loader {
      * Get active addons
      */
     public function get_active_addons() {
-        return get_option($this->option_name, []);
+        return self::resolve_active(
+            get_option($this->option_name, []),
+            get_option($this->disabled_option_name, []),
+            $this->addons
+        );
+    }
+
+    /**
+     * Stored active list plus 'default_active' addons that were not explicitly switched off.
+     */
+    public static function resolve_active($stored, $disabled, array $addons) {
+        $active = is_array($stored) ? array_values($stored) : [];
+        $disabled = is_array($disabled) ? $disabled : [];
+        foreach ($addons as $addon_id => $addon) {
+            if (!empty($addon['default_active']) && !in_array($addon_id, $active) && !in_array($addon_id, $disabled)) {
+                $active[] = $addon_id;
+            }
+        }
+        return $active;
     }
 
     /**
@@ -299,10 +335,15 @@ class Starter_Addon_Loader {
             return false;
         }
 
-        $active = $this->get_active_addons();
+        $active = (array) get_option($this->option_name, []);
         if (!in_array($addon_id, $active)) {
             $active[] = $addon_id;
             update_option($this->option_name, $active);
+        }
+
+        $disabled = (array) get_option($this->disabled_option_name, []);
+        if (in_array($addon_id, $disabled)) {
+            update_option($this->disabled_option_name, array_values(array_diff($disabled, [$addon_id])));
         }
 
         return true;
@@ -312,9 +353,18 @@ class Starter_Addon_Loader {
      * Deactivate addon
      */
     public function deactivate_addon($addon_id) {
-        $active = $this->get_active_addons();
+        $active = (array) get_option($this->option_name, []);
         $active = array_diff($active, [$addon_id]);
         update_option($this->option_name, array_values($active));
+
+        // Remember the explicit "off" so a default-active addon stays off.
+        if (!empty($this->addons[$addon_id]['default_active'])) {
+            $disabled = (array) get_option($this->disabled_option_name, []);
+            if (!in_array($addon_id, $disabled)) {
+                $disabled[] = $addon_id;
+                update_option($this->disabled_option_name, $disabled);
+            }
+        }
 
         return true;
     }
