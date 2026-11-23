@@ -153,55 +153,158 @@ class Starter_Webp_Images {
      * Create "<source>.webp" with an image editor (WP_Image_Editor or compatible).
      *
      * @param string   $source         Absolute path (see resolve_source()).
-     * @param callable $editor_factory fn(string $path): object editor, or anything else on error.
+     * @param callable $editor_factory fn(string $path): object editor, or WP_Error/anything else on error.
      * @return string converted | exists | small | larger | error
      */
     public static function convert_file($source, callable $editor_factory) {
+        return self::convert_file_detailed($source, $editor_factory)[0];
+    }
+
+    /**
+     * Same as convert_file(), with a readable message: sizes on success, the editor's own
+     * error text (WP_Error::get_error_message(), exception message) on failure.
+     *
+     * @return array{0:string, 1:string} [status, message]
+     */
+    public static function convert_file_detailed($source, callable $editor_factory) {
         $target = $source . self::SUFFIX;
+        clearstatcache(true, $source);
+        clearstatcache(true, $target);
         if (file_exists($target)) {
-            return 'exists';
+            return ['exists', 'WebP already exists'];
         }
         $bytes = @filesize($source);
         if ($bytes === false) {
-            return 'error';
+            return ['error', 'Cannot read the original file'];
         }
         if ($bytes < self::MIN_BYTES) {
-            return 'small';
+            return ['small', 'Smaller than 30 KB (' . self::format_bytes($bytes) . ')'];
         }
 
         try {
             $editor = $editor_factory($source);
             if (!is_object($editor) || !method_exists($editor, 'save')) {
-                return 'error';
+                return ['error', 'Image editor: ' . self::error_message($editor)];
             }
             $size = $editor->get_size();
             if (is_array($size) && (int) ($size['width'] ?? 0) > self::MAX_WIDTH) {
                 $resized = $editor->resize(self::MAX_WIDTH, null, false);
                 if ($resized !== true) {
-                    return 'error';
+                    return ['error', 'Resize: ' . self::error_message($resized)];
                 }
             }
-            $editor->set_quality(self::QUALITY);
+            $editor->set_quality(self::QUALITY); // a failure here only keeps the editor's default quality
             $saved = $editor->save($target, 'image/webp');
         } catch (\Throwable $e) {
             self::remove($target);
-            return 'error';
+            return ['error', self::error_message($e)];
         }
 
-        $path = is_array($saved) && !empty($saved['path']) ? (string) $saved['path'] : '';
-        if ($path === '' || !is_file($path) || realpath($path) !== realpath($target)) {
-            if ($path !== '' && is_file($path)) {
-                self::remove($path);
-            }
+        if (!is_array($saved) || empty($saved['path'])) {
             self::remove($target);
-            return 'error';
+            return ['error', 'Save: ' . self::error_message($saved)];
+        }
+        $path = (string) $saved['path'];
+        if (!is_file($path) || realpath($path) !== realpath($target)) {
+            self::remove($path);
+            self::remove($target);
+            return ['error', 'Save: editor wrote ' . basename($path) . ' instead of ' . basename($target)];
         }
         clearstatcache(true, $target);
-        if (filesize($target) >= $bytes) {
+        $webp_bytes = (int) filesize($target);
+        if ($webp_bytes === 0) {
             self::remove($target);
-            return 'larger';
+            return ['error', 'Save: WebP file is empty (0 bytes)'];
         }
-        return 'converted';
+        if ($webp_bytes >= $bytes) {
+            self::remove($target);
+            return ['larger', 'WebP ' . self::format_bytes($webp_bytes) . ' is not smaller than the original ' . self::format_bytes($bytes)];
+        }
+        return ['converted', self::format_bytes($bytes) . ' → ' . self::format_bytes($webp_bytes)];
+    }
+
+    /** Readable text of a WP_Error-like object, a Throwable or a string; max 300 characters. */
+    public static function error_message($error) {
+        $text = '';
+        if ($error instanceof \Throwable) {
+            $text = get_class($error) . ': ' . $error->getMessage();
+        } elseif (is_object($error) && method_exists($error, 'get_error_message')) {
+            $text = (string) $error->get_error_message();
+        } elseif (is_string($error)) {
+            $text = $error;
+        }
+        if (trim($text) === '') {
+            $text = 'unknown error (' . (is_object($error) ? get_class($error) : gettype($error)) . ')';
+        }
+        return self::cut($text);
+    }
+
+    /** The generator should be (re)scheduled: files are waiting and no event is planned. */
+    public static function should_schedule($queue_length, $next_scheduled) {
+        return (int) $queue_length > 0 && !$next_scheduled;
+    }
+
+    /**
+     * none | scheduled | overdue. Overdue (more than 2 minutes late) means WP-Cron does not run:
+     * DISABLE_WP_CRON without a server cron, no traffic, or blocked loopback requests.
+     */
+    public static function cron_state($next_scheduled, $now) {
+        if (!$next_scheduled) {
+            return 'none';
+        }
+        return (int) $next_scheduled < (int) $now - 120 ? 'overdue' : 'scheduled';
+    }
+
+    /** Last $limit skipped paths, newest first. */
+    public static function recent_skips($skip, $limit = 10) {
+        if (!is_array($skip)) {
+            return [];
+        }
+        return array_slice(array_reverse(array_values(array_map('strval', $skip))), 0, $limit);
+    }
+
+    /**
+     * State of one generator run, stored in the option mwts_webp_last.
+     *
+     * @param array $files [['path' => string, 'status' => string, 'message' => string], ...]
+     */
+    public static function last_run_record($time, $trigger, array $files, $queue_before, $supports_webp, $editor_class, $cron_disabled, $message) {
+        $clean = [];
+        $counts = [];
+        foreach ($files as $file) {
+            $status = (string) ($file['status'] ?? 'error');
+            $counts[$status] = ($counts[$status] ?? 0) + 1;
+            $clean[] = [
+                'path'    => (string) ($file['path'] ?? ''),
+                'status'  => $status,
+                'message' => self::cut((string) ($file['message'] ?? '')),
+            ];
+        }
+        return [
+            'time'            => (int) $time,
+            'trigger'         => (string) $trigger,
+            'processed'       => count($clean),
+            'queue_before'    => (int) $queue_before,
+            'supports_webp'   => (bool) $supports_webp,
+            'editor'          => is_string($editor_class) ? $editor_class : '',
+            'disable_wp_cron' => (bool) $cron_disabled,
+            'message'         => self::cut((string) $message),
+            'counts'          => $counts,
+            'files'           => $clean,
+        ];
+    }
+
+    /** 493568 → "482 KB", 50000 → "48.8 KB". */
+    public static function format_bytes($bytes) {
+        $kb = number_format($bytes / 1024, 1, '.', '');
+        if (substr($kb, -2) === '.0') {
+            $kb = substr($kb, 0, -2);
+        }
+        return $kb . ' KB';
+    }
+
+    private static function cut($text) {
+        return function_exists('mb_substr') ? mb_substr($text, 0, 300, 'UTF-8') : substr($text, 0, 300);
     }
 
     /** Upload URL of a PNG/JPEG without query string, fragment, entities or parent-directory segments. */

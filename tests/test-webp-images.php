@@ -220,6 +220,126 @@ $ed->fail_save = true;
 check('convert: save error', 'error', $W::convert_file($src, function () use ($ed) { return $ed; }));
 check('convert: no webp left after error', false, file_exists($src . '.webp'));
 
+// --- convert_file_detailed: concrete error messages ---
+class Fake_WP_Error {
+    private $msg;
+    public function __construct($msg) { $this->msg = $msg; }
+    public function get_error_message() { return $this->msg; }
+}
+class Detail_Editor extends Fake_Editor {
+    public $resize_result = true;
+    public $save_result = null;
+    public $save_throws = null;
+    public function resize($w, $h, $crop = false) { parent::resize($w, $h, $crop); return $this->resize_result; }
+    public function save($path, $mime) {
+        if ($this->save_throws) { file_put_contents($path, 'partial'); throw $this->save_throws; }
+        if ($this->save_result !== null) { return $this->save_result; }
+        return parent::save($path, $mime);
+    }
+}
+$detail = function ($editor_or_factory, $file = null) use ($W, $src) {
+    $factory = is_callable($editor_or_factory) ? $editor_or_factory : function () use ($editor_or_factory) { return $editor_or_factory; };
+    return $W::convert_file_detailed($file ?: $src, $factory);
+};
+
+[$status, $msg] = $detail(new Fake_WP_Error('No editor could be selected.'));
+check('detail: editor WP_Error status', 'error', $status);
+check('detail: editor WP_Error message', 'Image editor: No editor could be selected.', $msg);
+
+$ed = new Detail_Editor(2560, 100);
+$ed->resize_result = new Fake_WP_Error('Image resize failed.');
+check('detail: resize WP_Error', ['error', 'Resize: Image resize failed.'], $detail($ed));
+
+$ed = new Detail_Editor(800, 100);
+$ed->save_result = new Fake_WP_Error('Could not write file.');
+check('detail: save WP_Error', ['error', 'Save: Could not write file.'], $detail($ed));
+check('detail: nothing left after save error', false, file_exists($src . '.webp'));
+
+$ed = new Detail_Editor(800, 100);
+$ed->save_throws = new RuntimeException('ImagickException: no encode delegate for WEBP');
+[$status, $msg] = $detail($ed);
+check('detail: exception status', 'error', $status);
+check('detail: exception class and message', 'RuntimeException: ImagickException: no encode delegate for WEBP', $msg);
+check('detail: partial file removed after exception', false, file_exists($src . '.webp'));
+
+[$status, $msg] = $detail(function () { throw new Error('Call to undefined function imagewebp()'); });
+check('detail: PHP Error from factory caught', ['error', 'Error: Call to undefined function imagewebp()'], [$status, $msg]);
+
+$ed = new Detail_Editor(800, 0);
+[$status, $msg] = $detail($ed);
+check('detail: empty webp is an error', 'error', $status);
+check('detail: empty webp message', true, strpos($msg, '0 bytes') !== false);
+check('detail: empty webp deleted', false, file_exists($src . '.webp'));
+check('convert_file: empty webp -> error (old API)', 'error', $W::convert_file($src, function () { return new Detail_Editor(800, 0); }));
+
+$ed = new Detail_Editor(800, 100);
+$other = $up . '/2025/07/elsewhere.webp';
+$ed->save_result = ['path' => $other];
+file_put_contents($other, 'x');
+[$status, $msg] = $detail($ed);
+check('detail: saved to another path', 'error', $status);
+check('detail: other path named', true, strpos($msg, 'elsewhere.webp') !== false);
+check('detail: stray file removed', false, file_exists($other));
+
+$ed = new Detail_Editor(800, 60000);
+[$status, $msg] = $detail($ed);
+check('detail: larger', 'larger', $status);
+check('detail: larger message has both sizes', 'WebP 58.6 KB is not smaller than the original 48.8 KB', $msg);
+
+[$status, $msg] = $detail(function () { throw new Exception('must not run'); }, $up . '/2025/07/small.jpg');
+check('detail: exists', ['exists', 'WebP already exists'], [$status, $msg]);
+@unlink($up . '/2025/07/small.jpg.webp');
+file_put_contents($up . '/2025/07/small.jpg', str_repeat('s', 2048));
+check('detail: small with size', ['small', 'Smaller than 30 KB (2 KB)'], $detail(function () { throw new Exception('must not run'); }, $up . '/2025/07/small.jpg'));
+check('detail: missing source', 'error', $detail(new Detail_Editor(800, 1), $up . '/2025/07/gone.png')[0]);
+
+$ed = new Detail_Editor(2560, 20000);
+check('detail: converted with sizes', ['converted', '48.8 KB → 19.5 KB'], $detail($ed));
+@unlink($src . '.webp');
+// filesize() is cached by PHP: a rewritten source must still be measured fresh.
+file_put_contents($src, str_repeat('p', 100));
+check('detail: stat cache cleared for source', 'small', $detail(new Detail_Editor(800, 1))[0]);
+file_put_contents($src, str_repeat('p', 50000));
+
+// --- error_message ---
+check('error_message: WP_Error-like', 'boom', $W::error_message(new Fake_WP_Error('boom')));
+check('error_message: Throwable', 'LogicException: bad', $W::error_message(new LogicException('bad')));
+check('error_message: string', 'plain', $W::error_message('plain'));
+check('error_message: false', 'unknown error (boolean)', $W::error_message(false));
+check('error_message: object without message', 'unknown error (stdClass)', $W::error_message(new stdClass()));
+check('error_message: long text cut to 300 characters', 300, mb_strlen($W::error_message(str_repeat('ą', 400))));
+check('error_message: empty WP_Error message', 'unknown error (Fake_WP_Error)', $W::error_message(new Fake_WP_Error('')));
+
+// --- should_schedule ---
+check('schedule: queue and no event', true, $W::should_schedule(3, false));
+check('schedule: queue and event', false, $W::should_schedule(3, 1700000000));
+check('schedule: empty queue', false, $W::should_schedule(0, false));
+
+// --- cron_state ---
+check('cron: none', 'none', $W::cron_state(false, 1000));
+check('cron: scheduled in future', 'scheduled', $W::cron_state(1100, 1000));
+check('cron: just due', 'scheduled', $W::cron_state(950, 1000));
+check('cron: overdue (WP-Cron not running)', 'overdue', $W::cron_state(800, 1000));
+
+// --- recent_skips ---
+check('recent skips: newest first, max 10', ['f12', 'f11', 'f10', 'f9', 'f8', 'f7', 'f6', 'f5', 'f4', 'f3'],
+    $W::recent_skips(array_map(function ($i) { return "f{$i}"; }, range(1, 12))));
+check('recent skips: invalid option', [], $W::recent_skips('x'));
+
+// --- last_run_record ---
+$rec = $W::last_run_record(1700000000, 'manual', [
+    ['path' => 'a.png', 'status' => 'converted', 'message' => '1 KB → 0.5 KB'],
+    ['path' => 'b.png', 'status' => 'error', 'message' => str_repeat('x', 400)],
+], 12, true, 'WP_Image_Editor_Imagick', false, '');
+check('record: fields', ['time', 'trigger', 'processed', 'queue_before', 'supports_webp', 'editor', 'disable_wp_cron', 'message', 'counts', 'files'], array_keys($rec));
+check('record: processed', 2, $rec['processed']);
+check('record: counts', ['converted' => 1, 'error' => 1], $rec['counts']);
+check('record: message cut', 300, strlen($rec['files'][1]['message']));
+check('record: editor class', 'WP_Image_Editor_Imagick', $rec['editor']);
+check('record: no editor -> empty string', '', $W::last_run_record(1, 'cron', [], 0, false, false, true, 'x')['editor']);
+check('record: stop reason kept', 'Server cannot write WebP', $W::last_run_record(1, 'cron', [], 5, false, '', false, 'Server cannot write WebP')['message']);
+check('record: format_bytes', '482 KB', $W::format_bytes(493568));
+
 // cleanup
 foreach (['2025/07/foo.png', '2025/07/foo.gif', '2025/07/big.png', '2025/07/small.jpg', '2025/07/small.jpg.webp'] as $f) { @unlink($up . '/' . $f); }
 @unlink($up . '/link');

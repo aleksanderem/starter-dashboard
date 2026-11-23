@@ -132,7 +132,8 @@ class Starter_Addon_Loader {
             'icon' => 'image-upload',
             'category' => 'seo',
             'file' => $addons_dir . '/webp-images/addon.php',
-            'has_settings' => false,
+            'has_settings' => true,
+            'settings_callback' => 'Starter_Addon_Webp_Images::render_settings',
             'version' => '1.0.0',
             'default_active' => true,
         ];

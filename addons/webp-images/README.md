@@ -13,7 +13,7 @@ Page views do nothing with images except add them to the queue.
 
 ## Background generation
 
-Each run converts up to 10 files. If the queue is not empty afterwards, the next run is scheduled 60 seconds later.
+Each run converts up to 10 files. If the queue is not empty afterwards, the next run is scheduled 60 seconds later. Every page view that finds a missing WebP also plans a run when none is scheduled, so a lost cron event is replaced.
 
 - Only files inside the uploads directory, only PNG/JPEG.
 - Files under 30 KB are skipped (the gain is too small).
@@ -21,9 +21,27 @@ Each run converts up to 10 files. If the queue is not empty afterwards, the next
 - Quality 82.
 - If the WebP is not smaller than the original, it is deleted.
 
-Skipped files, files that would get bigger and editor errors go to the option `mwts_webp_skip` and are never tried again. To retry them, delete that option.
+Skipped files, files that would get bigger and editor errors go to the option `mwts_webp_skip` and are never tried again. To retry them, use "Clear skip list" in the settings panel.
 
 If the server's image library cannot write WebP (GD/Imagick without WebP), nothing is generated and the queue stays.
+
+## Settings panel (diagnostics)
+
+Addons → WebP Images → Settings shows:
+
+- queue length, number of skipped files and the last 10 skipped,
+- the next scheduled run; "overdue" means WP-Cron does not run (`DISABLE_WP_CRON` without a server cron, or loopback requests blocked),
+- whether `DISABLE_WP_CRON` is set and whether the server can write WebP (and which image editor class WordPress picks),
+- the uploads URL the page is compared against (if pages use another address, e.g. `http://` or a CDN, nothing is queued),
+- the last run (option `mwts_webp_last`): time, cron or manual, and for each file its result with the editor's own error text.
+
+Buttons:
+
+- Generate now: converts one batch (up to 10 files) at once, without waiting for WP-Cron, and returns with a summary.
+- Clear skip list: deletes `mwts_webp_skip`, so skipped files are tried again.
+- Clear queue: deletes `mwts_webp_queue` and the scheduled run.
+
+Errors are also written to the PHP error log as `[mwts-webp] <file>: <message>`.
 
 ## Not handled
 

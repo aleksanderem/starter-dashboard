@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.7.3
+Stable tag: 4.7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.7.4 =
+* WebP Images: new settings panel (Addons > WebP Images) with queue length, skipped files, the result and error message of the last run, WP-Cron status and buttons "Generate now", "Clear skipped list" and "Clear queue". Image editor errors are now recorded with a message instead of silently skipping the file. The cron event is re-scheduled on page views when it was lost.
 
 = 4.7.3 =
 * NEW addon "Complianz Fast Banner" (on by default): the Complianz cookie banner no longer waits 2-6 s for the geoIP request; the site's default consent type (opt-in) is pre-filled in the browser, so the banner shows immediately. Trade-off: every visitor gets the default opt-in banner. Disable with add_filter('mwts_cmplz_fast_banner', '__return_false').
