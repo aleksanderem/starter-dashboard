@@ -113,6 +113,30 @@ class Starter_Addon_Loader {
             'default_active' => true,
         ];
 
+        // Complianz Fast Banner (show the cookie banner without waiting for the geoIP request)
+        $this->addons['cmplz-fast-banner'] = [
+            'name' => __('Complianz Fast Banner', 'starter-dashboard'),
+            'description' => __('Shows the Complianz cookie banner immediately by skipping the slow geoIP request (every visitor gets the default opt-in banner)', 'starter-dashboard'),
+            'icon' => 'shield-01',
+            'category' => 'seo',
+            'file' => $addons_dir . '/cmplz-fast-banner/addon.php',
+            'has_settings' => false,
+            'version' => '1.0.0',
+            'default_active' => true,
+        ];
+
+        // WebP Images (serve PNG/JPEG uploads as WebP, generated in the background)
+        $this->addons['webp-images'] = [
+            'name' => __('WebP Images', 'starter-dashboard'),
+            'description' => __('Serves PNG and JPEG uploads as WebP on the front end; missing WebP files are created in the background', 'starter-dashboard'),
+            'icon' => 'image-upload',
+            'category' => 'seo',
+            'file' => $addons_dir . '/webp-images/addon.php',
+            'has_settings' => false,
+            'version' => '1.0.0',
+            'default_active' => true,
+        ];
+
         // Vertical Menu Shortcode
         $this->addons['vertical-menu'] = [
             'name' => __('Vertical Menu', 'starter-dashboard'),

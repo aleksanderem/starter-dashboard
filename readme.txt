@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.7.2
+Stable tag: 4.7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,10 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.7.3 =
+* NEW addon "Complianz Fast Banner" (on by default): the Complianz cookie banner no longer waits 2-6 s for the geoIP request; the site's default consent type (opt-in) is pre-filled in the browser, so the banner shows immediately. Trade-off: every visitor gets the default opt-in banner. Disable with add_filter('mwts_cmplz_fast_banner', '__return_false').
+* NEW addon "WebP Images" (on by default): PNG/JPEG files from uploads are served as WebP on the front end. Missing .webp copies are created in the background by WP-Cron next to the originals (originals stay; images wider than 1920 px get a 1920 px copy; copies larger than the original are skipped). Disable with add_filter('mwts_webp_images_enabled', '__return_false').
 
 = 4.7.2 =
 * NEW addon "Front Speed" (on, mode "test" by default): defers non-critical JavaScript (jQuery, consent and scripts with inline "after" code stay synchronous) and loads selected stylesheets asynchronously for logged-out visitors, removes Dashicons for visitors and preconnects to cdn.jsdelivr.net. Modes: off, test (only with ?mwtperf=1 in the URL), on (all logged-out visitors). Filters: mwts_front_speed_mode, mwts_front_speed_js_exclude, mwts_front_speed_css_async.
