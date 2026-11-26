@@ -93,7 +93,7 @@ check('regular on: still no disabled option', false, array_key_exists('starter_d
 
 // --- real registry: only image-alt-filter is default-active, always_load unchanged ---
 $src = file_get_contents(__DIR__ . '/../addons/class-addon-loader.php');
-check('default_active only on image-alt-filter, front-speed, cmplz-fast-banner and webp-images', 4,substr_count($src, "'default_active' => true,"));
+check('default_active only on image-alt-filter, front-speed, cmplz-fast-banner, webp-images and seo-structure', 5, substr_count($src, "'default_active' => true,"));
 check('always_load list unchanged',
     1,
     substr_count($src, "\$always_load = ['elementor-phone-field', 'elementor-styled-checkboxes', 'elementor-csv-options'];"));

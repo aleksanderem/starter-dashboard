@@ -4,7 +4,7 @@ Tags: dashboard, admin, command menu, custom post types, role editor
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 4.7.4
+Stable tag: 4.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,10 @@ Press Cmd+K (Mac) or Ctrl+K (Windows/Linux) anywhere in the WordPress admin.
 The command menu automatically includes all registered admin pages, recent posts, and quick actions based on your installed plugins.
 
 == Changelog ==
+
+= 4.8.0 =
+* NEW addon "SEO Structure" (on by default): heading levels follow MWT's table (one H1 per page; H2 for the listed sections; menu, footer, popups, listing tiles, hidden duplicates and the "Zastanawiasz się..." block become plain text). The look stays the same (original level kept as uicore-title classes + a small stylesheet for promoted headings). Works on rendered Elementor widgets, so it covers all languages and tiles loaded on scroll. Widgets that are not in rules.php are never touched, so headings chosen in Elementor for new sections keep working. Pages without a visible title ("O nas") get a visually hidden H1. Disable with add_filter('mwts_seo_structure_headings', '__return_false').
+* 404 pages: no canonical, hreflang alternates, og:url or AIOSEO structured data (AIOSEO invented /strona-nie-zostala-znaleziona/). Disable with add_filter('mwts_seo_structure_404', '__return_false').
 
 = 4.7.4 =
 * WebP Images: new settings panel (Addons > WebP Images) with queue length, skipped files, the result and error message of the last run, WP-Cron status and buttons "Generate now", "Clear skipped list" and "Clear queue". Image editor errors are now recorded with a message instead of silently skipping the file. The cron event is re-scheduled on page views when it was lost.

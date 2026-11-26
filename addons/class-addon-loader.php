@@ -125,6 +125,18 @@ class Starter_Addon_Loader {
             'default_active' => true,
         ];
 
+        // SEO Structure (heading levels per MWT guidelines, clean 404 pages)
+        $this->addons['seo-structure'] = [
+            'name' => __('SEO Structure', 'starter-dashboard'),
+            'description' => __('One H1 per page and clean heading levels (menu, footer, tiles and hidden duplicates become plain text, same look); 404 pages without canonical', 'starter-dashboard'),
+            'icon' => 'heading',
+            'category' => 'seo',
+            'file' => $addons_dir . '/seo-structure/addon.php',
+            'has_settings' => false,
+            'version' => '1.0.0',
+            'default_active' => true,
+        ];
+
         // WebP Images (serve PNG/JPEG uploads as WebP, generated in the background)
         $this->addons['webp-images'] = [
             'name' => __('WebP Images', 'starter-dashboard'),
