@@ -137,6 +137,18 @@ class Starter_Addon_Loader {
             'default_active' => true,
         ];
 
+        // Translated Labels (English literals left in templates, e.g. careers tiles)
+        $this->addons['translated-labels'] = [
+            'name' => __('Translated Labels', 'starter-dashboard'),
+            'description' => __('Replaces untranslated English labels in templates (careers tiles: Job title, Location, Work mode) with the visitor\'s language', 'starter-dashboard'),
+            'icon' => 'translate-01',
+            'category' => 'content',
+            'file' => $addons_dir . '/translated-labels/addon.php',
+            'has_settings' => false,
+            'version' => '1.0.0',
+            'default_active' => true,
+        ];
+
         // WebP Images (serve PNG/JPEG uploads as WebP, generated in the background)
         $this->addons['webp-images'] = [
             'name' => __('WebP Images', 'starter-dashboard'),
